@@ -1,0 +1,596 @@
+/* =========================================================================
+   TEACHER ASSIGNMENT STYLES (TAM_ prefix)
+   Refactored from Attendance Management Styles (atm_)
+   Refactored to use variables from index.css
+   ========================================================================= */
+
+/* Global Wrapper and Typography */
+.TAM_wrapper {
+    padding: var(--space-5); /* 20px */
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: var(--font-primary);
+}
+
+.TAM_section-title {
+    font-size: var(--font-size-3xl); /* 30px */
+    font-weight: var(--font-weight-bold); /* 700 */
+    color: var(--brand-pink);
+    margin-bottom: var(--space-6); /* 24px */
+    text-align: center;
+}
+
+.TAM_step-title {
+    font-size: var(--font-size-xl); /* 20px */
+    font-weight: var(--font-weight-semibold); /* 600 */
+    color: var(--color-gray-700);
+    margin-top: var(--space-8); /* 32px */
+    margin-bottom: var(--space-4); /* 16px */
+    padding-bottom: var(--space-2); /* 8px */
+    border-bottom: 1px solid var(--color-gray-300);
+}
+
+.TAM_empty-message, .TAM_info-block {
+    text-align: center;
+    padding: var(--space-8);
+    color: var(--color-gray-600);
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-6);
+}
+
+.TAM_info-block.TAM_teacher-admin {
+    color: var(--brand-pink-dark); 
+    background-color: var(--brand-pink-light); 
+}
+
+/* ----------------------------------
+   Selection Cards (Role, Stream, Level) 
+   ---------------------------------- */
+.TAM_card-selection-row { display: flex; gap: var(--space-8); flex-wrap: wrap; justify-content: center; margin-bottom: var(--space-8); }
+.TAM_nav-card { flex: 1 1 180px; min-width: 180px; max-width: 300px; height: 120px; padding: var(--space-4); background: var(--color-white); border: 1px solid var(--color-gray-300); border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; text-align: center; box-shadow: var(--shadow-xs); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.TAM_nav-card:hover { border-color: var(--brand-pink-light); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+
+/* UPDATED: Explicitly set icon size for uniformity (28px) */
+.TAM_nav-card-icon { 
+    margin-bottom: var(--space-2); 
+    color: var(--color-gray-600); 
+    transition: color 0.2s; 
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+}
+/* END UPDATED */
+
+.TAM_nav-card h3 { margin-top: 0; margin-bottom: 0; color: var(--color-gray-900); font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); }
+.TAM_nav-card p { margin-bottom: 0; font-size: var(--font-size-sm); color: var(--color-gray-600); }
+.TAM_nav-card.selected-pink { background-color: var(--brand-pink); box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1); border-color: var(--brand-pink); }
+.TAM_nav-card.selected-pink h3, .TAM_nav-card.selected-pink p, .TAM_nav-card.selected-pink .TAM_nav-card-icon { color: var(--color-white); }
+.TAM_nav-card.selected-blue { 
+    background-color:var(--brand-pink); /* Using a standard blue */
+    box-shadow: 0 0 0 3px var(--brand-pink-light); 
+    border-color: var(--brand-orange-dark); 
+}
+.TAM_nav-card.selected-blue h3, .TAM_nav-card.selected-blue p, .TAM_nav-card.selected-blue .TAM_nav-card-icon { 
+    color: var(--color-white); 
+}
+.TAM_nav-card.selected-orange { background-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1); border-color: var(--brand-orange); }
+.TAM_nav-card.selected-orange h3, .TAM_nav-card.selected-orange p, .TAM_nav-card.selected-orange .TAM_nav-card-icon { color: var(--color-white); }
+.TAM_nav-card.selected-gray { background-color: var(--brand-pink); box-shadow: 0 0 0 3px rgba(97, 97, 97, 0.1); border-color: var(--brand-pink); }
+.TAM_nav-card.selected-gray h3, .TAM_nav-card.selected-gray p, .TAM_nav-card.selected-gray .TAM_nav-card-icon { color: var(--color-white); }
+
+
+/* ----------------------------------
+   Batch/Institute Slider (Reusable structure)
+   ---------------------------------- */
+.TAM_batch-container { margin-top: var(--space-8); }
+.TAM_institute-container { margin-top: var(--space-8); }
+.TAM_search-bar { display: flex; align-items: center; max-width: 600px; margin: 0 auto var(--space-6) auto; padding: var(--space-3) var(--space-4); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); background-color: var(--color-white); box-shadow: var(--shadow-xs); }
+.TAM_batch-slider-outer { position: relative; max-width: 100%; }
+.TAM_batch-slider-wrapper { overflow-x: auto; overflow-y: hidden; scroll-behavior: smooth; padding-bottom: var(--space-4); -ms-overflow-style: none; scrollbar-width: none; }
+.TAM_batch-slider-wrapper::-webkit-scrollbar { display: none; }
+.TAM_batch-slider-content { display: flex; gap: var(--space-5); padding: var(--space-3) var(--space-1); width: max-content; }
+.TAM_batch-card { flex-shrink: 0; width: 300px; padding: var(--space-4); background-color: var(--color-white); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); transition: all var(--transition-base); cursor: pointer; box-shadow: var(--shadow-xs); }
+.TAM_batch-card.TAM_selected { border-color: var(--brand-orange-dark); background-color: var(--brand-orange-light); box-shadow: var(--shadow-md); transform: scale(1.02); color: white; }
+
+/* Slider Buttons */
+.TAM_slider-button { position: absolute; top: 50%; transform: translateY(-50%); background-color: var(--color-white); border: 1px solid var(--color-gray-300); border-radius: var(--radius-full); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; box-shadow: var(--shadow-md); color: var(--color-gray-700); transition: all 0.2s; }
+.TAM_slider-button.left { left: -16px; }
+.TAM_slider-button.right { right: -16px; }
+.TAM_slider-button:hover:not(.disabled) { background-color: var(--brand-pink); color: var(--color-white); border-color: var(--brand-pink); }
+.TAM_slider-button.disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ----------------------------------
+   Assignment Dashboard (Stage 2)
+   ---------------------------------- */
+
+.TAM_assignment-dashboard {
+    padding-top: var(--space-6);
+}
+
+.TAM_dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+}
+
+.TAM_dashboard-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-gray-800);
+    margin: 0;
+}
+
+.TAM_back-button {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--color-gray-600);
+    transition: all 0.2s;
+}
+
+.TAM_back-button:hover {
+    background-color: var(--color-gray-50);
+    border-color: var(--color-gray-400);
+}
+
+/* NEW LOOK: Filter Bar */
+.TAM_filter-bar-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-gray-200);
+    box-shadow: var(--shadow-md);
+}
+
+.TAM_student-search-new {
+    flex-grow: 1;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    background-color: var(--color-gray-50); 
+    padding-inline: var(--space-2);
+}
+
+.TAM_search-icon {
+    color: var(--color-gray-500);
+    margin-right: var(--space-3);
+}
+
+.TAM_search-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: var(--font-size-base);
+    padding: 0;
+    background-color: transparent;
+}
+
+.TAM_filter-actions-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+/* NEW: Custom Dropdown Styles */
+.TAM_custom-dropdown-container {
+    position: relative;
+    min-width: 180px;
+}
+
+.TAM_custom-dropdown-display {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    transition: all 0.2s;
+}
+
+.TAM_custom-dropdown-display:hover, .TAM_custom-dropdown-display.open {
+    border-color: var(--brand-pink-dark);
+    box-shadow: 0 0 0 2px var(--brand-pink-light);
+}
+
+.TAM_dropdown-chevron {
+    margin-left: auto;
+    transition: transform 0.2s;
+    color: var(--brand-pink);
+}
+
+.TAM_custom-dropdown-display.open .TAM_dropdown-chevron {
+    transform: rotate(180deg);
+}
+
+.TAM_custom-dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    margin-top: var(--space-1);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.TAM_custom-dropdown-option {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.TAM_custom-dropdown-option:hover {
+    background-color: var(--color-gray-50);
+}
+
+.TAM_custom-dropdown-option.selected {
+    background-color: var(--brand-pink-light);
+    color: var(--brand-pink-dark);
+    font-weight: var(--font-weight-medium);
+}
+
+/* NEW: Export Button Style */
+.TAM_export-excel-button {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-success);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.TAM_export-excel-button:hover {
+    background-color: var(--color-success-dark);
+    box-shadow: var(--shadow-md);
+}
+
+
+/* Stats Cards */
+.TAM_stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.TAM_stats-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+    color: white    ;
+    box-shadow: var(--shadow-md);
+}
+
+.TAM_stats-total { background-color: rgb(105, 104, 104);}
+.TAM_stats-total h3,.TAM_stats-filtered h3, .TAM_stats-present h3, .TAM_stats-absent h3 {
+    color: white;
+}
+.TAM_stats-filtered { background-color: var(--brand-orange-light); }
+.TAM_stats-present { background-color: var(--color-success-dark); } 
+.TAM_stats-absent { background-color: var(--brand-pink-dark); }
+
+.TAM_stats-title { font-size: var(--font-size-sm); margin: 0; }
+.TAM_stats-value { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); margin: var(--space-1) 0 0 0; }
+.TAM_stats-content p{
+    font-size: medium;
+    color: white;
+}
+
+/* Assignment Table (Refactored from Attendance Table) */
+.TAM_table-container {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+}
+
+.TAM_table-responsive-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.TAM_assignment-table {
+    width: 100%;
+    border-collapse:collapse;
+    min-width: 900px; 
+}
+
+.TAM_assignment-table tr {
+    background-color: var(--color-gray-50);
+    display: table-row;
+    border-bottom: 2px solid var(--color-gray-200);
+    text-align: center;
+}
+.TAM_assignment-table-backgroundcolor{
+     background-color:  var(--brand-orange) ;
+    color: white;
+    
+}
+
+.TAM_assignment-table th, .TAM_assignment-table td {
+    padding: var(--space-4); 
+    white-space: nowrap;
+    font-size: var(--font-size-sm); 
+}
+
+.TAM_assignment-table th {
+    font-weight: var(--font-weight-semibold);
+    vertical-align: top;
+}
+
+.TAM_assignment-table tbody tr {
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.TAM_assignment-table tbody tr:hover {
+    background-color: var(--color-gray-100);
+}
+
+/* Sticky Column for Name */
+.TAM_sticky-col {
+    left: 0;
+    text-align: left;
+}
+.TAM_assignment-table tbody tr:hover .TAM_sticky-col {
+    background-color: var(--color-gray-100);
+}
+
+
+.TAM_student-name-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 180px; 
+}
+
+.TAM_profile-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xs);
+    flex-shrink: 0;
+}
+
+.TAM_roll-no {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    margin: 0;
+}
+
+/* Date Headers */
+.TAM_day-of-week {
+    display: block;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-xs); 
+}
+
+/* Status Cells (Generic/Placeholder for Assignment Status) */
+.TAM_status-cell {
+    text-align: center;
+    font-weight: var(--font-weight-bold);
+    cursor: default;
+    font-size: var(--font-size-xs); 
+}
+
+.TAM_status-cell.TAM_today-cell { /* Renamed from atm_today-cell */
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.TAM_status-text {
+    display: block;
+    width: 20px; 
+    height: 20px;
+    line-height: 20px;
+    border-radius: var(--radius-sm);
+    margin: 0 auto;
+}
+
+/* Color codes for P and A (Placeholder colors) */
+.TAM_status-p { /* Placeholder for 'Submitted' */
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+
+.TAM_status-a { /* Placeholder for 'Pending' */
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+}
+
+/* Today's Checkmark Status (Placeholder for 'Marked') */
+.TAM_today-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    margin: 0 auto;
+}
+
+.TAM_today-cell:hover {
+    background-color: var(--color-gray-100);
+}
+
+.TAM_today-cell .TAM_today-status.TAM_status-p {
+    background-color: var(--color-success);
+    color: var(--color-white);
+}
+
+.TAM_today-cell .TAM_today-status.TAM_status-a {
+    background-color: var(--color-error);
+    color: var(--color-white);
+}
+
+/* Toggle Column in Header */
+.TAM_view-toggle-header {
+    cursor: pointer;
+    background-color: var(--brand-orange-dark);
+    color:white;
+    transition: all 0.2s;
+    font-size: var(--font-size-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 3px;
+    width: 60px;
+    position: sticky; 
+    right: 0;
+    z-index: 2;
+}
+
+
+.TAM_view-toggle-header:hover svg {
+    color: var(--color-white);
+}
+
+.TAM_toggle-label {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xs);
+}
+
+/* Placeholder for the sticky column in table body */
+.TAM_toggle-placeholder-col {
+    background-color: transparent;
+    width: 60px;
+    text-align: center;
+    right: 0;
+    z-index: 1;
+    border-left: 1px solid var(--color-gray-200);
+}
+.TAM_assignment-table tbody tr:hover .TAM_toggle-placeholder-col {
+    background-color: var(--color-gray-100);
+}
+
+
+/* ----------------------------------
+   Responsive Adjustments 
+   ---------------------------------- */
+
+@media (max-width: 1024px) {
+    .TAM_stats-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .TAM_filter-bar-new {
+        flex-wrap: wrap;
+        gap: var(--space-4);
+    }
+    .TAM_filter-actions-group {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    .TAM_student-search-new {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .TAM_filter-bar-new {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .TAM_student-search-new {
+        max-width: 100%;
+        order: 1;
+    }
+
+    .TAM_filter-actions-group {
+        order: 2;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-3);
+    }
+    
+    .TAM_custom-dropdown-container, .TAM_export-excel-button {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .TAM_stats-row {
+        grid-template-columns: 1fr;
+    }
+
+    .TAM_dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+
+    .TAM_assignment-table {
+        min-width: 600px;
+    }
+}
+
+.TAM_nav-card.selected-green {
+    /* Background and border for the selected state */
+    background-color: #e6f7ed; /* Very light green background */
+    border-color: #52c41a; /* Bright green border */
+    box-shadow: 0 4px 12px rgba(82, 196, 26, 0.2); /* Green shadow */
+    transform: scale(1.03); /* Slight zoom on selection */
+}
+
+/* Ensure text and icon contrast well on the green background */
+.TAM_nav-card.selected-green h3, 
+.TAM_nav-card.selected-green p,
+.TAM_nav-card.selected-green .TAM_nav-card-icon {
+    color: #004d40; /* Darker text for readability */
+}
+
+
+/* ======================================= */
+/* 2. STYLES FOR SELECTED SUBJECTS (selected-purple) */
+/* ======================================= */
+
+.TAM_nav-card.selected-purple {
+    /* Background and border for the selected state */
+    background-color: #f3e6ff; /* Very light purple/lavender background */
+    border-color: #722ed1; /* Bright purple border */
+    box-shadow: 0 4px 12px rgba(114, 46, 209, 0.2); /* Purple shadow */
+    transform: scale(1.03); 
+}
+
+/* Ensure text and icon contrast well on the purple background */
+.TAM_nav-card.selected-purple h3, 
+.TAM_nav-card.selected-purple p,
+.TAM_nav-card.selected-purple .TAM_nav-card-icon {
+    color: #4a148c; /* Darker violet text for readability */
+}

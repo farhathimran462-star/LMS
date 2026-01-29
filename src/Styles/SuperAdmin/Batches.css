@@ -1,0 +1,636 @@
+/* Batches.css (Revised and Optimized) */
+
+/* =========================================================================
+   GENERAL LAYOUT AND STEP CARDS
+   ========================================================================= */
+
+.batch_wrapper {
+    padding-inline: var(--space-8);
+    min-height: 100vh;
+    padding-top: var(--space-6);
+}
+.batch_wrapper_flex{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.batch_title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-8);
+}
+
+.step_card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200); /* Lighter border */
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Softer shadow */
+}
+
+.step_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-gray-200); /* Clean divider */
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+    gap: var(--space-4);
+}
+
+.step_title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--brand-pink);
+    margin: 0;
+}
+
+.step_actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+/* =========================================================================
+   SEARCH BAR & BUTTONS
+   ========================================================================= */
+
+.batch_search-bar {
+    position: relative;
+    display: flex; 
+    align-items: center;
+}
+
+.batch_search-bar input {
+    padding: var(--space-3) var(--space-4) var(--space-3) var(--space-10);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    width: 250px;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+}
+
+.batch_search-bar input:focus {
+    border-color: var(--brand-pink);
+    box-shadow: 0 0 0 2px var(--brand-pink-light);
+    outline: none;
+    width: 280px; 
+}
+
+.batch_search-icon {
+    position: absolute;
+    left: var(--space-3);
+    color: var(--color-gray-500);
+    pointer-events: none; 
+}
+
+/* --- BUTTONS --- */
+.batch_btn-primary, .batch_btn-secondary, .batch_btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+    border: 1px solid transparent;
+    font-size: var(--font-size-sm);
+}
+
+.batch_btn-primary {
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+}
+
+.batch_btn-primary:hover {
+    background-color: var(--brand-pink-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+.batch_btn-secondary {
+    background-color: var(--color-white);
+    color: var(--brand-pink);
+    border: 1px solid var(--brand-pink);
+}
+
+.batch_btn-secondary:hover {
+    background-color: var(--brand-pink-light);
+}
+
+.batch_btn-outline {
+    background-color: transparent;
+    color: var(--brand-pink);
+    border: 1px solid var(--brand-pink);
+}
+.batch_btn-outline:hover {
+    background-color: var(--brand-pink-light);
+}
+
+/* =========================================================================
+   CARD SLIDERS (Steps 1, 2, 3, 4, and Class Selection)
+   --- Unused styles from old table/pill formats are removed ---
+   ========================================================================= */
+
+/* DEDICATED HORIZONTAL SLIDER CLASS */
+.inst_slider_grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--space-4);
+    overflow-x: auto;
+    padding-bottom: var(--space-4);
+    padding-top: var(--space-2);
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+}
+.inst_slider_grid::-webkit-scrollbar {
+    display: none;
+}
+
+/* Institution Card Styles (Step 1) */
+.inst_card {
+    background-color: var(--color-gray-50);
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex: 0 0 200px; 
+    flex-shrink: 0;
+    text-align: center;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-800);
+    box-shadow: var(--shadow-xs);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.inst_card:hover {
+    border-color: var(--brand-orange);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+.inst_card-icon { color: var(--brand-orange); margin-bottom: var(--space-2); }
+.inst_card-name { font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); }
+.inst_card.inst_active {
+    border-color: var(--brand-pink);
+    background-color: var(--brand-pink-light);
+    color: var(--color-gray-900);
+    box-shadow: 0 0 0 3px var(--brand-pink-light);
+}
+
+/* Stream/Course Category Card Styles (Step 2) */
+.stream_card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-left: 5px solid var(--color-info); 
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex: 0 0 250px; 
+    flex-shrink: 0;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    box-shadow: var(--shadow-xs);
+}
+.stream_card:hover { box-shadow: var(--shadow-sm); }
+.stream_card.stream_active {
+    border: 2px solid var(--brand-pink);
+    border-left: 5px solid var(--brand-pink);
+    background-color: var(--brand-pink-light);
+    color: var(--color-gray-900);
+    box-shadow: var(--shadow-md);
+}
+
+/* Course Level/Package Card Styles (Step 3/4) */
+.course_card {
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex: 0 0 280px;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+    min-height: 100px;
+    position: relative;
+    border: 1px solid transparent;
+    overflow: hidden;
+    color: var(--color-gray-900);
+}
+/* Dynamic Color Palette (Kept as is for functionality) */
+.course-color-0 { border-color: var(--brand-pink); }
+.course-color-0::before { background-color: var(--brand-pink); }
+.course-color-0.course_active { border-color: var(--brand-pink-dark); background-color: var(--brand-pink-light); }
+.course-color-1 { border-color: var(--color-info); }
+.course-color-1::before { background-color: var(--color-info); }
+.course-color-1.course_active { border-color: var(--color-info-dark); background-color: var(--color-info-light); }
+.course_card-name { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); }
+.course_card-stream { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-gray-700); }
+
+
+/* Class Card Styles (Step 6 - Class Selection in CardSlider) */
+.class_card {
+    border-top: 5px solid var(--color-gray-400); 
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    border: 1px solid var(--color-gray-300);
+    background-color: var(--color-white);
+}
+.class_card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--brand-pink);
+    transform: translateY(-3px);
+}
+.class_card.class_active {
+    border-color: var(--brand-pink);
+    border-top: 5px solid var(--brand-pink);
+    box-shadow: 0 0 0 4px var(--brand-pink-light);
+}
+.class_card-name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+}
+
+/* =========================================================================
+   CLASS DETAILS (STEP 6) - Focus on Professional UI
+   ========================================================================= */
+
+.batch_class-detail-section {
+    padding-bottom: var(--space-8);
+}
+
+.batch_detail-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+/* Detail Cards Grid */
+.batch_detail-grid {
+    display: grid;
+    /* Clean, professional ratio: 1/3 for small stat, 2/3 for list/info */
+    grid-template-columns: 1fr 2fr; 
+    gap: var(--space-5);
+    padding-top: var(--space-4);
+}
+
+.batch_detail-item {
+    padding: var(--space-5);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    /* Revert background to white/light gray for cleaner look */
+    background-color: var(--color-white); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s;
+}
+
+.batch_detail-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.batch_detail-header strong {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-800);
+}
+
+/* --- 1. Student Count Card (item-students) --- */
+.item-students {
+    border: 1px solid var(--color-success-light);
+    border-left: 5px solid var(--color-success-dark);
+}
+.item-students .batch_detail-icon { color: var(--color-success-dark); }
+.item-students strong { color: var(--color-success-dark); }
+.item-students .batch_detail-value {
+    font-size: var(--font-size-4xl); /* Larger value */
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-success-dark);
+    margin-top: var(--space-4);
+    text-align: center;
+}
+
+/* --- 2. Subjects & Teachers List Card (item-subjects-teachers) --- */
+.item-subjects-teachers {
+    border: 1px solid var(--brand-pink-light);
+    border-left: 5px solid var(--brand-pink);
+}
+.item-subjects-teachers .batch_detail-icon { color: var(--brand-pink-dark); }
+.item-subjects-teachers strong { color: var(--brand-pink-dark); }
+
+.batch_subject-teacher-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: var(--space-1);
+    font-size: var(--font-size-sm);
+    max-height: 200px; 
+    overflow-y: auto;
+}
+
+.subject-teacher-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) 0;
+    border-bottom: 1px dashed var(--color-gray-100); /* Lighter dash */
+}
+.subject-teacher-row:last-child {
+    border-bottom: none;
+}
+.subject-name {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+}
+.teacher-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-info-dark);
+    /* Clean pill effect */
+    background-color: var(--color-info-light);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+}
+/* Empty state for the Class Details section */
+.batch_empty-state {
+    text-align: center;
+    padding: var(--space-12) var(--space-6);
+    color: var(--color-gray-500);
+    border: 2px dashed var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    margin-top: var(--space-6);
+    background-color: var(--color-gray-50);
+}
+.batch_empty-state svg {
+    margin-bottom: var(--space-3);
+    color: var(--color-gray-400);
+}
+
+/* =========================================================================
+   TIMETABLE STYLES (Used by DynamicTimetable)
+   ========================================================================= */
+
+.batch_timetable-container {
+    padding: var(--space-5);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.timetable_heading {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--brand-orange-dark);
+    margin-top: 0;
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.timetable_legend {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin-bottom: var(--space-4);
+    font-style: italic;
+    padding: var(--space-2);
+    border-left: 3px solid var(--color-info);
+    background-color: var(--color-info-light);
+}
+
+/* =========================================================================
+   MODAL STYLING
+   ========================================================================= */
+.batch_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.batch_modal-content {
+    background-color: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    width: 80%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.95);
+    transition: transform 0.2s ease-out;
+}
+.batch_modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.batch_modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.batch_modal-header h3 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    color: var(--brand-pink);
+}
+
+.batch_close-modal {
+    cursor: pointer;
+    color: var(--color-gray-500);
+    transition: color 0.15s;
+}
+.batch_close-modal:hover {
+    color: var(--color-gray-900);
+}
+
+.batch_modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-gray-100);
+}
+
+/* --- Form Elements --- */
+.batch_form-group { margin-bottom: var(--space-4); }
+.batch_form-row { display: flex; gap: var(--space-4); margin-bottom: var(--space-4); }
+.batch_form-row .batch_form-group { flex: 1; margin-bottom: 0; }
+
+.batch_form-group label {
+    display: block;
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 5px;
+    color: var(--color-gray-700);
+    font-size: var(--font-size-sm);
+}
+
+.batch_form-group input,
+.batch_form-group select,
+.batch_form-group textarea {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    transition: border-color 0.15s;
+    background-color: var(--color-white);
+}
+.batch_form-group input:focus,
+.batch_form-group select:focus,
+.batch_form-group textarea:focus {
+    border-color: var(--brand-pink);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--brand-pink-light);
+}
+
+.batch_read-only-field {
+    background-color: var(--color-gray-100) !important;
+    color: var(--color-gray-600) !important;
+    cursor: not-allowed;
+    border-style: dashed;
+}
+
+/* --- Radio Group Styling for 'Mode' --- */
+.batch_radio-group {
+    display: flex;
+    gap: var(--space-4);
+}
+.batch_radio-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: var(--font-weight-normal);
+    color: var(--color-gray-700);
+    padding: var(--space-1);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.15s;
+}
+.batch_radio-label:hover {
+    background-color: var(--color-gray-50);
+}
+.batch_radio-label input[type="radio"] {
+    margin-right: 5px;
+    width: auto;
+}
+
+/* --- Confirmation Overlay (Kept as is for functionality) --- */
+.batch_modal-confirmation-overlay {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.95); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1010;
+    backdrop-filter: blur(4px);
+}
+.batch_confirm-popup {
+    max-width: 380px; 
+    width: 90%;
+    padding: var(--space-6);
+    text-align: center;
+    border: 2px solid var(--brand-pink);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: none !important;
+    background-color: var(--color-white); 
+    max-height: none; 
+    overflow-y: visible;
+}
+.batch_confirm-icon {
+    color: var(--brand-orange-dark);
+    margin-bottom: var(--space-4);
+}
+.batch_confirm-popup h4 { font-size: var(--font-size-lg); color: var(--color-gray-900); }
+.batch_confirm-popup p { font-size: var(--font-size-base); color: var(--color-gray-700); margin-bottom: var(--space-6); }
+.batch_confirm-popup .batch_modal-actions { justify-content: center; border-top: none; padding-top: 0; margin-top: 0; }
+
+
+/* =========================================================================
+   RESPONSIVE DESIGN 
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+    .batch_detail-grid {
+        grid-template-columns: 1fr; /* Stack the detail cards */
+    }
+    .inst_card, .stream_card, .course_card {
+        flex-basis: 200px; 
+    }
+}
+@media (max-width: 768px) {
+    .batch_wrapper {
+        padding-inline: var(--space-4);
+    }
+    .step_header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .step_actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .batch_search-bar, .batch_search-bar input {
+        width: 100%;
+    }
+    .batch_search-bar input {
+        width: 100% !important;
+    }
+    .inst_card, .stream_card, .course_card {
+        flex-basis: 180px;
+    }
+    .batch_timetable-container {
+        overflow-x: auto;
+    }
+    /* Note: DynamicTable handles the inner min-width for the table now. */
+}
+@media (max-width: 640px) {
+    .batch_modal-content {
+        padding: var(--space-4);
+        max-width: 100%;
+        margin: var(--space-2);
+    }
+    .batch_form-row {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+}
+@media (max-width: 480px) {
+    .inst_card, .stream_card, .course_card {
+        flex-basis: 150px;
+    }
+}

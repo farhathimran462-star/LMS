@@ -1,0 +1,808 @@
+/* TeacherBatches.css - Updated to use explicit colors and sizes from index.css */
+
+/* =========================================================================
+   GENERAL LAYOUT AND TB_ CARDS 
+   ========================================================================= */
+
+.tb_wrapper {
+    padding-inline: 2rem;
+    min-height: 100vh;
+    padding-top: 1.5rem;
+}
+
+.tb_title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #212121; /* color-gray-900 */
+    margin-bottom: 2rem;
+}
+.tb_card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212121; /* color-gray-900 */
+}
+
+.tb_card {
+    background-color: #FFFFFF; /* color-white */
+    border: 1px solid #EEEEEE; /* color-gray-200 */
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.tb_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #F5F5F5; /* color-gray-100 */
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tb_actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.tb_btn-primary {
+    background-color: #E91E63; /* brand-pink */
+    color: #FFFFFF; /* color-white */
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.tb_btn-primary:hover {
+    background-color: #C2185B; /* brand-pink-dark */
+}
+
+/* Search Bar */
+.tb_search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #E0E0E0; /* color-gray-300 */
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background-color: #FFFFFF; /* color-white */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.tb_search-bar:focus-within {
+    border-color: #E91E63; /* brand-pink */
+    box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.2);
+}
+.tb_search-icon, .tb_clear-icon {
+    color: #BDBDBD; /* color-gray-400 */
+    cursor: pointer;
+}
+.tb_search-bar input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 0 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* =========================================================================
+   BREADCRUMBS
+   ========================================================================= */
+.tb_breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+}
+
+.tb_breadcrumb-item {
+    color: #757575; /* color-gray-600 */
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.tb_breadcrumb-item.tb_active {
+    color: #E91E63; /* brand-pink */
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #F5F5F5; /* color-gray-100 */
+}
+
+.tb_breadcrumb-item.tb_active:hover {
+    background-color: #EEEEEE; /* color-gray-200 */
+}
+
+.tb_breadcrumb-separator {
+    color: #BDBDBD; /* color-gray-400 */
+}
+
+/* =========================================================================
+   SLIDER CONTAINER AND CONTROLS
+   ========================================================================= */
+
+.tb_slider-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem; /* space-4 */
+}
+
+.tb_center-content {
+    justify-content: center;
+}
+
+.tb_slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #FFFFFF; /* color-white */
+    border: 1px solid #E0E0E0; /* color-gray-300 */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    color: #E91E63; /* brand-pink */
+    transition: background-color 0.2s;
+}
+
+.tb_slider-prev { left: 0px; }
+.tb_slider-next { right: 0px; }
+
+.tb_slider-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #F5F5F5; /* color-gray-100 */
+}
+
+.entity_card_slider {
+    display: flex;
+    gap: 1rem; /* space-4 */
+    overflow-x: auto; 
+    padding: 0.5rem 0; /* space-2 */
+    scroll-snap-type: x mandatory; 
+    width: 100%; 
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+.entity_card_slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* =========================================================================
+   SELECTION CARD STYLES (Inst/Stream/Course/Class/Subject)
+   ========================================================================= */
+
+/* Institution Card (Slider item) */
+.inst_card {
+    flex: 0 0 300px;
+    scroll-snap-align: start; 
+    border: 1px solid #E0E0E0; /* color-gray-300 */
+    background-color: #FFFFFF; /* color-white */
+    border-radius: 0.5rem;
+    cursor: pointer;
+    padding: 1rem; /* space-4 */
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background-color 0.2s;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* space-4 */
+}
+.inst_card:hover {
+    box-shadow: 0 4px 10px rgba(233, 30, 99, 0.1);
+}
+.inst_active {
+    border-color: #E91E63; /* brand-pink */
+    background-color: #F5F5F5; /* color-gray-100 */
+}
+.inst_card-icon {
+    color: #E91E63; /* brand-pink */
+}
+
+/* Grid Layout for Streams, Levels, Classes, Subjects */
+.entity_card_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; /* space-4 */
+}
+.tb_grid-item-wrapper {
+    min-width: 0;
+}
+
+
+.stream_card, .course_card {
+    /* Base styles for all grid items */
+    border: 1px solid #EEEEEE; /* color-gray-200 */
+    background-color: #FFFFFF; /* color-white */
+    border-radius: 0.5rem;
+    cursor: pointer;
+    padding: 1rem; /* space-4 */
+    font-size: 1.125rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* space-4 */
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    height: 100%;
+}
+.stream_card:hover, .course_card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.stream_active, .course_active {
+    border-color: #E91E63; /* brand-pink */
+    background-color: #F5F5F5; /* color-gray-100 */
+    font-weight: 600;
+}
+
+/* Subject/Level Cards - Added color strip for visual interest */
+.course_card {
+    position: relative;
+    overflow: hidden;
+    padding-left: calc(1rem + 12px); /* space-4 */
+}
+.course_card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background-color: #EEEEEE; /* color-gray-200 */
+}
+/* Side Strip Colors - Keeping specific accent colors for differentiation */
+.course-color-0::before { background-color: #6366f1; } /* Indigo */
+.course-color-1::before { background-color: #f97316; } /* Orange */
+.course-color-2::before { background-color: #4CAF50; } /* Standard Success Green */
+.course-color-3::before { background-color: #ef4444; } /* Red */ 
+
+
+/* =========================================================================
+   BATCH LIST (Slider - Now clickable)
+   ========================================================================= */
+
+.tb_batch-list-slider {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem; /* space-4 */
+    overflow-x: auto; 
+    padding: 0.5rem 0; /* space-2 */
+    scroll-snap-type: x mandatory; 
+    width: 100%; 
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.tb_batch-list-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.tb_batch-item {
+    flex: 0 0 320px;
+    scroll-snap-align: start;
+
+    padding: 1rem; /* space-4 */
+    border: 1px solid #EEEEEE; /* color-gray-200 */
+    border-left: 4px solid #E91E63; /* brand-pink */
+    border-radius: 0.5rem;
+    background-color: #FFFFFF; /* color-white */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    cursor: pointer; 
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.tb_batch-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tb_batch-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.tb_batch-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #212121; /* color-gray-900 */
+}
+
+.tb_status-pill {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.tb_status-active {
+    background-color: rgba(76, 175, 80, 0.12); /* 10b98120 replaced with 4CAF5020 */
+    color: #4CAF50; /* Standard Success Green */
+}
+
+.tb_status-inactive {
+    background-color: #fef3c7; 
+    color: #f59e0b; 
+}
+
+.tb_batch-action-hint {
+    font-size: 0.75rem;
+    color: #E91E63; /* brand-pink */
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: -0.25rem;
+}
+
+.tb_batch-details {
+    display: flex;
+    gap: 1rem; /* space-4 */
+    border-top: 1px dashed #EEEEEE; /* color-gray-200 */
+    padding-top: 0.5rem;
+}
+
+.tb_batch-detail-item {
+    font-size: 0.875rem;
+    color: #757575; /* color-gray-600 */
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.tb_no-results {
+    color: #757575; /* color-gray-600 */
+    padding: 1rem; /* space-4 */
+    text-align: center;
+}
+.tb_no-results-fullwidth {
+    flex: 1 1 100%;
+}
+
+/* =========================================================================
+   STUDENT TABLE (NEW)
+   ========================================================================= */
+
+.tb_student-table-container {
+    overflow-x: auto;
+    margin-top: 1rem; /* space-4 */
+}
+
+.tb_student-table-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #212121; /* color-gray-900 */
+    margin-bottom: 1rem; /* space-4 */
+}
+
+.tb_table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #EEEEEE; /* color-gray-200 */
+    border-radius: 0.5rem;
+}
+
+.tb_student-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    min-width: 700px;
+}
+
+.tb_student-table thead th {
+    background-color: #F5F5F5; /* color-gray-100 */
+    color: #757575; /* color-gray-600 */
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid #EEEEEE; /* color-gray-200 */
+}
+
+.tb_student-table tbody tr {
+    border-bottom: 1px solid #F5F5F5; /* color-gray-100 */
+    transition: background-color 0.2s;
+}
+
+.tb_student-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tb_student-table tbody tr:hover {
+    background-color: #FAFAFA; /* color-gray-50 */
+}
+
+.tb_student-table tbody td {
+    padding: 0.75rem 1rem;
+    color: #212121; /* color-gray-900 */
+    vertical-align: middle;
+}
+
+.tb_profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #EEEEEE; /* color-gray-200 */
+}
+
+.tb_profile-cell {
+    width: 60px;
+}
+
+.tb_email-link {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #E91E63; /* brand-pink */
+    text-decoration: none;
+}
+.tb_email-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================================================================
+   RESPONSIVE BREAKPOINTS 
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+    .tb_wrapper {
+        padding-inline: 1.5rem; /* space-6 */
+    }
+}
+@media (max-width: 768px) {
+    .tb_wrapper {
+        padding-inline: 1rem; /* space-4 */
+    }
+    
+    /* Step Header/Actions */
+    .tb_header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .tb_actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+    }
+    
+    .tb_search-bar {
+        width: 100%;
+    }
+
+    .tb_search-bar input {
+        width: 100%;
+    }
+
+    /* Cards */
+    .inst_card {
+        flex: 0 0 250px;
+        font-size: 1.125rem;
+    }
+    .stream_card, .course_card {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    /* Student Table (Mobile: Cards or Stacked) */
+    .tb_student-table {
+        border: 0;
+        min-width: 100%;
+    }
+
+    .tb_student-table thead {
+        display: none;
+    }
+
+    .tb_student-table tbody tr {
+        display: block;
+        margin-bottom: 1rem; /* space-4 */
+        border: 1px solid #EEEEEE; /* color-gray-200 */
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .tb_student-table tbody td {
+        display: block;
+        text-align: right;
+        padding: 0.5rem 1rem;
+        position: relative;
+    }
+
+    .tb_student-table tbody td::before {
+        /* Create pseudo-element for the column label */
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        font-weight: 600;
+        color: #757575; /* color-gray-600 */
+    }
+    
+    /* Center profile image and name on mobile */
+    .tb_profile-cell, .tb_name-cell {
+        text-align: center;
+        border-bottom: 1px solid #F5F5F5; /* color-gray-100 */
+    }
+    .tb_profile-cell::before, .tb_name-cell::before {
+        content: none;
+    }
+    .tb_profile-cell {
+        padding-top: 1rem;
+    }
+    .tb_name-cell {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #212121; /* color-gray-900 */
+    }
+}
+
+/* =========================================================================
+   NEW STYLES FOR MYBATCHES COMPONENT
+   ========================================================================= */
+
+.tb_summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tb_summary-card {
+    background: white;
+    border: 1px solid #EEEEEE;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tb_card-icon {
+    font-size: 2rem;
+    color: #E91E63;
+}
+
+.tb_card-label {
+    font-size: 0.875rem;
+    color: #757575;
+    margin-bottom: 0.25rem;
+}
+
+.tb_card-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #212121;
+}
+
+.tb_filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.tb_filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tb_filter-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #424242;
+}
+
+.tb_filter-select,
+.tb_filter-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #EEEEEE;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    min-width: 200px;
+}
+
+.tb_filter-select:focus,
+.tb_filter-input:focus {
+    outline: none;
+    border-color: #E91E63;
+}
+
+.tb_table-container {
+    background: white;
+    border: 1px solid #EEEEEE;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tb_loading,
+.tb_error,
+.tb_no-data {
+    text-align: center;
+    padding: 3rem;
+    color: #757575;
+}
+
+.tb_error {
+    color: #f44336;
+}
+
+.tb_error button {
+    margin-top: 1rem;
+    padding: 0.5rem 1.5rem;
+    background: #E91E63;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.tb_modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.tb_modal-content {
+    background: white;
+    border-radius: 0.5rem;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.tb_modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.tb_modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #212121;
+}
+
+.tb_modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #757575;
+    line-height: 1;
+}
+
+.tb_modal-close:hover {
+    color: #212121;
+}
+
+.tb_modal-body {
+    padding: 1.5rem;
+}
+
+.tb_detail-section {
+    margin-bottom: 2rem;
+}
+
+.tb_detail-section h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #212121;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #F5F5F5;
+}
+
+.tb_detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.tb_detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.tb_detail-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #757575;
+}
+
+.tb_detail-item span:last-child {
+    font-size: 1rem;
+    color: #212121;
+}
+
+.tb_status-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.tb_status-pill.active {
+    background: #E8F5E9;
+    color: #2E7D32;
+}
+
+.tb_status-pill.inactive {
+    background: #FFEBEE;
+    color: #C62828;
+}
+
+.tb_classes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.tb_class-card {
+    background: #F5F5F5;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    border-left: 4px solid #E91E63;
+}
+
+.tb_class-name {
+    font-weight: 600;
+    color: #212121;
+    margin-bottom: 0.5rem;
+}
+
+.tb_class-subject,
+.tb_class-date {
+    font-size: 0.875rem;
+    color: #757575;
+    margin-top: 0.25rem;
+}
+
+.tb_no-classes,
+.tb_no-subjects {
+    color: #9E9E9E;
+    font-style: italic;
+}
+
+.tb_subjects-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tb_subject-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #F3E5F5;
+    color: #6A1B9A;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}

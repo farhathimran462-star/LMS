@@ -1,0 +1,134 @@
+/*
+ * StudentBatches.css
+ * Refined Styles using theme variables from index.css
+ * UNUSED/REDUNDANT CSS REMOVED.
+ */
+
+/* General Layout & Card Base Styling */
+.student-batches-container {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-8);
+}
+
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-8);
+  border: 1px solid var(--color-gray-300);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+/* Hover effect for main cards */
+.card:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+.card-header {
+  padding: var(--space-4);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+}
+
+.card-header h2 {
+  color: var(--color-white);
+  margin-bottom: 0;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+}
+
+/* Background Utility Classes used by BatchDetailsCard and TimetableCard */
+.bg-brand-pink { background-color: var(--brand-pink); }
+/* NOTE: The component uses .bg-brand-pink-dark for the TimetableCard header */
+.bg-brand-pink-dark { background-color: var(--brand-pink-dark); color: var(--color-white); }
+
+
+/* --- Batch Details Styling (ENHANCED with Borders and Hover) --- */
+
+/* Base container for the information box */
+.batch-info-box {
+  background-color: var(--color-white); 
+  padding: var(--space-6); 
+  border-radius: var(--radius-xl); 
+  border: 1px solid var(--color-gray-200); 
+  transition: box-shadow var(--transition-base), transform var(--transition-fast);
+}
+
+
+/* Title within the info box */
+.batch-info-box .text-brand-pink {
+    margin-bottom: var(--space-5) !important;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px dashed var(--brand-pink); 
+    display: block; 
+}
+
+
+/* Layout for Batch Info + Instructors (The Grid) */
+.batch-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-4) var(--space-6); 
+}
+
+/* Styling for individual paragraphs/info items in the grid (Key-Value Pair Box) */
+.batch-info-grid p {
+  text-align: center;
+  margin-bottom: 0; 
+  padding: var(--space-4) var(--space-2); 
+  font-size: var(--font-size-md); 
+  color: var(--brand-pink);
+  font-weight: 400;
+  border: 2px solid var(--color-gray-300); /* Added: Border for the key-value item */
+  border-radius: var(--radius-md); /* Added: Rounded corners for the box */
+  transition: all var(--transition-fast); /* Added: Transition for hover animation */
+}
+
+/* Added: Hover animation for the key-value item */
+.batch-info-grid p:hover {
+    box-shadow: var(--shadow-md); /* Subtle shadow lift */
+    transform: translateY(-1px); /* Slight lift */
+    border-color: var(--brand-pink); /* Highlight border on hover */
+    background-color: var(--color-gray-50); /* Subtle background change */
+}
+
+
+/* Styling for the Key (The label text) */
+.batch-info-box strong {
+    color: var(--brand-pink-dark); 
+    font-weight: var(--font-weight-bold);
+    min-width: 140px; 
+    display: inline-block;
+    margin-right: var(--space-2);
+}
+
+/* Styling for the Value (The data) */
+.batch-info-box strong span {
+    color: var(--color-gray-900); 
+    font-weight: var(--font-weight-semibold);
+}
+
+
+/* Badge Mode Enhancement (if used in future, it's not currently used in the BatchDetailsCard component) */
+.badge-mode {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill); 
+    background-color: var(--brand-orange-light);
+    color: var(--brand-orange-dark);
+    font-weight: var(--font-weight-bold);
+    box-shadow: none;
+    display: inline-block;
+    margin-left: var(--space-2);
+}
+
+/* Text Utility Adjustments (Used by h1 and batch details card) */
+.text-brand-pink {
+    font-size: var(--font-size-2xl) !important;
+    letter-spacing: 2px;
+    text-decoration: underline;
+    text-decoration-color: var(--brand-pink);
+    text-underline-offset: 5px;
+    font-weight: bold !important;
+    color: var(--brand-pink);
+    margin: 0;
+   }
+.text-brand-orange { color: var(--brand-orange); }

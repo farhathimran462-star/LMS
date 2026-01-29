@@ -1,0 +1,6 @@
+full_name,email,phone,username,password,role,roll_number,employee_id,institute_id,institutes_managed,is_active,notes
+John Doe,john.doe@student.edu,1234567890,john.doe,Student@123,Student,2025001,,INST001,,true,First year student - Physics major
+Jane Smith,jane.smith@student.edu,2345678901,jane.smith,Student@456,Student,2025002,,INST001,,true,Chemistry major
+Michael Johnson,michael.j@student.edu,3456789012,michael.johnson,Student@789,Student,2025003,,INST001,,true,Mathematics honors student
+Emily Davis,emily.davis@student.edu,4567890123,emily.davis,Student@321,Student,2025004,,INST001,,true,Biology and chemistry double major
+Robert Wilson,robert.w@student.edu,5678901234,robert.wilson,Student@654,Student,2025005,,INST001,,true,Transfer student from another institute

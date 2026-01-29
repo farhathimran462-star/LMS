@@ -1,0 +1,888 @@
+/* ============= ATTENDANCE MANAGEMENT ============= */
+.attendance-management-container {
+    padding: 24px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.attendance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.attendance-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.attendance-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.attendance-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.attendance-actions .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: #545b62;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* Date Range Filter */
+.date-range-filter {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+}
+
+.date-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.date-filter-group label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #495057;
+}
+
+.date-filter-group input[type="date"] {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Error Message */
+.error-message {
+    padding: 12px 16px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    color: #721c24;
+    margin-bottom: 16px;
+}
+
+/* ============= MODAL ============= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.close-btn:hover {
+    background-color: #f8f9fa;
+    color: #1a1a1a;
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #495057;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.form-group input:disabled,
+.form-group select:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.file-input-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.file-input-wrapper input[type="file"] {
+    flex: 1;
+}
+
+.file-selected {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #155724;
+}
+
+.help-text {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+/* Upload Errors */
+.upload-errors {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+}
+
+.upload-errors h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #721c24;
+}
+
+.upload-errors ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.upload-errors li {
+    font-size: 13px;
+    color: #721c24;
+    margin-bottom: 4px;
+}
+
+/* Upload Summary */
+.upload-summary {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 4px;
+}
+
+.upload-summary.success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.upload-summary.warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+}
+
+.upload-summary h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.upload-summary p {
+    margin: 4px 0;
+    font-size: 13px;
+}
+
+.upload-summary h5 {
+    margin: 12px 0 6px 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.upload-summary ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.upload-summary li {
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .attendance-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .attendance-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .attendance-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .date-range-filter {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+
+    .file-input-wrapper {
+        flex-direction: column;
+    }
+}
+
+/* ----------------------------------
+   Selection Cards (Role, Stream, Level) 
+   ---------------------------------- */
+.atm_card-selection-row { display: flex; gap: var(--space-8); flex-wrap: wrap; justify-content: center; margin-bottom: var(--space-8); }
+.atm_nav-card { flex: 1 1 180px; min-width: 180px; max-width: 300px; height: 150px; padding: var(--space-8); background: var(--color-white); border: 1px solid var(--color-gray-300); border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; text-align: center; box-shadow: var(--shadow-xs); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.atm_nav-card:hover { border-color: var(--brand-pink-light); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+
+/* UPDATED: Explicitly set icon size for uniformity (28px) */
+.atm_nav-card-icon { 
+    margin-bottom: var(--space-2); 
+    color: var(--color-gray-600); 
+    transition: color 0.2s; 
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+}
+/* END UPDATED */
+
+.atm_nav-card h3 { margin-top: 0; margin-bottom: 0; color: var(--color-gray-900); font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); }
+.atm_nav-card p { margin-bottom: 0; font-size: var(--font-size-sm); color: var(--color-gray-600); }
+.atm_nav-card.selected-pink { background-color: var(--brand-pink); box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1); border-color: var(--brand-pink); }
+.atm_nav-card.selected-pink h3, .atm_nav-card.selected-pink p, .atm_nav-card.selected-pink .atm_nav-card-icon { color: var(--color-white); }
+.atm_nav-card.selected-blue { 
+    background-color:var(--brand-pink); /* Using a standard blue */
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2); 
+    border-color: var(--brand-orange-dark); 
+}
+.atm_nav-card.selected-blue h3, .atm_nav-card.selected-blue p, .atm_nav-card.selected-blue .atm_nav-card-icon { 
+    color: var(--color-white); 
+}
+.atm_nav-card.selected-orange { background-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1); border-color: var(--brand-orange); }
+.atm_nav-card.selected-orange h3, .atm_nav-card.selected-orange p, .atm_nav-card.selected-orange .atm_nav-card-icon { color: var(--color-white); }
+.atm_nav-card.selected-gray { background-color: var(--brand-pink); box-shadow: 0 0 0 3px rgba(97, 97, 97, 0.1); border-color: var(--brand-pink); }
+.atm_nav-card.selected-gray h3, .atm_nav-card.selected-gray p, .atm_nav-card.selected-gray .atm_nav-card-icon { color: var(--color-white); }
+
+
+/* ----------------------------------
+   Batch/Institute Slider (Reusable structure)
+   ---------------------------------- */
+.atm_batch-container { margin-top: var(--space-8); }
+.atm_institute-container { margin-top: var(--space-8); }
+.atm_search-bar { display: flex; align-items: center; max-width: 600px; margin: 0 auto var(--space-6) auto; padding: var(--space-3) var(--space-4); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); background-color: var(--color-white); box-shadow: var(--shadow-xs); }
+.atm_batch-slider-outer { position: relative; max-width: 100%; }
+.atm_batch-slider-wrapper { overflow-x: auto; overflow-y: hidden; scroll-behavior: smooth; padding-bottom: var(--space-4); -ms-overflow-style: none; scrollbar-width: none; }
+.atm_batch-slider-wrapper::-webkit-scrollbar { display: none; }
+.atm_batch-slider-content { display: flex; gap: var(--space-5); padding: var(--space-5) var(--space-1); width: max-content; }
+.atm_batch-card { flex-shrink: 0; width: 300px; padding: var(--space-4); background-color: var(--color-white); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); transition: all var(--transition-base); cursor: pointer; box-shadow: var(--shadow-xs); }
+.atm_batch-card.atm_selected { border-color: var(--brand-orange-dark); background-color: var(--brand-orange-light); box-shadow: var(--shadow-md); transform: scale(1.02); }
+
+/* Slider Buttons */
+.atm_slider-button { position: absolute; top: 50%; transform: translateY(-50%); background-color: var(--color-white); border: 1px solid var(--color-gray-300); border-radius: var(--radius-full); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; box-shadow: var(--shadow-md); color: var(--color-gray-700); transition: all 0.2s; }
+.atm_slider-button.left { left: -16px; }
+.atm_slider-button.right { right: -16px; }
+.atm_slider-button:hover:not(.disabled) { background-color: var(--brand-pink); color: var(--color-white); border-color: var(--brand-pink); }
+.atm_slider-button.disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ----------------------------------
+   Attendance Dashboard (Stage 2)
+   ---------------------------------- */
+
+.atm_attendance-dashboard {
+    padding-top: var(--space-6);
+}
+
+.atm_dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+}
+
+.atm_dashboard-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-gray-800);
+    margin: 0;
+}
+
+.atm_back-button {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--color-gray-600);
+    transition: all 0.2s;
+}
+
+.atm_back-button:hover {
+    background-color: var(--color-gray-50);
+    border-color: var(--color-gray-400);
+}
+
+/* NEW LOOK: Filter Bar */
+.atm_filter-bar-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-gray-200);
+    box-shadow: var(--shadow-md);
+}
+
+.atm_student-search-new {
+    flex-grow: 1;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    background-color: var(--color-gray-50); /* Light background for search input */
+    padding-inline: var(--space-2);
+}
+
+.atm_search-icon {
+    color: var(--color-gray-500);
+    margin-right: var(--space-3);
+}
+
+.atm_search-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: var(--font-size-base);
+    padding: 0;
+    background-color: transparent;
+}
+
+.atm_filter-actions-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+/* NEW: Custom Dropdown Styles */
+.atm_custom-dropdown-container {
+    position: relative;
+    min-width: 180px;
+}
+
+.atm_custom-dropdown-display {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    transition: all 0.2s;
+}
+
+.atm_custom-dropdown-display:hover, .atm_custom-dropdown-display.open {
+    border-color: var(--brand-pink-dark);
+    box-shadow: 0 0 0 2px var(--brand-pink-light);
+}
+
+.atm_dropdown-chevron {
+    margin-left: auto;
+    transition: transform 0.2s;
+    color: var(--brand-pink);
+}
+
+.atm_custom-dropdown-display.open .atm_dropdown-chevron {
+    transform: rotate(180deg);
+}
+
+.atm_custom-dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    margin-top: var(--space-1);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.atm_custom-dropdown-option {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.atm_custom-dropdown-option:hover {
+    background-color: var(--color-gray-50);
+}
+
+.atm_custom-dropdown-option.selected {
+    background-color: var(--brand-pink-light);
+    color: var(--brand-pink-dark);
+    font-weight: var(--font-weight-medium);
+}
+
+/* NEW: Export Button Style */
+.atm_export-excel-button {
+    display: flex;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background-color: green;
+    color: var(--color-white);
+    border: none;
+    max-width: 120px;
+    border-radius: var(--radius-md);
+    /* font-weight: var(--font-weight-semibold); */
+    cursor: pointer;
+    white-space: nowrap;
+}
+.atm_import-excel-button{
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background-color: rgb(12, 12, 114);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    white-space: nowrap;
+}
+.atm_import_export_flexy{
+    display: flex;
+    gap:20px;
+    flex-wrap: wrap;
+}
+
+.atm_export-excel-button:hover {
+    background-color: var(--color-success-dark);
+    box-shadow: var(--shadow-md);
+}
+
+
+/* Stats Cards */
+.atm_stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.atm_stats-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+    color: white    ;
+    box-shadow: var(--shadow-md);
+}
+
+.atm_stats-total { background-color: rgb(105, 104, 104);}
+.atm_stats-total h3,.atm_stats-filtered h3, .atm_stats-present h3, .atm_stats-absent h3 {
+    color: white;
+}
+.atm_stats-filtered { background-color: var(--brand-orange-light); }
+.atm_stats-present { background-color: var(--color-success-dark); } 
+.atm_stats-absent { background-color: var(--brand-pink-dark); }
+
+.atm_stats-title { font-size: var(--font-size-sm); margin: 0; }
+.atm_stats-value { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); margin: var(--space-1) 0 0 0; }
+.atm_stats-content p{
+    font-size: medium;
+    color: white;
+}
+
+/* Attendance Table */
+.atm_table-container {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+}
+
+.atm_table-responsive-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.atm_attendance-table {
+    width: 100%;
+    border-collapse:collapse;
+    min-width: 900px; 
+}
+
+.atm_attendance-table tr {
+    /* background-color: var(--color-gray-50); */
+    display: table-row;
+    border-bottom: 2px solid var(--color-gray-200);
+    text-align: center;
+}
+.atm_attendance-table-backgroundcolor{
+     background-color:  var(--brand-orange) ;
+    color: white;
+    
+}
+
+.atm_attendance-table th, .atm_attendance-table td {
+    padding: var(--space-4); 
+    white-space: nowrap;
+    font-size: var(--font-size-sm); 
+}
+
+.atm_attendance-table th {
+    font-weight: var(--font-weight-semibold);
+    vertical-align: top;
+}
+
+.atm_attendance-table tbody tr {
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.atm_attendance-table tbody tr:hover {
+    background-color: var(--color-gray-100);
+}
+
+/* Sticky Column for Name */
+.atm_sticky-col {
+    left: 0;
+    text-align: left;
+}
+.atm_attendance-table tbody tr:hover .atm_sticky-col {
+    background-color: var(--color-gray-100);
+}
+
+
+.atm_student-name-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 180px; 
+}
+
+.atm_profile-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xs);
+    flex-shrink: 0;
+}
+
+.atm_roll-no {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    margin: 0;
+}
+
+/* Date Headers */
+.atm_day-of-week {
+    display: block;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-xs); 
+}
+
+/* Status Cells */
+.atm_status-cell {
+    text-align: center;
+    font-weight: var(--font-weight-bold);
+    cursor: default;
+    font-size: var(--font-size-xs); 
+}
+
+.atm_status-cell.atm_today-cell {
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.atm_status-text {
+    display: block;
+    width: 20px; 
+    height: 20px;
+    line-height: 20px;
+    border-radius: var(--radius-sm);
+    margin: 0 auto;
+}
+
+/* Color codes for P and A */
+.atm_status-p {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+
+.atm_status-a {
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+}
+
+/* Today's Checkmark Status */
+.atm_today-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    margin: 0 auto;
+}
+
+.atm_today-cell:hover {
+    background-color: var(--color-gray-100);
+}
+
+.atm_today-cell .atm_today-status.atm_status-p {
+    background-color: var(--color-success);
+    color: var(--color-white);
+}
+
+.atm_today-cell .atm_today-status.atm_status-a {
+    background-color: var(--color-error);
+    color: var(--color-white);
+}
+
+/* Toggle Column in Header */
+.atm_view-toggle-header {
+    cursor: pointer;
+    background-color: var(--brand-orange-dark);
+    color:white;
+    transition: all 0.2s;
+    font-size: var(--font-size-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 3px;
+    width: 60px;
+    position: sticky; 
+    right: 0;
+    z-index: 2;
+}
+
+
+.atm_view-toggle-header:hover svg {
+    color: var(--color-white);
+}
+
+.atm_toggle-label {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xs);
+}
+
+/* Placeholder for the sticky column in table body */
+.atm_toggle-placeholder-col {
+    background-color: transparent;
+    width: 60px;
+    text-align: center;
+    right: 0;
+    z-index: 1;
+    border-left: 1px solid var(--color-gray-200);
+}
+.atm_attendance-table tbody tr:hover .atm_toggle-placeholder-col {
+    background-color: var(--color-gray-100);
+}
+
+
+/* ----------------------------------
+   Responsive Adjustments 
+   ---------------------------------- */
+
+@media (max-width: 1024px) {
+    .atm_stats-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .atm_filter-bar-new {
+        flex-wrap: wrap;
+        gap: var(--space-4);
+    }
+    .atm_filter-actions-group {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    .atm_student-search-new {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .atm_filter-bar-new {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .atm_student-search-new {
+        max-width: 100%;
+        order: 1;
+    }
+
+    .atm_filter-actions-group {
+        order: 2;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-3);
+    }
+    
+    .atm_custom-dropdown-container, .atm_export-excel-button , .atm_import-excel-button {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .atm_stats-row {
+        grid-template-columns: 1fr;
+    }
+
+    .atm_dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }x1
+
+    .atm_attendance-table {
+        min-width: 600px;
+    }
+}

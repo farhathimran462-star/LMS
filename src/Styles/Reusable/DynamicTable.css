@@ -1,0 +1,685 @@
+/* Base container */
+.DT_main-container {
+ background: white;
+ box-shadow: var(--shadow-md, 0 4px 10px rgba(0, 0, 0, 0.05));
+ border-radius: 12px;
+ margin: 20px auto;
+ padding-top: 10px;
+ overflow: hidden;
+}
+
+/* --- UPDATED HEADER LAYOUT --- */
+.DT_header-row {
+ /* Use flexbox to align title on one side and controls on the other */
+ display: flex;
+ align-items: center;
+ justify-content: space-between; /* Pushes title to left, controls to right */
+ flex-wrap: wrap; /* Allows wrapping on smaller screens */
+ gap: 1rem;
+ padding: 12px 20px;
+}
+
+.DT_title-header {
+ /* Title remains on the left */
+ display: flex;
+ align-items: center;
+ font-size: 24px;
+ letter-spacing: 2px;
+ font-weight: bolder;
+ color: var(--brand-pink, #e91e63);
+ text-decoration: underline;
+ text-underline-offset: 4px;
+}
+
+.DT_title-icon {
+ margin-right: 6px;
+}
+
+/* New wrapper for search and button to manage their layout on the right */
+.DT_controls-group {
+ display: grid;
+ /* 1fr 1fr makes Search and Add New button share equal width */
+ grid-template-columns: 1fr 1fr; 
+ gap: 10px; /* Space between search and button */
+ min-width: 350px; /* Ensure minimum space for controls */
+}
+
+/* Search Input */
+.DT_search-container {
+ position: relative;
+ display: flex;
+ align-items: center;
+ /* Takes up its allocated 1fr column */
+ min-width: 0; 
+}
+
+.DT_search-input {
+ width: 100%;
+ padding: 8px 10px 8px 30px;
+ border: 1px solid #ddd;
+ border-radius: 6px;
+}
+
+.DT_search-icon {
+ position: absolute;
+ left: 8px;
+ color: #888;
+}
+
+/* Add New Button */
+.DT_add-new-btn {
+ /* Now takes up its allocated 1fr column */
+ width: 100%; 
+ display: flex;
+ align-items: center;
+ justify-content: center; /* Center content horizontally */
+ gap: 6px;
+ padding: 8px 12px;
+ background-color: var(--brand-orange, #ff8c00);
+ color: #fff;
+ border: none;
+ max-width: 220px;
+ border-radius: 6px;
+ cursor: pointer;
+ transition: all 0.2s ease;
+ white-space: nowrap; /* Prevent text from wrapping inside the button */
+}
+
+.DT_add-new-btn:hover {
+ transform: translateY(-1px);
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Query for smaller screens: stack controls vertically */
+@media (max-width: 768px) {
+  .DT_header-row {
+    justify-content: flex-start; /* Title can go back to start */
+  }
+  
+  .DT_controls-group {
+    /* On small screens, the controls take full width and stack */
+    grid-template-columns: 1fr; 
+    width: 100%;
+    min-width: unset;
+  }
+}
+/* --- END UPDATED HEADER LAYOUT --- */
+
+
+/* Table */
+.DT_Table-wrapper-container{
+    /* border: 1px solid red; */
+    overflow: auto;
+    border-radius: 20px;
+}
+.DT_table-wrapper {
+ 
+ padding: 10px 20px;
+}
+
+.DT_table {
+ width: 100%;
+ border-collapse: collapse;
+ font-size: 14px;
+ overflow: auto;
+}
+.DT_Table-wrapper-container::-webkit-scrollbar{
+    display: none;
+}
+
+.DT_table-head {
+ background-color: var(--brand-pink, #e91e63);
+ color: #fff;
+}
+
+.DT_th-cell {
+ padding: 20px 14px;
+ text-align: left;
+ white-space: NOWRAP;
+ font-weight: 600;
+ border-bottom: 1px solid #f3f3f3;
+}
+
+.DT_td-cell {
+ padding: 10px 14px;
+ border-bottom: 1px solid #f3f3f3;
+ color: #333 !important;
+}
+
+/* Default hover state */
+.DT_tr:hover {
+ background-color: #eeecec;
+}
+
+/* --- SELECTED ROW STYLES (DEFINITIVE FIX) --- */
+.DT_tr.DT_row-clickable {
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+/* 1. Style the selected row (TR level) - Base styling */
+.DT_tr.DT_row-selected {
+    /* This TR background setting is often ignored, but kept for completeness */
+    background-color: var(--brand-purple-light, #473b5a) !important; 
+    color: var(--color-gray-900, #212121);
+    font-weight: var(--font-weight-medium, 500);
+}
+
+/* 2. FIX: Target the cells (TD level) within the selected row for maximum reliability */
+.DT_tr.DT_row-selected .DT_td-cell {
+    /* Essential FIX: Set background on TD level to override cell defaults/hover effects */
+    background-color: var(--brand-pin, #EDE7F6) !important;
+}
+
+/* 3. FIX: Explicitly manage the hover state for the selected row and its cells */
+.DT_tr.DT_row-selected:hover,
+.DT_tr.DT_row-selected:hover .DT_td-cell {
+    /* Ensure selected look persists during hover */
+    background-color: var(--brand-purple-light, #EDE7F6) !important;
+}
+/* ---------------------------------- */
+
+.DT_multi-pill-container {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 6px;
+}
+
+.DT_pill {
+ padding: 4px 10px;
+ border-radius: 9999px;
+ font-size: 0.85rem;
+ text-wrap: nowrap;
+ 
+ border: 1px solid var(--brand-orange);
+ background-color: white;
+ color: var(--brand-orange);
+ font-weight: 500;
+ transition: all 0.2s ease;
+}
+
+.DT_pill:hover {
+ border: 1px solid white;
+ background-color: var(--brand-orange-light);
+ color: white;
+}
+
+/* Example color overrides based on name */
+.DT_pill-batch-a { background-color: #d1e7ff; color: #084298; }
+.DT_pill-batch-b { background-color: #d4edda; color: #155724; }
+.DT_pill-batch-c { background-color: #fff3cd; color: #856404; }
+.DT_pill-batch-d { background-color: #f8d7da; color: #721c24; }
+/* Status Pill Overrides */
+.DT_pill-approved { background-color: #d4edda; color: #155724; border-color: #155724; }
+.DT_pill-rejected { background-color: #f8d7da; color: #721c24; border-color: #721c24; }
+.DT_pill-pending { background-color: #fff3cd; color: #856404; border-color: #856404; }
+
+/* No Data Container */
+.DT_no-data-container {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column;
+ padding: 40px 20px;
+ text-align: center;
+ color: #ffc107;
+ background-color: #fff;
+ border-radius: 12px;
+ margin: 20px auto;
+ box-shadow: var(--shadow-md, 0 4px 10px rgba(0, 0, 0, 0.05));
+}
+
+.DT_no-data-text {
+ margin-top: 10px;
+ font-size: 16px;
+ font-weight: 500;
+ color: #6c757d;
+}
+
+/* Action Cell Styling */
+.DT_td-action-cell {
+ white-space: nowrap;
+}
+
+.DT_action-btn-container {
+ display: flex;
+ gap: 8px;
+ justify-content: flex-end;
+}
+
+.DT_action-btn {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 12px;
+ padding: 5px 4px;
+ border: none;
+ border-radius: 4px;
+ cursor: pointer;
+ transition: background-color 0.2s ease;
+}
+
+.DT_edit-btn {
+ color:green;
+ border: 1px solid green;
+ background-color: white;
+}
+
+.DT_edit-btn:hover {
+ background-color:green;
+ color: white;
+}
+
+.DT_delete-btn {
+ color: #dc3545;
+ background-color: white;
+ border: 1px solid red;
+}
+
+.DT_delete-btn:hover {
+ background-color:red;
+ color: white;
+}
+
+/* ======================================= */
+/* 3. DYNAMIC FILTER ROW STYLES (UPDATED) */
+/* ======================================= */
+
+.DT_filter-row {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 0.75rem 0 1rem 0; 
+  border-bottom: 1px solid var(--color-border-subtle, #e0e0e0);
+  margin: 0rem 1rem  1rem 1rem;
+  flex-wrap: wrap; 
+  /* align-items: center; */
+}
+.DT_filter-row p{
+  color: rgb(148, 147, 147);
+  font-size: 13px;
+}
+.DT_filter_flexy{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Ensure the filter container can position the absolute dropdown menu */
+.DT_filter-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* Removed min-width to allow more flexibility */
+  position: relative; 
+  flex-grow: 1; 
+  flex-basis: auto; 
+}
+
+.DT_filter-label {
+  display: flex;
+  align-items: center;
+  
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary, #555);
+  font-weight: 600;
+}
+
+.DT_filter-icon {
+  color: var(--color-primary, #007bff);
+}
+
+
+/* --- Custom Select Box (Replaces <select>) --- */
+.DT_custom-dropdown-select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: var(--border-radius-sm, 6px);
+  background-color: var(--color-background-input, #fff);
+  font-size: 0.9rem;
+  color: var(--color-text-primary, #333);
+  height: 46px; 
+  width: 100%; 
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  min-width: 220px; 
+}
+
+.DT_custom-dropdown-select:hover {
+  border-color: var(--brand-pink);
+}
+
+.DT_custom-dropdown-select.DT_dropdown-open {
+  border-color: var(--brand-pink);
+  box-shadow: 0 0 0 1px var(--color-primary, var(--brand-pink-light));
+}
+
+.DT_custom-dropdown-value {
+  /* Truncate long values if necessary */
+  overflow: hidden; 
+  display: flex;
+  align-items: center;
+  gap:10px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 0.5rem;
+}
+
+.DT_custom-dropdown-arrow {
+  font-size: 0.7rem;
+  transition: transform 0.2s;
+}
+
+.DT_custom-dropdown-select.DT_dropdown-open .DT_custom-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/* --- Custom Dropdown Menu (Replaces <option>) --- */
+.DT_custom-dropdown-menu {
+  position: absolute;
+  top: 100%; /* Position below the select box */
+  left: 0;
+  z-index: 10;
+  width: 100%; 
+  margin-top: 4px;
+  background-color: var(--color-background-input, #fff);
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: var(--border-radius-sm, 6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 200px; /* Limit height for scrollability */
+  overflow-y: auto;
+}
+
+.DT_custom-dropdown-option {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--color-text-primary, #333);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.1s;
+}
+
+.DT_custom-dropdown-option:hover {
+  background-color: var(--color-background-hover, #f5f5f5);
+}
+
+.DT_custom-dropdown-option.DT_active-option {
+  background-color:white;
+  color:var(--brand-pink);
+  font-weight: 600;
+}
+/* --- Action Columns --- */
+.DT_column-actions,
+.DT_column-approval-actions {
+    width: 1%; /* Minimize column width */
+    white-space: nowrap;
+    text-align: center;
+}
+
+.DT_td-action-cell,
+.DT_td-approval-action-cell {
+    padding: 8px; /* Standardize padding for action cells */
+}
+
+/* Container for all buttons in a cell */
+.DT_action-btn-container {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Specific styling for the Approve/Reject container to handle status display */
+.DT_approval-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+
+.DT_action-btn svg {
+    margin-right: 4px;
+    width: 14px;
+    height: 14px;
+}
+
+
+.DT_action-btn.DT_edit-btn {
+ background-color: white;   
+}
+
+.DT_action-btn.DT_delete-btn {
+    background-color: white;   
+}
+
+.DT_action-btn.DT_edit-btn:hover {
+    background-color: green;
+    color: white;
+}
+
+.DT_action-btn.DT_delete-btn:hover{
+    background-color:red;
+    color: white; 
+}
+
+
+/* Specific styling for Approval/Rejection buttons */
+.DT_action-btn.DT_approve-btn {
+    background-color: white; 
+    color: green; 
+    border: 1px solid green;
+}
+.DT_action-btn.DT_approve-btn:hover {
+    background-color: green;
+    color: white;
+}
+
+.DT_action-btn.DT_reject-btn {
+    background-color: white; 
+    color: red; 
+    border: 1px solid red;
+}
+.DT_action-btn.DT_reject-btn:hover {
+    background-color: red;
+    color: white;
+}
+
+/* --- Current Status Pill Styles (When actions are hidden) --- */
+.DT_current-status {
+    padding: 4px 8px;
+    border-radius: 9999px; /* Pill shape */
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+}
+
+.DT_status-approved {
+    background-color: #10b981; /* Solid green */
+    color: white;
+}
+
+.DT_status-rejected {
+    background-color: #ef4444; /* Solid red */
+    color: white;
+}
+
+
+
+/* --- SUSPEND/REACTIVATE ICONS (Kept for reference, though unused in current DT.jsx) --- */
+
+/* Base style for the new action buttons */
+.DT_action-btn.DT_suspend-btn,
+.DT_action-btn.DT_unsuspend-btn {
+    background-color: var(--color-white, #fff);
+    transition: all 0.2s ease-in-out;
+}
+
+.DT_action-btn.DT_suspend-btn {
+    color: var(--brand-orange); 
+    border: 1px solid var(--brand-orange);
+}
+
+.DT_action-btn.DT_suspend-btn:hover {
+    background-color: var(--brand-orange);
+    color: white;
+}
+
+/* Reactivate (RotateCcw) - Suspended state color (e.g., Blue/Success) */
+.DT_action-btn.DT_unsuspend-btn {
+    color: var(--color-blue-600, #3182ce); 
+    border:1px solid var(--color-blue-600, #3182ce); 
+}
+
+.DT_action-btn.DT_unsuspend-btn:hover {
+    background-color: var(--color-blue-600, #3182ce);
+    color: white;
+}
+
+/* --- END OF SUSPEND/REACTIVATE STYLES --- */
+/* --- This container holds all the controls on the top-right --- */
+.DT_controls-group {
+    display: flex;
+    flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+    align-items: center;
+    gap: 12px; /* Space between buttons */
+}
+
+/* --- Base style for all top buttons --- */
+.DT_add-new-btn,
+.DT_import-btn,
+.DT_export-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 14px; /* Horizontal padding */
+    height: 38px; /* Fixed height for all buttons */
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* --- "Add New" Button (Primary action) --- */
+
+
+/* --- "Import" Button (Secondary action) --- */
+.DT_import-btn {
+    background-color: #ffffff;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.DT_import-btn:hover {
+    background-color: #f8f9fa;
+    color: #0056b3;
+}
+
+/* --- "Export" Button (Secondary action) --- */
+.DT_export-btn {
+    background-color: green; /* Secondary Gray */
+    color: white;
+    border-color: green;
+}
+
+.DT_export-btn:hover {
+    background-color: white;
+    color: green;
+    border-color: green;
+}
+
+/* --- This is the menu for the Export button --- */
+.DT_export-container {
+    position: relative; /* Required for the dropdown menu */
+}
+
+.DT_export-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100px;
+    /* max-width: 200px; */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    margin-top: 4px;
+    overflow: hidden;
+}
+
+.DT_export-option {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.DT_export-option:hover {
+    background-color: #f4f5f7;
+}
+
+.DT_export-option.DT_disabled {
+    color: #aaa;
+    cursor: not-allowed;
+    background-color: #fafafa;
+}
+
+/* ... (Keep all existing CSS) ... */
+
+/* ======================================= */
+/* 4. RIGHT-SIDE STICKY COLUMN STYLES      */
+/* ======================================= */
+
+.DT_sticky-col {
+    position: sticky !important;
+    z-index: 10; 
+    /* Important: Set a consistent width to ensure calculations align */
+    min-width: 150px;
+    max-width: 150px;
+    
+    /* Border on the LEFT side because column is on the Right */
+    border-left: 2px solid #e0e0e0; 
+    
+    /* Shadow pointing LEFT to show depth over scrolling content */
+    box-shadow: -4px 0 5px -2px rgba(0,0,0,0.1); 
+    
+    /* Clip path allows shadow to be visible on the left */
+    clip-path: inset(0px 0px 0px -15px); 
+}
+
+/* --- Sticky Header Specifics --- */
+.DT_th-cell.DT_sticky-col {
+    z-index: 10; /* Higher than body cells */
+    background-color: var(--brand-pink, #e91e63);
+    color: #fff;
+}
+
+/* --- Sticky Body Cell Specifics --- */
+.DT_td-cell.DT_sticky-col {
+    z-index: 10;
+    background-color: #ffffff;
+}
+
+/* --- Fix Hover Background for Sticky Columns --- */
+.DT_tr:hover .DT_td-cell.DT_sticky-col {
+    background-color: #eeecec;
+}
+
+/* --- Fix Selected Row Background for Sticky Columns --- */
+.DT_tr.DT_row-selected .DT_td-cell.DT_sticky-col,
+.DT_tr.DT_row-selected:hover .DT_td-cell.DT_sticky-col {
+    background-color: var(--brand-pin, #EDE7F6) !important;
+    color: var(--color-gray-900, #212121);
+}

@@ -1,0 +1,193 @@
+/* =======================================
+   REPORTS ANALYTICS COMPONENT STYLES
+   Prefix: SARA_ (Student Analytics Report App)
+   ======================================= */
+
+.SARA_dashboard-container {
+    padding: var(--space-8);
+    background-color: var(--color-gray-100);
+    min-height: 100vh;
+    font-family: var(--font-primary);
+}
+
+.SARA_dashboard-title {
+    color: var(--color-gray-900);
+    /* Using brand pink for the underline border */
+    border-bottom: 4px solid var(--brand-pink);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-semibold);
+}
+
+.SARA_selected-title {
+    color: var(--color-gray-700);
+    font-size: var(--font-size-xl);
+    margin: var(--space-4) 0 var(--space-2) 0;
+}
+
+/* --- Filter Styles --- */
+.SARA_filter-box {
+    background-color: var(--color-white);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--space-8);
+    border: 1px solid var(--color-gray-300);
+}
+
+.SARA_filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    width: 100%; /* Ensure it uses full width for wrapping */
+}
+
+.SARA_filter-group {
+    display: flex;
+    align-items: center;
+    /* Removed fixed margin-right to rely on SARA_filter-row gap */
+    position: relative;
+    gap: var(--space-2); 
+    min-width: 0;
+}
+
+.SARA_filter-label {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    white-space: nowrap;
+    font-size: var(--font-size-sm);
+}
+
+.SARA_filter-select {
+    padding: var(--space-3) var(--space-4);
+    /* INCREASED padding-right to 45px for better clear button clearance */
+    padding-right: 45px; 
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-300);
+    /* Set reasonable minimum width, overridden on mobile */
+    min-width: 200px;
+    max-width: 100%;
+    font-size: var(--font-size-base);
+    background-color: var(--color-white);
+    color: var(--color-gray-900);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    
+    /* FIX: Prevent selected long text from overflowing */
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    overflow: hidden; 
+}
+
+/* FIX: Tweak button position to ensure it's fully inside the select's padding */
+.SARA_clear-button {
+    position: absolute;
+    /* Moved right to 5px (was 0) */
+    right: 5px; 
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    color: var(--color-error);
+    cursor: pointer;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    padding: 0 var(--space-2);
+    line-height: 1;
+    z-index: 10;
+}
+
+/* --- Grid Layout Styles --- */
+.SARA_two-column-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+    margin-bottom: var(--space-8);
+}
+
+.SARA_horizontal-report-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+}
+
+/* --- Card/Chart Styles (No Change) --- */
+.SARA_chart-card {
+    background-color: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-gray-200);
+    overflow-x: auto; 
+}
+
+.SARA_card-title {
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    border-left: 5px solid var(--brand-pink-dark);
+    padding-left: var(--space-3);
+}
+
+.SARA_card-subtitle {
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-5);
+    font-size: var(--font-size-sm);
+}
+
+/* Summary Metrics */
+.SARA_summary-metrics-row {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: var(--space-6);
+}
+
+.SARA_summary-value {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--brand-pink);
+}
+
+.SARA_summary-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    margin-top: var(--space-2);
+    font-weight: var(--font-weight-medium);
+}
+
+.SARA_marks-value {
+    color: var(--brand-pink);
+}
+.SARA_attendance-value {
+    color: var(--brand-orange-dark);
+}
+.SARA_students-value {
+    color: var(--color-success);
+}
+
+/* =======================================
+   RESPONSIVE LAYOUT ADJUSTMENTS
+   ======================================== */
+@media (max-width: 1024px) {
+    .SARA_two-column-grid,
+    .SARA_horizontal-report-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* FIX: Specific adjustment for mobile screens (< 640px) */
+@media (max-width: 640px) {
+    .SARA_filter-select {
+        /* Allow the select to take up all available width on mobile */
+        min-width: unset; 
+        width: 100%;
+    }
+    .SARA_filter-group {
+        /* Force each filter group to stack vertically */
+        width: 100%; 
+    }
+}

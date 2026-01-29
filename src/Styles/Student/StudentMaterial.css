@@ -1,0 +1,133 @@
+/* Student Material Component Styles */
+
+.student-material-container {
+    padding: 20px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+.student-material-header {
+    margin-bottom: 20px;
+}
+
+.student-info-card {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.student-info-card h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.student-info-details {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.student-info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.student-info-item strong {
+    color: #666;
+    font-weight: 500;
+}
+
+.student-info-item span {
+    color: #333;
+}
+
+.material-type-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.material-controls {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.material-table-section {
+    margin-top: 20px;
+}
+
+.error-message {
+    background-color: #fee;
+    color: #c33;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border-left: 4px solid #c33;
+}
+
+.loading-message {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+.no-materials-message {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    background: white;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Action buttons in table */
+.DT_action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.DT_action-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+.DT_download-doc:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.DT_view-doc:hover {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .student-material-container {
+        padding: 10px;
+    }
+
+    .student-info-details {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .material-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+}

@@ -1,0 +1,1257 @@
+/* =========================================================================
+   ASSIGNMENT MANAGEMENT: LAYOUT & GLOBAL ADMIN STYLES (ad_asm_ prefix)
+   ========================================================================= */
+
+/* Main Wrapper/Layout (From user-management) */
+.ad_asm_wrapper {
+    padding-inline: var(--space-8, 32px);
+    min-height: 100vh;
+}
+
+/* Section Title for Step-by-step display */
+.ad_asm_section-title {
+    font-size: var(--font-size-xl, 1.25rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--brand-pink);
+    margin: 20px 0 15px 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--color-gray-200); 
+}
+
+/* Utility classes */
+.ad_asm_section-title-no-border {
+    border-bottom: none !important;
+    margin: 0; 
+}
+
+.ad_asm_bottom-border-section {
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--color-gray-200);
+    margin-bottom: var(--space-6, 24px); 
+}
+
+/* Header and Actions (From um-header) */
+.ad_asm_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-8, 32px);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.ad_asm_page-title {
+    font-size: var(--font-size-3xl, 1.875rem);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--color-gray-900, #212121);
+    margin: 0;
+}
+
+/* Search Bar (ad_asm_search-bar) - Used for Batch Filtering */
+.ad_asm_search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-gray-300, #E0E0E0);
+    border-radius: var(--radius-md, 8px);
+    background-color: var(--color-white, #FFFFFF);
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.ad_asm_search-bar input {
+    border: none;
+    outline: none;
+    padding: var(--space-2, 8px) 0 var(--space-2, 8px) 35px; 
+    flex-grow: 1;
+    font-size: var(--font-size-base, 1rem);
+    background-color: transparent;
+}
+
+.ad_asm_search-icon {
+    position: absolute;
+    left: var(--space-3, 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-gray-500, #9E9E9E);
+    pointer-events: none; 
+    z-index: 1;
+}
+
+.ad_asm_clear-icon {
+    color: var(--color-gray-500, #9E9E9E);
+    cursor: pointer;
+    margin-right: var(--space-2, 8px); 
+    z-index: 2; 
+}
+
+/* Specific style for the search bar inside the batch detail panel */
+.ad_asm_batch-search-bar {
+    width: 300px; /* Controlled width on desktop */
+    margin-bottom: 0; 
+    flex-grow: 0; 
+    flex-shrink: 1;
+}
+
+
+/* =========================================================================
+   NAVIGATION & LEVEL ACTION BUTTON STYLES
+   ========================================================================= */
+
+.ad_asm_flex {
+    display: flex;
+    gap: var(--space-4, 16px);
+    flex-wrap: wrap;
+}
+
+.ad_asm_stream-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    gap: var(--space-4, 16px);
+    margin-bottom: var(--space-8, 32px);
+    flex-wrap: wrap;
+}
+
+.ad_asm_stream-nav-flex {
+    display: flex;
+    gap: var(--space-4, 16px);
+    flex-wrap: wrap;
+    flex-grow: 1; 
+}
+
+/* General Nav Card Styles (CA, CMA, Foundation, etc.) */
+.ad_asm_stream-nav .ad_asm_nav-card,
+.ad_asm_level-nav .ad_asm_nav-card {
+    flex: 1 1 180px; 
+    min-width: 180px;
+    padding: var(--space-5, 20px);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-lg, 12px);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    box-shadow: var(--shadow-xs);
+}
+
+.ad_asm_nav-card h3 {
+    margin-top: 0;
+    color: var(--color-gray-900);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    transition: color 0.2s;
+}
+
+.ad_asm_nav-card p {
+    margin-bottom: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.ad_asm_nav-card:hover {
+    border-color: var(--brand-pink-light);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+
+.ad_asm_nav-card.selected {
+    background-color: var(--brand-pink);
+    box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+    color:var(--color-white);
+}
+
+.ad_asm_nav-card.selected_sec {
+    background-color: var(--brand-orange);
+    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2); 
+    color:var(--color-white);
+}
+
+.ad_asm_nav-card.selected h3,
+.ad_asm_nav-card.selected p,
+.ad_asm_nav-card.selected_sec h3,
+.ad_asm_nav-card.selected_sec p {
+    color: var(--color-white);
+}
+
+
+/* =========================================================================
+   DETAIL PANEL STYLES (Shared by Batch & Subject)
+   ========================================================================= */
+
+.ad_asm_detail-panel-container {
+    flex: 1; 
+    min-width: 100%; 
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg, 12px);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-6, 24px); 
+    margin-bottom: var(--space-8, 32px);
+}
+
+.ad_asm_full-width-panel {
+    min-width: 100%;
+    padding: var(--space-6, 24px); 
+}
+
+.ad_asm_detail-panel-content {
+    padding: var(--space-2, 8px) 0;
+}
+
+/* Flex container to hold header title and search bar in the same row */
+.ad_asm_batch-controls-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    gap: var(--space-4, 16px);
+    margin-bottom: var(--space-4, 16px);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px dashed var(--color-gray-300);
+    flex-wrap: wrap; 
+}
+
+/* Adjustments for the header title when it is in the flex row */
+.ad_asm_detail-header {
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-bold);
+    color: var(--brand-pink);
+}
+
+.ad_asm_header-in-row {
+    margin: 0; 
+    padding: 0; 
+    border-bottom: none; 
+    flex-shrink: 0; 
+}
+
+
+/* =========================================================================
+   BATCH SLIDER STYLES (Step 3)
+   ========================================================================= */
+.ad_asm_batch-view-section{
+    margin-top: 30px;
+}
+
+.ad_asm_batch-slider-wrapper {
+    position: relative;
+    padding: 0 var(--space-2);
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.ad_asm_batch-slider {
+    display: flex;
+    overflow-x: auto; 
+    overflow-y: hidden;
+    flex-wrap: nowrap; 
+    gap: var(--space-4, 16px); 
+    width: 100%;
+    justify-content: center;
+    padding: var(--space-2) 0; 
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+
+.ad_asm_batch-slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* Batch Card Design */
+.ad_asm_batch-card {
+    position: relative; 
+    flex-shrink: 0; 
+    width: 250px; 
+    padding: var(--space-4, 16px);
+    background-color: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md, 8px);
+    box-shadow: var(--shadow-xs);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.ad_asm_batch-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--brand-orange-light);
+}
+
+/* Style for selected Batch Card */
+.ad_asm_batch-card-selected {
+    border: 2px solid var(--brand-orange);
+    background-color: var(--brand-orange-light) !important;
+    color: var(--color-white);
+    transform: none; 
+    box-shadow: var(--shadow-md);
+}
+
+/* Style for Batch selection Checkmark Overlay */
+.ad_asm_batch-check-icon-overlay {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    color: var(--color-white);
+   
+    background-color: var(--brand-pink);
+    border-radius: var(--radius-full);
+    border: 3px solid var(--color-white);
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    z-index: 15;
+}
+
+.ad_asm_batch-card-selected .ad_asm_batch-name,
+.ad_asm_batch-card-selected .ad_asm_batch-prefix,
+.ad_asm_batch-card-selected .ad_asm_batch-meta,
+.ad_asm_batch-card-selected .ad_asm_batch-status,
+.ad_asm_batch-card-selected .ad_asm_batch-enrollment {
+    color: var(--color-white) !important;
+}
+
+.ad_asm_batch-prefix {
+    font-size: var(--font-size-xs, 0.75rem);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--brand-pink);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.ad_asm_batch-name {
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-gray-900);
+    margin: 0 0 var(--space-2) 0;
+    white-space: normal;
+    line-height: 1.3;
+}
+
+.ad_asm_batch-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding-top: var(--space-2);
+    border-top: 1px dashed var(--color-gray-100);
+    margin-top: var(--space-2);
+}
+
+.ad_asm_batch-status, .ad_asm_batch-enrollment {
+    display: flex;
+    align-items: center; 
+    gap: 4px;
+    font-size: var(--font-size-sm);
+}
+
+.ad_asm_status-active { 
+    color: var(--color-success); 
+    padding: 3px 5px;
+    border-radius: 5px;
+
+}
+.ad_asm_status-upcoming { color: var(--color-warning); }
+.ad_asm_status-completed { color: var(--color-info); }
+
+/* Slider Navigation Buttons (Used by both Batch and Subject) */
+.ad_asm_slider-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-full);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    z-index: 10;
+    color: var(--brand-pink);
+    transition: all 0.2s;
+}
+
+.ad_asm_slider-nav-btn:hover {
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+    box-shadow: var(--shadow-lg);
+}
+
+.ad_asm_slider-nav-left {
+    left: 0;
+}
+
+.ad_asm_slider-nav-right {
+    right: 0;
+}
+
+
+/* =========================================================================
+   SUBJECT GRID STYLES (Step 4)
+   ========================================================================= */
+
+/* Grid container for subjects */
+.ad_asm_subject-card-grid {
+    display: grid;
+    /* Two columns on desktop, responsive min-max for tablets */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: var(--space-4, 16px);
+    padding: var(--space-2) 0; 
+}
+
+/* Individual Subject Card */
+.ad_asm_subject-card {
+    position: relative;
+    padding: var(--space-5, 20px);
+    /* background: var(--color-gray-50); */
+    background: whitesmoke;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg, 12px);
+    transition: all 0.2s;
+    cursor: pointer;
+    box-shadow: var(--shadow-xs);
+    min-height: 80px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ad_asm_subject-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--brand-pink);
+}
+
+.ad_asm_subject-card-selected {
+    border: 2px solid var(--brand-pink);
+    background-color: var(--brand-pink-light) !important;
+    transform: none; 
+    box-shadow: var(--shadow-md);
+}
+
+.ad_asm_subject-card-selected .ad_asm_subject-name,
+.ad_asm_subject-card-selected .ad_asm_subject-meta,
+.ad_asm_subject-card-selected .ad_asm_subject-meta span {
+    color: var(--color-white) !important;
+}
+
+.ad_asm_subject-name {
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-gray-900);
+    margin: 0 0 var(--space-2) 0;
+    line-height: 1.3;
+}
+
+.ad_asm_subject-meta {
+    display: flex;
+    align-items: center; 
+    padding-top: var(--space-2);
+    border-top: 1px dashed var(--color-gray-200);
+    margin-top: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    gap: 4px;
+}
+
+.ad_asm_subject-code {
+    font-weight: var(--font-weight-medium);
+}
+
+.ad_asm_subject-check-icon-grid {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    color: var(--color-white);
+    background-color: var(--brand-orange);
+    border-radius: var(--radius-full);
+    border: 3px solid var(--color-white);
+    padding: 2px;
+    z-index: 15;
+}
+
+/* =========================================================================
+   ASSIGNMENT DISPLAY STYLES (Step 5) - NEW UI OVERHAUL
+   ========================================================================= */
+
+.ad_asm_assignment-panel-title {
+    color: var(--brand-orange);
+}
+
+.ad_asm_assignment-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    margin-block: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-gray-200);
+    flex-wrap: wrap;
+}
+
+.ad_asm_assignment-search-bar {
+    max-width: 400px;
+    flex-grow: 1;
+}
+
+.ad_asm_control-group {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* NEW: Style for the Add Assignment Button */
+.ad_asm_add-assignment-btn {
+    font-weight: var(--font-weight-semibold);
+    padding: var(--space-2) var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--brand-pink); /* Use brand pink for primary action */
+    border-color: var(--brand-pink);
+}
+
+.ad_asm_add-assignment-btn:hover {
+    background-color: var(--brand-pink-dark);
+    border-color: var(--brand-pink-dark);
+}
+
+.ad_asm_filter-buttons {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.ad_asm_view-toggle button {
+    border: 1px solid var(--color-gray-300);
+    color: var(--color-gray-600);
+}
+
+.ad_asm_view-toggle button.selected-view {
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+    border-color: var(--brand-pink);
+    box-shadow: var(--shadow-sm);
+}
+
+.ad_asm_assignment-content {
+    margin-top: var(--space-4);
+}
+
+/* --- GRID VIEW STYLES (NEW CARD DESIGN) --- */
+.ad_asm_assignment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+}
+
+.ad_asm_assignment-card {
+    /* Main card container */
+    position: relative;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden; /* Contains the color strip */
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.ad_asm_assignment-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* New Colorful Accent Strip */
+.ad_asm_card-color-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px; /* Accent width */
+    height: 100%;
+}
+
+/* Color definitions for accent strip */
+.ad_asm_strip-color-pink {
+    background-color: var(--brand-pink);
+}
+
+.ad_asm_strip-color-orange {
+    background-color: var(--brand-orange);
+}
+
+.ad_asm_strip-color-info {
+    background-color: var(--color-info);
+}
+
+.ad_asm_strip-color-success {
+    background-color: var(--color-success);
+}
+
+.ad_asm_card-content-area {
+    padding: var(--space-4);
+    padding-left: var(--space-5); /* Adjust padding due to the color strip */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.ad_asm_card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+}
+
+.ad_asm_card-badge {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-700);
+}
+
+.ad_asm_status-badge {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+}
+
+.ad_asm_status-upcoming {
+    color: var(--color-warning-dark);
+    background-color: rgb(245, 245, 221);
+}
+
+.ad_asm_status-completed {
+    color: green;
+    background-color: rgb(208, 249, 208);
+}
+
+.ad_asm_assignment-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-3);
+    line-height: 1.3;
+}
+
+.ad_asm_card-details {
+    flex-grow: 1;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px dashed var(--color-gray-200);
+}
+
+.ad_asm_card-info {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--space-2);
+}
+
+.ad_asm_file-info-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    padding-block: var(--space-2);
+}
+
+.ad_asm_file-name-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ad_asm_card-actions {
+    display: flex;
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.ad_asm_card-actions button {
+    flex: 1;
+    padding: var(--space-3) var(--space-2);
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid var(--color-gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.ad_asm_card-actions button:last-child {
+    border-right: none;
+}
+
+.ad_asm_action-btn-secondary {
+    color: var(--color-gray-700) !important;
+}
+.ad_asm_action-btn-secondary:hover {
+    background-color: var(--color-gray-100) !important;
+}
+
+.ad_asm_admin-actions-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--space-2);
+    gap: var(--space-2);
+    background-color: var(--color-gray-50);
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.ad_asm_action-btn-sm {
+    padding: var(--space-1) var(--space-3) !important;
+    font-size: var(--font-size-xs) !important;
+}
+
+.ad_asm_action-btn-icon {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+}
+
+/* --- TABLE VIEW STYLES --- */
+.ad_asm_assignment-table-wrapper {
+    overflow-x: auto;
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-gray-200);
+}
+
+.ad_asm_assignment-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Minimum width for tablet/desktop table */
+}
+
+.ad_asm_assignment-table th,
+.ad_asm_assignment-table td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.ad_asm_assignment-table thead {
+    background-color: var(--color-gray-50);
+}
+
+.ad_asm_assignment-table th {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.ad_asm_table-header-sticky {
+    position: sticky;
+    left: 0;
+    background-color: var(--color-gray-50); 
+    z-index: 3;
+}
+
+.ad_asm_assignment-table tbody tr:hover {
+    background-color: var(--color-gray-100);
+}
+
+.ad_asm_table-no {
+    font-weight: var(--font-weight-bold);
+    color: var(--brand-pink);
+    position: sticky;
+    left: 0;
+    background-color: inherit; /* Maintain row color on hover */
+    z-index: 1;
+}
+
+.ad_asm_table-title {
+    max-width: 300px;
+}
+
+.ad_asm_table-title, .ad_asm_table-actions-col {
+    white-space: nowrap;
+}
+
+.ad_asm_table-actions-col {
+    width: 1%;
+}
+
+.ad_asm_table-actions-flex {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.ad_asm_table-status .ad_asm_status-badge {
+    padding: 3px 8px;
+}
+
+.ad_asm_file-link-meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    margin-top: 4px;
+}
+
+.ad_asm_file-link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: var(--color-gray-700);
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: var(--font-size-xs);
+    cursor: pointer;
+}
+.ad_asm_file-link-btn:hover {
+    color: var(--brand-pink);
+}
+
+.ad_asm_no-results-table, .ad_asm_no-results-grid {
+    text-align: center;
+    padding: var(--space-6);
+    color: var(--color-gray-500);
+    font-style: italic;
+}
+
+
+/* =========================================================================
+   VIEW SUBMISSION STYLES (Step 6)
+   ========================================================================= */
+
+.ad_asm_view-submission-wrapper {
+    margin-top: var(--space-8, 32px);
+    padding: var(--space-6, 24px); 
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg, 12px);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--brand-orange);
+}
+
+/* Specific styles for elements inside ViewSubmission component, using ad_asm_ prefix */
+.ad_asm_submission-header {
+    font-size: var(--font-size-2xl, 1.5rem);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--brand-orange);
+    margin-bottom: var(--space-4, 16px);
+}
+
+.ad_asm_submission-meta-row {
+    display: flex;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-4);
+    border-bottom: 1px dashed var(--color-gray-200);
+    padding-bottom: var(--space-3);
+}
+
+.ad_asm_meta-item {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-700);
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ad_asm_meta-label {
+    color: var(--color-gray-500);
+    font-weight: var(--font-weight-normal);
+}
+
+.ad_asm_submission-list-container {
+    margin-top: var(--space-6);
+}
+
+.ad_asm_student-file-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-3);
+    background-color: var(--color-gray-50);
+}
+
+.ad_asm_student-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.ad_asm_student-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+}
+
+.ad_asm_submission-actions {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.ad_asm_submission-date {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+
+/* =========================================================================
+   ASSIGNMENT FORM MODAL STYLES (Assume common modal wrapper)
+   ========================================================================= */
+
+/* Use general class name structure for modal elements */
+.ad_asm_modal-content {
+    padding: var(--space-6);
+}
+
+.ad_asm_modal-header {
+    border-bottom: 1px solid var(--color-gray-200);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.ad_asm_modal-title {
+    color: var(--brand-pink);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.ad_asm_form-group {
+    margin-bottom: var(--space-4);
+}
+
+.ad_asm_form-label {
+    display: block;
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-2);
+    color: var(--color-gray-700);
+}
+
+.ad_asm_input, .ad_asm_textarea, .ad_asm_select {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s;
+}
+
+.ad_asm_input:focus, .ad_asm_textarea:focus, .ad_asm_select:focus {
+    border-color: var(--brand-pink);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--brand-pink);
+}
+
+.ad_asm_modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    border-top: 1px solid var(--color-gray-200);
+    padding-top: var(--space-4);
+    margin-top: var(--space-6);
+}
+
+.ad_asm_file-upload-section {
+    padding: var(--space-4);
+    border: 2px dashed var(--color-gray-300);
+    border-radius: var(--radius-md);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.ad_asm_file-upload-section:hover {
+    background-color: var(--color-gray-50);
+    border-color: var(--brand-pink-light);
+}
+
+.ad_asm_uploaded-file-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2);
+    background-color: var(--color-success-light);
+    border: 1px solid var(--color-success);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-2);
+}
+
+.ad_asm_uploaded-file-name {
+    font-size: var(--font-size-sm);
+    color: var(--color-success-dark);
+}
+
+/* =========================================================================
+   MEDIA QUERIES (Responsiveness)
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+    .ad_asm_wrapper {
+        padding-inline: var(--space-4, 16px);
+    }
+
+    .ad_asm_batch-slider-wrapper {
+        padding: 0 var(--space-8); /* Make room for side buttons */
+    }
+
+    .ad_asm_assignment-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .ad_asm_header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: var(--space-6, 24px);
+    }
+    
+    .ad_asm_batch-controls-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ad_asm_batch-search-bar {
+        width: 100%;
+        max-width: none;
+    }
+
+    .ad_asm_stream-nav-container,
+    .ad_asm_stream-nav-flex {
+        flex-direction: column;
+    }
+
+    .ad_asm_stream-nav .ad_asm_nav-card,
+    .ad_asm_level-nav .ad_asm_nav-card {
+        min-width: 100%;
+    }
+
+    .ad_asm_assignment-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-3);
+    }
+    
+    .ad_asm_control-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .ad_asm_assignment-search-bar {
+        max-width: none;
+    }
+
+    /* Table View optimization for mobile */
+    .ad_asm_assignment-table {
+        min-width: 600px;
+    }
+    
+    .ad_asm_table-header-sticky,
+    .ad_asm_table-no {
+        /* Disable sticky on smaller screens if necessary, or make it less prominent */
+        position: static;
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .ad_asm_card-actions-grid {
+        flex-direction: column;
+    }
+
+    .ad_asm_card-actions-grid button {
+        border-right: none;
+        border-bottom: 1px solid var(--color-gray-200);
+    }
+
+    .ad_asm_card-actions-grid button:last-child {
+        border-bottom: none;
+    }
+
+    .ad_asm_admin-actions-footer {
+        justify-content: space-around;
+        padding: var(--space-2) 0;
+    }
+
+    .ad_asm_action-btn-sm {
+        flex: 1; /* Make admin buttons take full width */
+        font-size: var(--font-size-sm) !important;
+    }
+}
+/* Submission View File Card specific overrides (from ViewSubmission, assumed to be here) */
+
+.ad_asm_file-card-new {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-4);
+    overflow: hidden;
+}
+
+.ad_asm_file-card-header-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-gray-50);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.ad_asm_student-details-new {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.ad_asm_student-name-new {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    font-size: var(--font-size-base);
+}
+
+.ad_asm_submission-status-chip {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    
+}
+
+.ad_asm_status-pending {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning-dark);
+}
+
+.ad_asm_status-graded {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+
+.ad_asm_status-late {
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+}
+
+.ad_asm_large-file-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ad_asm_file-card-main-content {
+    display: flex;
+    gap: var(--space-5);
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-4);
+    padding-inline: var(--space-4);
+    align-items: center;
+}
+
+.ad_asm_file-meta-content {
+    flex-grow: 1;
+}
+
+.ad_asm_file-title-new {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-1);
+}
+
+.ad_asm_file-details-row {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.ad_asm_file-detail-item {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ad_asm_file-card-actions-new {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* 5 actions for a submission card */
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.ad_asm_file-card-actions-new .btn-icon {
+    padding: var(--space-3) var(--space-2);
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid var(--color-gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: var(--font-size-sm);
+}
+
+.ad_asm_file-card-actions-new .btn-icon:last-child {
+    border-right: none;
+}
+
+.ad_asm_file-card-actions-new .ad_asm_action-btn-secondary {
+    color: var(--color-gray-700) !important;
+}
+
+.ad_asm_file-card-actions-new .ad_asm_action-btn-secondary:hover {
+    background-color: var(--color-gray-100) !important;
+}
+
+/* Responsive Adjustments for new file card */
+@media (max-width: 768px) {
+    .ad_asm_file-card-new {
+        padding: var(--space-3);
+    }
+
+    .ad_asm_file-card-header-new {
+        padding: var(--space-2) var(--space-3);
+    }
+    
+    .ad_asm_large-file-icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+
+    .ad_asm_file-card-main-content {
+        padding-top: var(--space-5);
+        padding-bottom: var(--space-3);
+    }
+    
+    .ad_asm_file-card-actions-new {
+        grid-template-columns: 1fr 1fr 1fr 1fr; /* Make submission button the same size as others on mobile */
+    }
+}

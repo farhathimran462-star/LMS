@@ -1,0 +1,871 @@
+/* ========================================
+   BATCHES COMPONENT - PROFESSIONAL REDESIGN
+   Uses index.css variables exclusively
+   ======================================== */
+
+.ad_cs_batch-pro-wrapper {
+    min-height: 100vh;
+}
+
+/* ========================================
+   HEADER & ACTIONS
+   ======================================== */
+
+.ad_cs_batch-pro-header-main {
+    margin-bottom: var(--space-8);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ad_cs_batch-pro-header-main .ad_cs_page-title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900); /* Use dark text color */
+    margin: 0;
+}
+
+/* Primary Button Style */
+.ad_cs_btn-primary-pro {
+    padding: var(--space-3) var(--space-6);
+    /* background-color: var(--brand-pink); */
+    background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-orange) 100%);
+
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.ad_cs_btn-primary-pro:hover {
+    background-color: var(--brand-pink-dark);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+/* Outline Button Style (for Cancel/Secondary) */
+.ad_cs_btn-outline-pro {
+    padding: var(--space-3) var(--space-6);
+    background-color: var(--color-white);
+    color: var(--brand-pink);
+    border: 2px solid var(--brand-pink);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.ad_cs_btn-outline-pro:hover {
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+}
+
+
+/* ========================================
+   NAVIGATION: STREAM/LEVEL CARDS
+   ======================================== */
+
+.ad_cs_batch-pro-stream-nav, .ad_cs_batch-pro-level-nav {
+    margin-bottom: var(--space-10);
+}
+
+.ad_cs_batch-pro-stream-nav .ad_cs_flex, .ad_cs_batch-pro-level-nav .ad_cs_flex {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: flex-start;
+    flex-wrap: wrap; /* Added for responsiveness on tablets */
+}
+
+.ad_cs_batch-pro-nav-card {
+    flex: 1;
+    min-width: 180px;
+    padding: var(--space-5);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-align: center;
+    box-shadow: var(--shadow-xs);
+}
+
+.ad_cs_batch-pro-nav-card:hover {
+    border-color: var(--brand-pink);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.ad_cs_batch-pro-nav-card.ad_cs_selected {
+    background: var(--brand-pink);
+    border-color: var(--brand-pink-dark);
+    color: var(--color-white);
+    box-shadow: var(--shadow-md);
+}
+.ad_cs_batch-pro-nav-card.ad_cs_selected h3, .ad_cs_batch-pro-nav-card.ad_cs_selected p {
+    color: var(--color-white);
+}
+
+.ad_cs_batch-pro-nav-card h3 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.ad_cs_batch-pro-nav-card p {
+    margin: var(--space-1) 0 0 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+/* ========================================
+   COURSE SLIDER (Horizontal Tabs)
+   ======================================== */
+
+.ad_cs_batch-pro-course-slider-group {
+    position: relative;
+    /* margin-bottom: var(--space-12); */
+}
+
+.ad_cs_batch-pro-course-slider {
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    padding: var(--space-3);
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide scrollbar for clean look */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.ad_cs_batch-pro-course-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.ad_cs_batch-pro-course-card {
+    /* flex: 0 0 280px;  */
+    padding: var(--space-4);
+    background: var(--color-white);
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-xs);
+}
+
+.ad_cs_batch-pro-course-card:hover {
+    border-color: var(--brand-orange);
+    box-shadow: var(--shadow-sm);
+}
+
+.ad_cs_batch-pro-course-card.ad_cs_selected {
+    border-color: var(--brand-pink);
+    background-color: var(--color-gray-50);
+    box-shadow: var(--shadow-md);
+}
+
+.ad_cs_batch-pro-course-card h4 {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+    line-height: 1.4;
+}
+
+.ad_cs_batch-pro-course-card p {
+    margin: var(--space-1) 0 0 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+/* Scroll buttons for the slider (hidden by default, shown on hover/desktop) */
+.ad_cs_batch-pro-scroll-btn {
+    position: absolute;
+    top: 55%;
+    transform: translateY(calc(-50% + var(--space-3))); /* Adjust for padding on slider */
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    color: var(--brand-pink);
+    border-radius: var(--radius-full);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: var(--shadow-md);
+    transition: background-color var(--transition-fast);
+}
+
+.ad_cs_batch-pro-scroll-btn:hover {
+    background-color: var(--color-gray-100);
+}
+
+.ad_cs_batch-pro-scroll-left {
+    left: 0;
+}
+
+.ad_cs_batch-pro-scroll-right {
+    right: 0;
+}
+
+
+/* ========================================
+   TOOLBAR: FILTER & SEARCH
+   ======================================== */
+
+.ad_cs_batch-pro-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    padding: var(--space-4) var(--space-6);
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xs);
+}
+
+.ad_cs_batch-pro-filter-search {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+}
+
+/* Search Box */
+.ad_cs_batch-pro-search-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast);
+    min-width: 250px;
+    background: var(--color-white);
+}
+
+.ad_cs_batch-pro-search-input:focus-within {
+    border-color: var(--brand-pink);
+    box-shadow: var(--shadow-sm);
+}
+
+.ad_cs_batch-pro-search-input input {
+    border: none;
+    background: transparent;
+    flex: 1;
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-10); /* Padding for icon */
+    font-size: var(--font-size-sm);
+}
+
+.ad_cs_batch-pro-search-input input:focus {
+    outline: none;
+}
+
+.ad_cs_batch-pro-search-icon {
+    position: absolute;
+    margin-inline: var(--space-3);
+    /* justify-content: end; */
+    left: 0;
+    color: var(--brand-pink);
+    font-size: 16px;
+}
+
+/* Filter Dropdown (Year) */
+.ad_cs_batch-pro-filter-select {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--color-white);
+    /* padding: var(--space-3) var(--space-4); */
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-300);
+    cursor: pointer;
+}
+
+.ad_cs_batch-pro-filter-select label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+}
+
+.ad_cs_batch-pro-filter-select select {
+    border: none;
+    background: transparent;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    color: var(--brand-pink);
+}
+.ad_cs_batch-pro-filter-select select:focus {
+    outline: none;
+}
+
+/* ========================================
+   BATCHES DATA TABLE
+   ======================================== */
+
+.ad_cs_batch-pro-table-container {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    overflow-x: auto; /* Enables horizontal scroll on small screens */
+    margin-top: var(--space-8);
+    padding:var(--space-4) ;
+}
+
+.ad_cs_batch-pro-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Minimum width to ensure content is visible on scroll */
+}
+
+.ad_cs_batch-pro-data-table thead {
+    /* background-color: var(--color-gray-800); */
+    background-color:  var(--brand-orange) ;
+}
+
+.ad_cs_batch-pro-data-table th {
+    padding: var(--space-4) var(--space-5);
+    text-align: left;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ad_cs_batch-pro-data-table td {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-gray-200);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+}
+
+.ad_cs_batch-pro-data-table tbody tr {
+    transition: background-color var(--transition-fast);
+}
+
+.ad_cs_batch-pro-data-table tbody tr:hover {
+    background-color: var(--color-gray-50);
+}
+
+/* Status Badges */
+.ad_cs_batch-status-badge {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.ad_cs_status-active {
+    background-color: white;
+    color: var(--color-success-dark);
+}
+
+.ad_cs_status-upcoming {
+    background-color: var(--brand-orange-light);
+    color: var(--brand-orange-dark);
+}
+
+.ad_cs_status-completed {
+    background-color: var(--color-gray-300);
+    color: var(--color-gray-700);
+}
+
+/* Table Action Buttons */
+.ad_cs_batch-pro-action-group {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.ad_cs_btn-icon-pro {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: var(--color-gray-100);
+    border: 1px solid var(--color-gray-300);
+    color: var(--color-gray-700);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.ad_cs_btn-icon-pro:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.ad_cs_btn-icon-pro.ad_cs_edit:hover {
+    background: var(--color-info);
+    color: var(--color-white);
+    border-color: var(--color-info-dark);
+}
+
+.ad_cs_btn-icon-pro.ad_cs_delete:hover {
+    background: var(--color-error);
+    color: var(--color-white);
+    border-color: var(--color-error-dark);
+}
+
+/* ========================================
+   FORM/MODAL STYLES (General Form Elements)
+   ======================================== */
+
+/* Grouping for Checkbox/Radio */
+.ad_cs_batch-pro-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+}
+
+.ad_cs_batch-pro-checkbox-group .ad_cs_checkbox-label {
+    /* Style for the visual label (the button) */
+    background-color: var(--color-white);
+    color: var(--color-gray-700);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative; 
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+}
+
+.ad_cs_batch-pro-checkbox-group .ad_cs_checkbox-label:hover {
+    border-color: var(--brand-pink);
+}
+
+/* CRITICAL FIX: Hide the actual checkbox input */
+.ad_cs_batch-pro-checkbox-group .ad_cs_checkbox-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+/* Style the button look when checked using :has selector */
+.ad_cs_batch-pro-checkbox-group .ad_cs_checkbox-label:has(input[type="checkbox"]:checked) {
+     background-color:  var(--brand-orange) ;
+    color: var(--color-white);
+    border-color: transparent;
+    box-shadow: var(--shadow-sm);
+}
+.ad_cs_batch-pro-course-slider-flexy{
+    display: flex;
+}
+
+/* Form Layout */
+.ad_cs_form-row {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.ad_cs_form-row > * {
+    flex: 1;
+}
+
+.ad_cs_batch_form_group {
+    margin-bottom: var(--space-4);
+    padding: var(--space-4)
+}
+
+/* Modal Styling */
+.ad_cs_batch-pro-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-modal);
+    backdrop-filter: blur(4px);
+    animation: fadeIn var(--transition-fast);
+}
+
+.ad_cs_batch-pro-modal {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    width: 90%;
+    max-width: 650px;
+    box-shadow: var(--shadow-2xl);
+    animation: slideDown var(--transition-base);
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.ad_cs_batch-pro-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-6);
+    border-bottom: 1px solid var(--color-gray-200);
+    position: sticky;
+    top: 0;
+    background: var(--color-white);
+    z-index: var(--z-low);
+    border-top-left-radius: var(--radius-xl);
+    border-top-right-radius: var(--radius-xl);
+}
+
+.ad_cs_batch-pro-modal-header h3 {
+    margin: 0;
+    font-size: var(--font-size-2xl);
+}
+
+.ad_cs_batch-pro-modal-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-gray-600);
+}
+
+.ad_cs_batch-pro-modal-header button:hover {
+    color: var(--brand-pink);
+}
+
+.ad_cs_batch-pro-modal-body {
+    padding: var(--space-6);
+    flex-grow: 1;
+}
+
+.ad_cs_batch_form_actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--color-gray-200);
+    position: sticky;
+    bottom: 0;
+    background: var(--color-white);
+    z-index: var(--z-low);
+    border-bottom-left-radius: var(--radius-xl);
+    border-bottom-right-radius: var(--radius-xl);
+}
+
+/* Feedback Messages */
+.ad_cs_batch-pro-message {
+    padding: var(--space-3);
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.ad_cs_batch-pro-message.ad_cs_error {
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+    border: 1px solid var(--color-error);
+}
+
+.ad_cs_batch-pro-message.ad_cs_success {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+    border: 1px solid var(--color-success);
+}
+
+/* Schedule Time Input Layout */
+.ad_cs_batch-pro-time-select {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.ad_cs_batch-pro-time-select > div {
+    flex: 1;
+}
+
+.ad_cs_batch-pro-schedule-group {
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    margin-top: var(--space-4);
+}
+.ad_cs_batch-pro-schedule-group label {
+    margin-bottom: var(--space-2);
+}
+
+/* Custom Select Dropdown Styles (For CustomSelect Component) */
+.ad_cs_batch-pro-dropdown-icon {
+    margin-left: auto;
+    transition: transform var(--transition-fast);
+}
+
+.ad_cs_batch-pro-custom-select {
+    position: relative;
+    cursor: pointer;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast);
+}
+
+.ad_cs_batch-pro-custom-select.ad_cs_open {
+    border-color: var(--brand-pink);
+    box-shadow: 0 0 0 1px var(--brand-pink);
+}
+
+.ad_cs_batch-pro-custom-select.ad_cs_open .ad_cs_batch-pro-dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.ad_cs_batch-pro-custom-select.ad_cs_disabled {
+    background-color: var(--color-gray-100);
+    cursor: not-allowed;
+    color: var(--color-gray-500);
+}
+
+.ad_cs_batch-pro-selected-value {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3);
+    font-size: var(--font-size-base);
+    color: var(--color-gray-800);
+}
+
+.ad_cs_batch-pro-selected-value.ad_cs_placeholder {
+    color: var(--color-gray-500);
+}
+
+.ad_cs_batch-pro-select-dropdown {
+    position: absolute;
+    top: 100%; /* Position right below the select header */
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-top: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    box-shadow: var(--shadow-md);
+    z-index: var(--z-medium);
+}
+
+.ad_cs_batch-pro-select-option {
+    padding: var(--space-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-800);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.ad_cs_batch-pro-select-option:hover {
+    background-color: var(--color-gray-100);
+}
+
+.ad_cs_batch-pro-select-option.ad_cs_selected {
+    background-color: var(--brand-pink-light);
+    color: var(--brand-pink-dark);
+    font-weight: var(--font-weight-medium);
+}
+
+.ad_cs_batch-pro-select-option.ad_cs_placeholder-option {
+    color: var(--color-gray-500);
+    font-style: italic;
+}
+
+/* Info Card Modal Specifics */
+.ad_cs_batch-pro-modal-row {
+    margin-top: var(--space-4);
+    display: flex;
+    gap: var(--space-4);
+}
+
+.ad_cs_batch-pro-modal-row > .ad_cs_batch_form_group {
+    flex: 1;
+    margin-bottom: 0; /* Remove redundant margin */
+}
+
+/* Batch Info Card (Used in Modal) */
+.ad_cs_batch-pro-info-card {
+    background-color: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.ad_cs_info-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-3);
+}
+
+.ad_cs_info-card-header h4 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--brand-pink);
+    margin: 0;
+}
+
+.ad_cs_status-indicator {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.ad_cs_info-card-detail {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-4);
+}
+
+.ad_cs_info-card-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.ad_cs_info-card-item span:first-child {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-1);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.ad_cs_stat-value {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+}
+
+.ad_cs_badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.ad_cs_teacher-badge {
+    font-size: var(--font-size-xs);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+}
+
+.ad_cs_tag-pink {
+    background-color: var(--brand-pink-light);
+    color: var(--brand-pink-dark);
+}
+.ad_cs_tag-orange {
+    background-color: var(--brand-orange-light);
+    color: var(--brand-orange-dark);
+}
+.ad_cs_tag-info {
+    background-color: var(--color-info-light);
+    color: var(--color-info-dark);
+}
+
+/* Detailed Information Grid */
+.ad_cs_batch-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+}
+
+.ad_cs_detail-group {
+    background-color: var(--color-white);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-200);
+}
+
+.ad_cs_detail-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-600);
+    margin-bottom: var(--space-1);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.ad_cs_detail-value {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+}
+
+@media (max-width: 640px) {
+    .ad_cs_form-row {
+        flex-direction: column;
+    }
+    .ad_cs_batch-pro-header-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-4);
+    }
+    .ad_cs_batch-pro-header-main .ad_cs_page-title {
+        font-size: var(--font-size-3xl);
+    }
+    .ad_cs_batch-pro-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .ad_cs_batch-pro-filter-search {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+    .ad_cs_batch-pro-search-input {
+        min-width: unset;
+        width: 100%;
+    }
+    .ad_cs_batch-pro-filter-select {
+        justify-content: space-between;
+    }
+    .ad_cs_batch-pro-modal {
+        width: 95%;
+        margin: var(--space-4);
+    }
+    .ad_cs_batch-pro-time-select {
+        flex-direction: column;
+    }
+    .ad_cs_batch-detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* .ad_cs_batch-pro-selected-course-info .sm_um-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; 
+}
+.ad_cs_batch-pro-selected-course-info .sm_filter-row {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px; 
+} */

@@ -1,0 +1,1595 @@
+/* =========================================================================
+   ASSIGNMENT MANAGEMENT: LAYOUT & GLOBAL ADMIN STYLES (am_ prefix)
+   ========================================================================= */
+
+/* Main Wrapper/Layout (From user-management) */
+.am_wrapper {
+    padding-inline: var(--space-8, 32px);
+    min-height: 100vh;
+}
+
+/* Section Title for Step-by-step display */
+.am_section-title {
+    font-size: var(--font-size-xl, 1.25rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--brand-pink);
+    margin: 20px 0 15px 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--color-gray-200); 
+}
+
+/* Utility classes */
+.am_section-title-no-border {
+    border-bottom: none !important;
+    margin: 0; 
+}
+
+.am_bottom-border-section {
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--color-gray-200);
+    margin-bottom: var(--space-6, 24px); 
+}
+
+/* Header and Actions (From um-header) */
+.am_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-8, 32px);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.am_page-title {
+    font-size: var(--font-size-3xl, 1.875rem);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--color-gray-900, #212121);
+    margin: 0;
+}
+
+/* Search Bar (am_search-bar) - Used for Batch Filtering */
+.am_search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-gray-300, #E0E0E0);
+    border-radius: var(--radius-md, 8px);
+    background-color: var(--color-white, #FFFFFF);
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.am_search-bar input {
+    border: none;
+    outline: none;
+    padding: var(--space-2, 8px) 0 var(--space-2, 8px) 35px; 
+    flex-grow: 1;
+    font-size: var(--font-size-base, 1rem);
+    background-color: transparent;
+}
+
+.am_search-icon {
+    position: absolute;
+    left: var(--space-3, 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-gray-500, #9E9E9E);
+    pointer-events: none; 
+    z-index: 1;
+}
+
+.am_clear-icon {
+    color: var(--color-gray-500, #9E9E9E);
+    cursor: pointer;
+    margin-right: var(--space-2, 8px); 
+    z-index: 2; 
+}
+
+/* Specific style for the search bar inside the batch detail panel */
+.am_batch-search-bar {
+    width: 300px; /* Controlled width on desktop */
+    margin-bottom: 0; 
+    flex-grow: 0; 
+    flex-shrink: 1;
+}
+
+
+/* =========================================================================
+   NAVIGATION & LEVEL ACTION BUTTON STYLES
+   ========================================================================= */
+
+.am_flex {
+    display: flex;
+    gap: var(--space-4, 16px);
+    flex-wrap: wrap;
+}
+
+.am_stream-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    gap: var(--space-4, 16px);
+    margin-bottom: var(--space-8, 32px);
+    flex-wrap: wrap;
+}
+
+.am_stream-nav-flex {
+    display: flex;
+    gap: var(--space-4, 16px);
+    flex-wrap: wrap;
+    flex-grow: 1; 
+}
+
+/* General Nav Card Styles (CA, CMA, Foundation, etc.) */
+.am_stream-nav .am_nav-card,
+.am_level-nav .am_nav-card {
+    flex: 1 1 180px; 
+    min-width: 180px;
+    padding: var(--space-5, 20px);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-lg, 12px);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    box-shadow: var(--shadow-xs);
+}
+
+.am_nav-card h3 {
+    margin-top: 0;
+    color: var(--color-gray-900);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    transition: color 0.2s;
+}
+
+.am_nav-card p {
+    margin-bottom: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.am_nav-card:hover {
+    border-color: var(--brand-pink-light);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+
+.am_nav-card.selected {
+    background-color: var(--brand-pink);
+    box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+    color:var(--color-white);
+}
+
+.am_nav-card.selected_sec {
+    background-color: var(--brand-orange);
+    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2); 
+    color:var(--color-white);
+}
+
+.am_nav-card.selected h3,
+.am_nav-card.selected p,
+.am_nav-card.selected_sec h3,
+.am_nav-card.selected_sec p {
+    color: var(--color-white);
+}
+
+
+/* =========================================================================
+   DETAIL PANEL STYLES (Shared by Batch & Subject)
+   ========================================================================= */
+
+.am_detail-panel-container {
+    flex: 1; 
+    min-width: 100%; 
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg, 12px);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-6, 24px); 
+    margin-bottom: var(--space-8, 32px);
+}
+
+.am_full-width-panel {
+    min-width: 100%;
+    padding: var(--space-6, 24px); 
+}
+
+.am_detail-panel-content {
+    padding: var(--space-2, 8px) 0;
+}
+
+/* Flex container to hold header title and search bar in the same row */
+.am_batch-controls-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    gap: var(--space-4, 16px);
+    margin-bottom: var(--space-4, 16px);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px dashed var(--color-gray-300);
+    flex-wrap: wrap; 
+}
+
+/* Adjustments for the header title when it is in the flex row */
+.am_detail-header {
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-bold);
+    color: var(--brand-pink);
+}
+
+.am_header-in-row {
+    margin: 0; 
+    padding: 0; 
+    border-bottom: none; 
+    flex-shrink: 0; 
+}
+
+
+/* =========================================================================
+   BATCH SLIDER STYLES (Step 3)
+   ========================================================================= */
+.am_batch-view-section{
+    margin-top: 30px;
+}
+
+.am_batch-slider-wrapper {
+    position: relative;
+    padding: 0 var(--space-2);
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.am_batch-slider {
+    display: flex;
+    overflow-x: auto; 
+    overflow-y: hidden;
+    flex-wrap: nowrap; 
+    gap: var(--space-4, 16px); 
+    width: 100%;
+    justify-content: center;
+    padding: var(--space-2) 0; 
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+
+.am_batch-slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* Batch Card Design */
+.am_batch-card {
+    position: relative; 
+    flex-shrink: 0; 
+    width: 250px; 
+    padding: var(--space-4, 16px);
+    background-color: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md, 8px);
+    box-shadow: var(--shadow-xs);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.am_batch-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--brand-orange-light);
+}
+
+/* Style for selected Batch Card */
+.am_batch-card-selected {
+    border: 2px solid var(--brand-orange);
+    background-color: var(--brand-orange-light) !important;
+    color: var(--color-white);
+    transform: none; 
+    box-shadow: var(--shadow-md);
+}
+
+/* Style for Batch selection Checkmark Overlay */
+.am_batch-check-icon-overlay {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    color: var(--color-white);
+   
+    background-color: var(--brand-pink);
+    border-radius: var(--radius-full);
+    border: 3px solid var(--color-white);
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    z-index: 15;
+}
+
+.am_batch-card-selected .am_batch-name,
+.am_batch-card-selected .am_batch-prefix,
+.am_batch-card-selected .am_batch-meta,
+.am_batch-card-selected .am_batch-status,
+.am_batch-card-selected .am_batch-enrollment {
+    color: var(--color-white) !important;
+}
+
+.am_batch-prefix {
+    font-size: var(--font-size-xs, 0.75rem);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--brand-pink);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.am_batch-name {
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-gray-900);
+    margin: 0 0 var(--space-2) 0;
+    white-space: normal;
+    line-height: 1.3;
+}
+
+.am_batch-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding-top: var(--space-2);
+    border-top: 1px dashed var(--color-gray-100);
+    margin-top: var(--space-2);
+}
+
+.am_batch-status, .am_batch-enrollment {
+    display: flex;
+    align-items: center; 
+    gap: 4px;
+    font-size: var(--font-size-sm);
+}
+
+.am_status-active { 
+    color: var(--color-success); 
+    padding: 3px 5px;
+    border-radius: 5px;
+
+}
+.am_status-upcoming { color: var(--color-warning); }
+.am_status-completed { color: var(--color-info); }
+
+/* Slider Navigation Buttons (Used by both Batch and Subject) */
+.am_slider-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-full);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    z-index: 10;
+    color: var(--brand-pink);
+    transition: all 0.2s;
+}
+
+.am_slider-nav-btn:hover {
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+    box-shadow: var(--shadow-lg);
+}
+
+.am_slider-nav-left {
+    left: 0;
+}
+
+.am_slider-nav-right {
+    right: 0;
+}
+
+
+/* =========================================================================
+   SUBJECT GRID STYLES (Step 4)
+   ========================================================================= */
+
+/* Grid container for subjects */
+.am_subject-card-grid {
+    display: grid;
+    /* Two columns on desktop, responsive min-max for tablets */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: var(--space-4, 16px);
+    padding: var(--space-2) 0; 
+}
+
+/* Individual Subject Card */
+.am_subject-card {
+    position: relative;
+    padding: var(--space-5, 20px);
+    /* background: var(--color-gray-50); */
+    background: whitesmoke;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg, 12px);
+    transition: all 0.2s;
+    cursor: pointer;
+    box-shadow: var(--shadow-xs);
+    min-height: 80px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.am_subject-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--brand-pink);
+}
+
+.am_subject-card-selected {
+    border: 2px solid var(--brand-pink);
+    background-color: var(--brand-pink-light) !important;
+    transform: none; 
+    box-shadow: var(--shadow-md);
+}
+
+.am_subject-card-selected .am_subject-name,
+.am_subject-card-selected .am_subject-meta,
+.am_subject-card-selected .am_subject-meta span {
+    color: var(--color-white) !important;
+}
+
+.am_subject-name {
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-gray-900);
+    margin: 0 0 var(--space-2) 0;
+    line-height: 1.3;
+}
+
+.am_subject-meta {
+    display: flex;
+    align-items: center; 
+    padding-top: var(--space-2);
+    border-top: 1px dashed var(--color-gray-200);
+    margin-top: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    gap: 4px;
+}
+
+.am_subject-code {
+    font-weight: var(--font-weight-medium);
+}
+
+.am_subject-check-icon-grid {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    color: var(--color-white);
+     background-color: var(--brand-orange);
+    border-radius: var(--radius-full);
+    border: 3px solid var(--color-white);
+    padding: 2px;
+    z-index: 15;
+}
+
+
+/* =========================================================================
+   PACKAGE STYLES (ADDED/UPDATED FOR 'pckge css')
+   ========================================================================= */
+
+.am_package-view-section {
+    margin-top: 30px;
+    margin-bottom: var(--space-8, 32px);
+}
+
+/* 🏆 FIX: Define the package navigation flex container for scoping 🏆 */
+.am_package-nav-flex {
+    display: flex;
+    gap: var(--space-4, 16px);
+    flex-wrap: wrap;
+    flex-grow: 1; 
+}
+
+/* 🏆 FIX: Override alignment for .am_nav-card used inside the package section 🏆 */
+.am_package-nav-flex .am_nav-card {
+
+    flex: 1 1 180px; 
+    min-width: 180px;
+    padding: var(--space-5, 20px);
+    /* background: var(--color-white); */
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-lg, 12px);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    /* box-shadow: var(--shadow-xs); */
+}
+
+/* Refine spacing for elements inside the card */
+.am_package-nav-flex .am_nav-card h3 {
+    margin-bottom: var(--space-1, 4px); /* Add space between title and description */
+    margin-top: 0;
+}
+
+.am_package-nav-flex .am_nav-card p {
+    margin-bottom: 0;
+    width: 90%;
+    white-space: wrap;
+}
+/* 🏆 END FIX 🏆 */
+
+.am_package-card-grid {
+    display: grid;
+    /* Responsive grid, similar to subjects, allowing for many packages */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: var(--space-4, 16px);
+    padding: var(--space-2) 0; 
+}
+
+/* Individual Package Card */
+.am_package-card {
+    position: relative;
+    /* padding: var(--space-5, 20px); */
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-lg, 12px);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    box-shadow: var(--shadow-xs);
+    min-height: 80px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.am_package-card:hover {
+    border-color: var(--brand-pink-light);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+
+.am_package-card.selected-package {
+    border: 2px solid var(--color-info);
+    background-color: var(--color-info-light) !important;
+    box-shadow: var(--shadow-md);
+    transform: none; 
+}
+
+.am_package-card-title {
+    margin: 0;
+    color: var(--color-gray-900);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+}
+
+.am_package-card-meta {
+    margin-top: var(--space-1);
+    margin-bottom: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+/* Text color for selected state */
+.am_package-card.selected-package .am_package-card-title,
+.am_package-card.selected-package .am_package-card-meta {
+    color: var(--color-info-dark); /* Use a darker color for contrast against light background */
+}
+
+
+/* =========================================================================
+   ASSIGNMENT DISPLAY STYLES (Step 5) - NEW UI OVERHAUL
+   ========================================================================= */
+
+.am_assignment-panel-title {
+    color: var(--brand-orange);
+}
+
+.am_assignment-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    margin-block: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-gray-200);
+    flex-wrap: wrap; 
+}
+
+.am_assignment-search-bar {
+    max-width: 400px;
+    flex-grow: 1;
+}
+
+.am_control-group {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* NEW: Style for the Add Assignment Button */
+.am_add-assignment-btn {
+    font-weight: var(--font-weight-semibold);
+    padding: var(--space-2) var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--brand-pink); /* Use brand pink for primary action */
+    border-color: var(--brand-pink);
+}
+.am_add-assignment-btn:hover {
+    background-color: var(--brand-pink-dark);
+    border-color: var(--brand-pink-dark);
+}
+
+.am_filter-buttons {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.am_view-toggle button {
+    border: 1px solid var(--color-gray-300);
+    color: var(--color-gray-600);
+}
+
+.am_view-toggle button.selected-view {
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+    border-color: var(--brand-pink);
+    box-shadow: var(--shadow-sm);
+}
+
+.am_assignment-content {
+    margin-top: var(--space-4);
+}
+
+/* --- GRID VIEW STYLES (NEW CARD DESIGN) --- */
+.am_assignment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+}
+
+.am_assignment-card {
+    /* Main card container */
+    position: relative;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden; /* Contains the color strip */
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.am_assignment-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* New Colorful Accent Strip */
+.am_card-color-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px; /* Accent width */
+    height: 100%;
+}
+
+/* Color definitions for accent strip */
+.am_strip-color-pink { background-color: var(--brand-pink); }
+.am_strip-color-orange { background-color: var(--brand-orange); }
+.am_strip-color-info { background-color: var(--color-info); }
+.am_strip-color-success { background-color: var(--color-success); }
+
+
+.am_card-content-area {
+    padding: var(--space-4);
+    padding-left: var(--space-5); /* Adjust padding due to the color strip */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.am_card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+}
+
+.am_card-badge {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-700);
+}
+
+.am_status-badge {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+}
+
+.am_status-upcoming {
+    color: var(--color-warning-dark);
+    background-color: rgb(245, 245, 221);
+}
+
+.am_status-completed {
+    color: green;
+    background-color: rgb(208, 249, 208);
+}
+
+.am_assignment-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-3);
+    line-height: 1.3;
+}
+
+.am_card-details {
+    flex-grow: 1;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px dashed var(--color-gray-200);
+}
+
+.am_card-info {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: var(--font-weight-medium);
+}
+
+/* File Info Bar - Separated from Card Details */
+.am_file-info-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    margin-top: var(--space-2);
+}
+
+.am_file-name-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80%; /* Ensure file name doesn't push buttons off */
+}
+
+/* File Icon Colors */
+.am_file-info-bar .text-error { color: var(--color-error-dark) !important; } /* PDF */
+.am_file-info-bar .text-info { color: var(--color-info-dark) !important; }   /* DOCX/WORD */
+.am_file-info-bar .text-warning { color: var(--color-warning-dark) !important; } /* ZIP */
+
+
+.am_card-actions {
+    /* Removed border-top, relying on the clean footer */
+    display: flex;
+    gap: 0; /* Tight grid for footer buttons */
+    border-top: 1px solid var(--color-gray-100);
+    width: 100%;
+}
+
+.am_card-actions-grid .btn-icon {
+    flex-basis: 25%;
+    flex-grow: 1;
+    height: 40px;
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid var(--color-gray-100);
+    color: var(--color-gray-600);
+    transition: all 0.1s;
+}
+
+.am_card-actions-grid .btn-icon:last-child {
+    border-right: none;
+}
+
+.am_card-actions-grid .btn-icon:hover {
+    background-color: var(--color-gray-50);
+}
+
+.am_action-btn-primary {
+    color: var(--brand-pink) !important;
+}
+
+.am_action-btn-primary:hover {
+    background-color: var(--brand-pink-light) !important;
+}
+
+.am_action-delete {
+    color: var(--color-error) !important;
+}
+
+.am_action-delete:hover {
+    background-color: var(--color-error-light) !important;
+}
+
+
+/* --- TABLE VIEW STYLES --- */
+.am_assignment-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-200);
+}
+
+.am_assignment-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    text-align: left;
+    background-color: var(--color-white);
+}
+.am_assignment-table thead {
+    background-color: var(--brand-pink);
+}
+.am_assignment-table th, 
+.am_assignment-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-gray-200);
+    /* CRUCIAL FIX: Ensures cell content is vertically aligned */
+    /* vertical-align: middle; */
+}
+.am_assignment-table th {
+    /* background-color: var(--color-gray-50); */
+    font-weight: var(--font-weight-semibold);
+    color: white;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.am_assignment-table tbody tr:hover {
+    background-color: var(--color-gray-100);
+}
+
+.am_file-cell {
+    /* FIX: Set to flex to ensure icon/text are vertically aligned and take up space */
+    display: flex; 
+    align-items: center;
+    gap: 4px;
+    color: var(--color-gray-600);
+}
+
+/* File Icon Colors for Table */
+.am_file-cell .text-error { color: var(--color-error-dark) !important; }
+.am_file-cell .text-info { color: var(--color-info-dark) !important; }
+.am_file-cell .text-warning { color: var(--color-warning-dark) !important; }
+
+.am_action-cell {
+    /* FIX 1: Use Flexbox to align buttons horizontally and vertically */
+    display: flex;
+    /* FIX 2: Add gap for space between buttons */
+    gap: var(--space-2, 8px); 
+    align-items: center; /* Ensures vertical centering regardless of row height */
+    height: 100%;
+    white-space: nowrap;
+}
+
+.am_action-cell .btn-icon {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    align-items: center;
+    border: 1px solid var(--color-gray-300);
+    color: var(--color-gray-600);
+}
+.am_action-cell .btn-icon:hover {
+    background-color: var(--color-gray-200);
+}
+
+.am_action-cell .am_action-delete {
+    color: var(--color-error);
+    border-color: var(--color-error);
+}
+.am_action-cell .am_action-delete:hover {
+    background-color: var(--color-error);
+    color: var(--color-white);
+}
+
+.am_no-results-grid,
+.am_no-results-table {
+    color: var(--color-gray-600);
+    padding: var(--space-8);
+    text-align: center;
+    font-size: var(--font-size-lg);
+    border: 1px dashed var(--color-gray-300);
+    border-radius: var(--radius-md);
+    background-color: var(--color-gray-50);
+}
+
+
+/* =========================================================================
+   ASSIGNMENT FORM MODAL STYLES (am_form-modal- prefix)
+   ========================================================================= */
+
+.am_form-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9000;
+}
+
+.am_form-modal-container {
+    background: var(--color-white);
+    border-radius: var(--radius-lg, 12px);
+    width: 95%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-2xl);
+    animation: am_scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.arm_form-modal-container::-webkit-scrollbar {
+    display: none;
+}
+
+@keyframes am_scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.am_form-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.am_form-modal-header h3 {
+    margin: 0;
+    font-size: var(--font-size-xl, 1.25rem);
+    color: var(--brand-pink);
+    font-weight: var(--font-weight-semibold, 600);
+}
+
+.am_form-modal-close {
+    background: none;
+    border: none;
+    color: var(--color-gray-600);
+    cursor: pointer;
+    padding: var(--space-1);
+    border-radius: var(--radius-sm);
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.am_form-modal-close:hover {
+    color: var(--color-gray-900);
+    background-color: var(--color-gray-100);
+}
+
+/* Context Bar (Non-Editable Fields) */
+.am_form-modal-context-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-6);
+    background-color: var(--color-gray-50);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.am_context-badge {
+    padding: 6px 10px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs, 0.75rem);
+    font-weight: var(--font-weight-semibold, 600);
+    text-transform: uppercase;
+}
+
+.am_context-stream {
+    background-color: var(--brand-pink-light);
+    color: var(--brand-pink-dark);
+}
+.am_context-level {
+    background-color: var(--brand-orange-light);
+    color: var(--brand-orange-dark);
+}
+.am_context-batch {
+    background-color: var(--color-info-light);
+    color: var(--color-info-dark);
+}
+.am_context-subject {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+/* ADDED: Package Context Badge */
+.am_context-package {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning-dark);
+}
+
+
+/* Form Body Layout */
+.am_form-modal-body {
+    padding: var(--space-6);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+}
+
+.am_form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.am_full-width {
+    grid-column: 1 / -1;
+}
+
+.am_form-group label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-2);
+}
+
+.am_required-star {
+    color: var(--color-error);
+    margin-left: 2px;
+}
+
+.am_form-group input:not([type="radio"]),
+.am_form-group select {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.am_form-group input:focus,
+.am_form-group select:focus {
+    border-color: var(--brand-pink);
+    box-shadow: 0 0 0 2px var(--brand-pink-light);
+    outline: none;
+}
+
+
+/* File Upload Styles (Matching "upload file" request) */
+.am_file-upload-container {
+    position: relative;
+    border: 2px dashed var(--color-gray-400);
+    border-radius: var(--radius-md);
+    background-color: var(--color-gray-50);
+    transition: all 0.2s;
+}
+
+.am_file-upload-container:hover {
+    border-color: var(--brand-pink);
+    background-color: var(--brand-pink-light);
+}
+
+.am_file-upload-input {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.am_file-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-5);
+    text-align: center;
+    pointer-events: none;
+}
+
+.am_upload-icon {
+    color: var(--color-gray-600);
+    margin-bottom: var(--space-2);
+}
+
+.am_file-upload-container:hover .am_upload-icon {
+    color: var(--brand-pink-dark);
+}
+
+.am_upload-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.am_file-upload-container:hover .am_upload-text {
+    color: var(--brand-pink-dark);
+}
+
+.am_existing-file-info {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-600);
+    margin-top: var(--space-1);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Radio Group Styles */
+.am_radio-group {
+    display: block; /* Override flex for the main form-group */
+}
+
+.am_radio-options {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    padding-top: var(--space-1);
+}
+
+.am_radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: var(--color-white);
+    font-size: var(--font-size-sm);
+}
+
+.am_radio-label:has(input:checked) {
+    border-color: var(--brand-orange);
+    background-color: var(--brand-orange-light);
+    color: var(--brand-orange-dark);
+    font-weight: var(--font-weight-medium);
+}
+
+.am_radio-label input[type="radio"] {
+    accent-color: var(--brand-orange);
+    margin: 0;
+    width: 16px;
+    height: 16px;
+}
+
+
+/* Modal Actions */
+.am_form-modal-actions {
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--color-gray-200);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+}
+
+.am_form-modal-actions .btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: var(--font-weight-semibold);
+}
+
+.am_form-modal-actions .btn-outline {
+    color: var(--color-gray-700);
+    border-color: var(--color-gray-300);
+}
+
+
+/* =========================================================================
+   RESPONSIVE DESIGN 
+   ========================================================================= */
+
+@media (max-width: 768px) {
+    /* Tiles */
+    .am_nav-card {
+        flex: 1 1 calc(50% - var(--space-4) / 2);
+        min-width: unset;
+    }
+    .am_wrapper{
+          padding-inline: var(--space-4, 32px);
+    }
+    
+    /* Panel Structure */
+    .am_detail-panel-container {
+        padding: var(--space-6, 16px);
+    }
+    
+    /* Force header title and search bar to stack on mobile */
+    .am_batch-controls-header {
+        flex-direction: column;
+        align-items: flex-start;
+        border-bottom: none; 
+    }
+
+    .am_batch-search-bar {
+        width: 100%; 
+        margin-top: var(--space-3, 12px); 
+    }
+    
+    /* Assignment Controls Stack */
+    .am_assignment-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .am_assignment-search-bar {
+        width: 100%;
+        max-width: 100%;
+        order: 1; /* Move search to the top */
+    }
+    .am_control-group {
+        width: 100%;
+        justify-content: space-between;
+        order: 2; /* Place filter/view toggle below search */
+        margin-top: var(--space-2);
+        gap: var(--space-2);
+    }
+    
+    .am_filter-buttons {
+        flex-grow: 1;
+    }
+    
+    .am_filter-buttons .btn {
+        flex-grow: 1;
+        font-size: var(--font-size-xs);
+    }
+    
+    /* Grid View on Mobile */
+    .am_assignment-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+    
+    /* New Card Responsive Adjustments */
+    .am_card-content-area {
+        padding: var(--space-4);
+        padding-left: var(--space-5);
+    }
+
+    .am_card-actions-grid {
+        flex-wrap: wrap; /* Allow actions to wrap if more than 4 */
+    }
+    .am_card-actions-grid .btn-icon {
+        flex-basis: 50%; /* Make download/view buttons full width in one row, others wrap */
+        border-right: none;
+        border-bottom: 1px solid var(--color-gray-100);
+        font-size: var(--font-size-sm);
+        height: 36px;
+    }
+    .am_card-actions-grid .btn-icon:nth-child(2) {
+        border-right: none;
+    }
+    .am_card-actions-grid .btn-icon:last-child {
+        border-bottom: none;
+    }
+    
+    .am_action-label {
+        display: inline; /* Show label on mobile */
+    }
+
+    /* Batch Slider */
+    .am_batch-slider-wrapper {
+        padding: 0; 
+    }
+    
+    .am_batch-slider {
+        flex-wrap: nowrap; 
+        justify-content: flex-start; 
+    }
+    
+    .am_batch-card {
+        width: 180px; 
+        flex-shrink: 0;
+        margin-bottom: 0; 
+    }
+    
+    /* Subject Grid Responsive */
+    .am_subject-card-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+    .am_subject-card {
+        padding: var(--space-4, 16px);
+    }
+    
+    /* Package Grid Responsive */
+    .am_package-card-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+    .am_package-card {
+        padding: var(--space-4, 16px);
+    }
+
+    /* Text Size Reduction (Batch & Subject) */
+    .am_batch-card h5.am_batch-name,
+    .am_subject-card h5.am_subject-name {
+        font-size: var(--font-size-sm, 0.875rem); 
+        line-height: 1.2;
+    }
+    
+    /* Hide the word "Students" to prevent wrapping/overflow */
+    .am_enrollment-label {
+        display: none; 
+    }
+
+    .am_batch-status, .am_batch-enrollment, .am_subject-meta {
+        font-size: var(--font-size-xs, 0.75rem); 
+    }
+
+    /* Display Slider Navigation Buttons on Mobile */
+    .am_slider-nav-btn {
+        display: flex; 
+        width: 30px; 
+        height: 30px;
+    }
+    
+    .am_slider-nav-left {
+        left: var(--space-2, 8px);
+    }
+
+    .am_slider-nav-right {
+        right: var(--space-2, 8px);
+    }
+
+    /* 👇 MODAL RESPONSIVE ADJUSTMENTS FOR SMALLER SIZE 👇 */
+    .am_form-modal-body {
+        grid-template-columns: 1fr; /* Single column layout for forms on mobile */
+        padding: var(--space-3); /* Reduced padding to 12px for compactness */
+        gap: var(--space-4);
+    }
+    
+    .am_form-modal-container {
+        width: 90%;
+    }
+
+    .am_form-modal-context-bar {
+        padding: var(--space-3); /* Reduced padding to 12px */
+    }
+    
+    .am_form-modal-header {
+        padding: var(--space-3); /* Reduced padding to 12px */
+    }
+
+    .am_form-modal-actions {
+        padding: var(--space-3); /* Reduced padding to 12px for compact footer */
+        /* Overrides: padding: var(--space-4) var(--space-6); */
+    }
+    
+    .am_subject-level-detail {
+        display: none;
+    }
+}
+.am_view-submisiion-flex
+{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+.am_view_sumbission-btn{
+   
+    padding: var(--space-1) var(--space-2);
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    outline: none;
+    font-size: small;
+    align-items: center;
+    gap: 8px;
+    background-color: white;
+    color:var(--brand-pink-dark) !important ;
+    border:1px solid var(--brand-pink-dark) !important;
+}
+.am_view_sumbission-btn:hover {
+    background-color: var(--brand-pink); 
+    color: white !important;
+    border:white 1px solid;
+
+}
+
+
+/* =========================================================================
+   NEW FILE CARD VIEW STYLES (Based on User Request)
+   ========================================================================= */
+
+/* Main card container for the new file-centric design */
+.am_file-card-new {
+    position: relative;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s, transform 0.2s;
+    text-align: center; /* Center content like title and icon */
+    padding: var(--space-4);
+}
+
+.am_file-card-new:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* Header to position badge and status at corners */
+.am_file-card-header-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute; /* Position relative to the card */
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: var(--space-3) var(--space-4);
+    z-index: 5;
+}
+
+/* Overriding default badge margins for corner position */
+.am_file-card-header-new .am_card-badge {
+    margin: 0;
+}
+
+/* Main content area: Large Icon and Title */
+.am_file-card-main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: var(--space-6); /* Push content down past the header */
+    padding-bottom: var(--space-4);
+}
+
+.am_large-file-icon-wrapper {
+    /* Styles for the large icon container */
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background-color: var(--color-gray-100);
+    margin-bottom: var(--space-3);
+    /* File icon colors are inherited from the existing .text-error, .text-info etc. */
+}
+
+.am_file-card-title {
+    /* Assignment Name below the icon */
+    font-size: var(--font-size-lg, 1rem);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-gray-900);
+    margin: 0;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    padding: 0 var(--space-2);
+}
+
+/* Details Footer (Due Date, Marks, Submission Type) */
+.am_file-card-details-footer {
+    text-align: left;
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-4);
+    border-top: 1px dashed var(--color-gray-200);
+    margin-top: var(--space-3);
+}
+
+/* Condensing the Info lines */
+.am_file-card-details-footer .am_card-info {
+    justify-content: flex-start;
+    margin-bottom: var(--space-1);
+    font-size: var(--font-size-sm);
+}
+
+/* Actions Bar for the new File Card */
+.am_file-card-actions-new {
+    border-top: 1px solid var(--color-gray-100);
+    margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) calc(var(--space-4) * -1); /* Full width border-to-edge */
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr; /* Larger space for Submissions count, smaller for icons */
+}
+
+/* Action buttons in the new File Card */
+.am_file-card-actions-new .btn-icon {
+    flex-grow: 1;
+    height: 40px;
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid var(--color-gray-100);
+    color: var(--color-gray-600);
+    transition: all 0.1s;
+    display: flex; /* Ensure the button content is aligned */
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--font-size-sm);
+}
+
+.am_file-card-actions-new .btn-icon:last-child {
+    border-right: none;
+}
+
+.am_file-card-actions-new .am_action-btn-secondary {
+    color: var(--color-gray-700) !important;
+}
+
+.am_file-card-actions-new .am_action-btn-secondary:hover {
+    background-color: var(--color-gray-100) !important;
+}
+
+/* Responsive Adjustments for new file card */
+@media (max-width: 768px) {
+    .am_file-card-new {
+        padding: var(--space-3);
+    }
+
+    .am_file-card-header-new {
+        padding: var(--space-2) var(--space-3);
+    }
+    
+    .am_large-file-icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+
+    .am_file-card-main-content {
+        padding-top: var(--space-5);
+        padding-bottom: var(--space-3);
+    }
+    
+    .am_file-card-actions-new {
+        grid-template-columns: 1fr 1fr 1fr 1fr; /* Make submission button the same size as others on mobile */
+        margin: calc(var(--space-3) * -1) calc(var(--space-3) * -1) calc(var(--space-3) * -1); 
+    }
+    
+    .am_file-card-actions-new .btn-icon span {
+        display: none; /* Hide the count label, just show the icon and number */
+    }
+    
+    .am_file-card-actions-new .am_action-btn-secondary {
+        /* Only show icon + count on small screens, no text label */
+        font-size: var(--font-size-base);
+    }
+    .am_file-card-actions-new .am_action-btn-primary {
+        color: var(--brand-pink) !important;
+    }
+
+}
+.vs_back-button{
+    padding: var(--space-2)  var(--space-2)  var(--space-1)  var(--space-2) ;
+    align-items: center;
+    font-size: larger;
+    border-radius: 8px;
+    border: 1px solid white;
+     background-color: var(--brand-pink); 
+    color: white !important;
+    margin-bottom: 5px;
+}
+.vs_back-button:hover {
+   
+    border: 1px solid  var(--brand-pink);
+    background-color: white;
+    color: var(--brand-pink-dark) !important;
+}

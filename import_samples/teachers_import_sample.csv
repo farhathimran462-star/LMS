@@ -1,0 +1,6 @@
+full_name,email,phone,username,password,role,roll_number,employee_id,institute_id,institutes_managed,is_active,notes
+Dr. Sarah Johnson,sarah.johnson@institute.edu,5551234567,sarah.johnson,Teacher@2025,Teacher,,TCH001,,,true,Physics department head - PhD in Quantum Mechanics
+Prof. Michael Brown,michael.brown@institute.edu,5559876543,michael.brown,Teacher@2025,Teacher,,TCH002,,,true,Mathematics professor - Specialized in Calculus
+Dr. Lisa Anderson,lisa.anderson@institute.edu,5558887777,lisa.anderson,Teacher@2025,Teacher,,TCH003,,,true,Chemistry lecturer - Organic chemistry expert
+Prof. David Lee,david.lee@institute.edu,5556661111,david.lee,Teacher@2025,Teacher,,TCH004,,,true,Biology teacher - Research in genetics
+Ms. Amanda White,amanda.white@institute.edu,5554443333,amanda.white,Teacher@2025,Teacher,,TCH005,,,true,English literature and composition

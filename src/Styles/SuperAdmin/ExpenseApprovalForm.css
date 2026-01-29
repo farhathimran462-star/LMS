@@ -1,0 +1,683 @@
+/* ExpenseApprovalForm.css - Complete Styles using My Career Point LMS Theme Variables */
+
+/* --- Dashboard Layout --- */
+.EXP_approval-dashboard {
+    padding: var(--space-8);
+    background-color: var(--color-gray-100); /* Background color from global theme */
+    min-height: 100vh;
+}
+
+.EXP_header {
+    margin-bottom: var(--space-6); 
+    color: var(--color-gray-900);
+}
+
+/* --- Controls Row (Search, Filter, Add Button) --- */
+.EXP_controls-row {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    align-items: center;
+    flex-wrap: wrap; /* Allows wrapping on small screens */
+}
+
+.EXP_search-container {
+    flex-grow: 1; 
+    max-width: 30rem;
+    min-width: 15rem; /* Prevents search bar from collapsing too much */
+}
+
+/* Input Styles - Shared for Search Input and Custom Select container */
+.EXP_search-input {
+    width: 90%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+    color: var(--color-gray-900);
+    /* Inherits focus/transition from global input styles */
+}
+.EXP_search-input:focus {
+    /* Uses global focus styles */
+    border-color: var(--brand-pink);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+}
+
+/* ------------------------------------------------------------------
+   CUSTOM DROPDOWN STYLES (Filters and Form)
+   ------------------------------------------------------------------ */
+.EXP_custom-dropdown-wrapper {
+    position: relative; 
+    width: 12rem; 
+    flex-shrink: 0;
+}
+
+.EXP_custom-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    /* Inherits style from EXP_search-input class */
+}
+
+.EXP_dropdown-icon {
+    color: var(--brand-pink); 
+    font-size: var(--font-size-sm);
+}
+
+.EXP_dropdown-options-container {
+    position: absolute;
+    top: calc(100% + var(--space-1));
+    left: 0;
+    width: 100%;
+    z-index: var(--z-dropdown);
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-gray-300);
+    max-height: 15rem; 
+    overflow-y: auto;
+    animation: slideDown var(--transition-fast); /* Uses global animation */
+}
+/* Ensure options container in modal is above other fields but below modal header/footer */
+.EXP_modal-options {
+    z-index: calc(var(--z-modal) + 1); 
+}
+
+.EXP_dropdown-options-list {
+    list-style: none;
+    padding: var(--space-2) 0;
+    margin: 0;
+}
+
+.EXP_dropdown-option {
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+    color: var(--color-gray-700);
+    font-size: var(--font-size-sm);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.EXP_dropdown-option:hover {
+    background-color: var(--brand-pink-light);
+    color: var(--color-gray-900);
+}
+
+.EXP_dropdown-option.EXP_selected {
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ------------------------------------------------------------------
+   CARD & TABLE STYLES
+   ------------------------------------------------------------------ */
+.EXP_card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg); 
+    padding: var(--space-6);
+    overflow-x: auto;
+    border-top: 4px solid var(--brand-orange); 
+}
+
+.EXP_table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px; /* Ensures minimum space for content */
+}
+
+/* Table Header */
+.EXP_th {
+    padding: var(--space-4);
+    text-align: left;
+    background-color: var(--brand-pink); 
+    color: var(--color-white); 
+    font-weight: var(--font-weight-semibold);
+    border-bottom: 2px solid var(--brand-pink-dark);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-tight);
+    vertical-align: middle;
+}
+
+.EXP_checkbox-col {
+    width: 30px;
+    text-align: center;
+}
+
+.EXP_tr {
+    border-bottom: 1px solid var(--color-gray-200);
+    transition: background-color var(--transition-fast);
+}
+
+.EXP_tr:hover {
+    background-color: var(--color-gray-50); 
+}
+
+.EXP_td {
+    padding: var(--space-4);
+    color: var(--color-gray-800);
+    font-size: var(--font-size-sm);
+    vertical-align: middle;
+}
+
+.EXP_td.EXP_purpose {
+    max-width: 200px; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.EXP_td.EXP_amount {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-success-dark);
+}
+
+.EXP_empty-row {
+    text-align: center;
+    font-style: italic;
+    color: var(--color-gray-500);
+    padding: var(--space-8);
+}
+
+/* --- Status Tags --- */
+.EXP_status-tag {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+    display: inline-block;
+    min-width: 70px;
+    text-align: center;
+}
+
+.EXP_pending {
+    background-color: var(--color-info-light); 
+    color: var(--color-info-dark);
+}
+.EXP_approved {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+.EXP_rejected {
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+}
+
+/* --- Action Buttons (Table & Controls) --- */
+.EXP_actions-group {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Base button for actions inheriting from global .btn style for font, transition, etc. */
+.EXP_action-button {
+    /* Base styles */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-fast);
+    line-height: 1;
+    border-radius: var(--radius-md);
+    
+    /* Default padding for icon buttons */
+    padding: var(--space-2);
+    width: 32px; 
+    height: 32px;
+}
+
+/* Add Expense Request Button (in the controls row) */
+.EXP_action-button.EXP_add-button {
+    background-color: var(--brand-orange); /* Using Primary button color */
+    color: var(--color-white);
+    padding: var(--space-3) var(--space-4); /* Larger padding */
+    height: auto;
+    width: auto;
+    box-shadow: var(--shadow-sm);
+    font-size: var(--font-size-sm);
+}
+.EXP_action-button.EXP_add-button:hover {
+    background-color: var(--brand-orange-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+
+/* Table Icon Buttons */
+.EXP_action-button.EXP_edit {
+    background-color: var(--color-info); 
+    color: var(--color-white);
+}
+
+.EXP_action-button.EXP_delete {
+    background-color: var(--color-error); 
+    color: var(--color-white);
+}
+
+.EXP_action-button.EXP_view-doc {
+    background-color: var(--color-gray-500); /* Neutral color for view */
+    color: var(--color-white);
+}
+
+.EXP_action-button:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
+}
+
+.EXP_action-button:disabled {
+    background-color: var(--color-gray-400);
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+}
+
+/* --- Modal/Popup Form Styles --- */
+
+.EXP_modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(33, 33, 33, 0.7); /* Dark gray from theme */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-modal-backdrop, 1240); /* Using global z-index for backdrop */
+    backdrop-filter: blur(2px);
+    animation: fadeIn var(--transition-fast);
+}
+
+.EXP_modal-content {
+    background: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    width: 90%;
+    max-height: 90vh;
+
+    overflow: auto;
+    max-width: 600px;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    z-index: var(--z-modal, 1250); /* Using global z-index for modal */
+    animation: slideDown var(--transition-base);
+}
+.EXP_modal-content {
+    /* For Firefox */
+    scrollbar-width: none; 
+    /* For IE and old Edge */
+    -ms-overflow-style: none; 
+}
+
+.EXP_modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-gray-300);
+}
+
+.EXP_modal-title {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    color: var(--color-gray-900);
+    font-weight: var(--font-weight-semibold);
+}
+
+.EXP_modal-close-button {
+    background: none;
+    border: none;
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+    color: var(--color-gray-500);
+    transition: color var(--transition-fast);
+}
+
+.EXP_modal-close-button:hover {
+    color: var(--color-error);
+}
+
+.EXP_expense-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5); /* Increased gap for form cleanliness */
+}
+
+.EXP_form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Span long fields across two columns */
+.EXP_form-group:has(#purpose), 
+.EXP_form-group:has(#supportingDocument) { 
+    grid-column: 1 / -1;
+}
+
+.EXP_form-label {
+    /* Uses global label styles */
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-2);
+    color: var(--color-gray-700);
+    font-size: var(--font-size-sm);
+}
+
+.EXP_form-input {
+    /* Inherits base input styles from global index.css */
+    padding: var(--space-3) var(--space-4);
+    width: 90% !important;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+}
+
+textarea.EXP_form-input {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Disabled/Readonly fields */
+.EXP_disabled-field .EXP_form-input,
+.EXP_disabled-field .EXP_custom-select {
+    background-color: var(--color-gray-100);
+    cursor: not-allowed;
+    color: var(--color-gray-600);
+}
+.EXP_disabled-field .EXP_dropdown-icon {
+    color: var(--color-gray-400);
+}
+
+
+.EXP_modal-footer {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-gray-200);
+}
+
+/* Footer Buttons */
+.EXP_action-button.EXP_cancel {
+    background-color: var(--color-gray-400);
+    color: var(--color-gray-900);
+    padding: var(--space-3) var(--space-6);
+    height: auto;
+    width: auto;
+}
+.EXP_action-button.EXP_cancel:hover {
+    background-color: var(--color-gray-500);
+    color: var(--color-white);
+}
+
+.EXP_action-button.EXP_approve {
+    /* Used for Save/Submit - use success color */
+    background-color: var(--color-success);
+    color: var(--color-white);
+    padding: var(--space-3) var(--space-6);
+    height: auto;
+    width: auto;
+}
+.EXP_action-button.EXP_approve:hover {
+    background-color: var(--color-success-dark);
+}
+
+/* ========================================
+   RESPONSIVE STYLES
+   ======================================== */
+@media (max-width: 900px) {
+    /* Collapse control row items */
+    .EXP_controls-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-3);
+    }
+    
+    .EXP_search-container,
+    .EXP_custom-dropdown-wrapper,
+    .EXP_action-button.EXP_add-button {
+        width: 100%;
+        max-width: 100%;
+    }
+    .EXP_action-button.EXP_add-button {
+        /* Ensure the button fills the width */
+        justify-content: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .EXP_approval-dashboard {
+        padding: var(--space-4);
+    }
+
+    /* Modal Form Collapse */
+    .EXP_modal-content {
+        padding: var(--space-4);
+    }
+    
+    .EXP_expense-form {
+        grid-template-columns: 1fr; /* Single column layout for form fields */
+        gap: var(--space-4);
+    }
+    
+    /* Ensure all elements span the single column */
+    .EXP_form-group:has(#purpose), 
+    .EXP_form-group:has(#supportingDocument) { 
+        grid-column: auto;
+    }
+
+    .EXP_modal-footer {
+        flex-direction: column;
+        gap: var(--space-3);
+        padding-top: var(--space-3);
+    }
+    .EXP_modal-footer button {
+        width: 90%;
+    }
+}
+/*
+ * Styles for the Expense Line Items Table (Added to ExpenseApprovalForm.css)
+ */
+
+/* Container ensures 100% width of the modal content area */
+.EXP_expense-items-table-wrapper {
+    margin-top: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    width: 90%; /* Ensure it uses the full width of the form container */
+    box-sizing: border-box;
+}
+
+.EXP_expense-items-table {
+    width: 100%; /* Table takes full container width */
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* Header Styles */
+.EXP_expense-items-table thead tr {
+    background-color: #f7f7f7;
+}
+
+.EXP_expense-items-table th,
+.EXP_expense-items-table td {
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+    vertical-align: top; /* Align text content to the top */
+}
+
+.EXP_expense-items-table th {
+    font-weight: 600;
+    color: #333;
+    /* Adjusted width distribution for better fit */
+    width: 25%; /* Type */
+}
+
+/* Specific column widths (optional, but good for layout) */
+.EXP_expense-items-table th:nth-child(2),
+.EXP_expense-items-table td:nth-child(2) {
+    width: 20%; /* Amount */
+    text-align: right;
+}
+.EXP_expense-items-table th:nth-child(3),
+.EXP_expense-items-table td:nth-child(3) {
+    width: 45%; /* Description */
+}
+.EXP_expense-items-table th:last-child,
+.EXP_expense-items-table td:last-child {
+    width: 10%; /* Action */
+    text-align: center;
+}
+
+
+/* Input/TextArea Overrides */
+.EXP_expense-items-table td input[type="number"],
+.EXP_expense-items-table td textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    padding: 8px;
+    margin: -8px -10px; /* Overlap padding of the TD for full cell coverage */
+    font-size: 14px;
+    resize: vertical;
+    min-height: 40px;
+    background: transparent;
+}
+
+.EXP_expense-items-table td input[type="number"] {
+    text-align: right;
+}
+
+/* Row Styling */
+.EXP_expense-items-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Remove default border on input/textarea */
+.EXP_expense-items-table td input:focus,
+.EXP_expense-items-table td textarea:focus {
+    outline: 1px solid #007bff; /* Add a focus indicator */
+}
+
+
+/* Total Row Styling */
+.EXP_expense-items-table tbody tr:last-child {
+    font-weight: bold;
+    background-color: #f0f8ff; /* Light blue background for total */
+}
+
+.EXP_expense-items-table tbody tr:last-child td {
+    border-top: 2px solid #ccc;
+}
+
+.EXP_expense-items-table-footer-total {
+    text-align: right;
+    font-size: 16px;
+    color: #0056b3;
+}
+
+/* Action Button in Table */
+.EXP_expense-items-table .EXP_action-button.EXP_reject {
+    padding: 6px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.EXP_expense-items-table .EXP_action-button.EXP_reject:hover {
+    background-color: #cc0000;
+}
+
+/* --- Summary Cards Section --- */
+
+.EXP_summary-cards-row {
+    display: flex;
+    gap: 20px; /* Space between cards */
+    margin-bottom: 25px; /* Space above the controls/search bar */
+    flex-wrap: wrap; /* Allows cards to wrap on smaller screens */
+}
+
+.EXP_summary-card {
+    flex: 1; /* Makes cards grow equally */
+    min-width: 250px; /* Minimum width for each card */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    /* Basic background color - will be overridden by specific status classes */
+    background-color: #ffffff; 
+}
+
+.EXP_summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.EXP_card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.EXP_card-value {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* --- Specific Card Status Styles --- */
+
+/* Pending Card (Accent color: Orange/Yellow) */
+.EXP_pending-card {
+    border-left: 5px solid #ff9800; /* Orange border for visual cue */
+}
+.EXP_pending-value {
+    color: #ff9800;
+}
+
+/* Approved Card (Accent color: Green) */
+.EXP_approved-card {
+    border-left: 5px solid #4CAF50; /* Green border */
+}
+.EXP_approved-value {
+    color: #4CAF50;
+}
+
+/* Total Card (Accent color: Primary/Blue) */
+.EXP_total-card {
+    border-left: 5px solid #2196F3; /* Blue border */
+}
+.EXP_total-value {
+    color: #2196F3;
+}
+
+/* Separator Line */
+.EXP_summary-separator {
+    border: none;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 10px 0 20px 0;
+}

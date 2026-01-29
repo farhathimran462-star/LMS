@@ -1,0 +1,688 @@
+{
+
+  "institutions_reference": [
+    {
+      "institution_id": "INST001",
+      "name": "Apex Commerce College (Main Campus)",
+      "location": "Mumbai",
+      "image": "https://picsum.photos/200/200?random=1"
+    },
+    {
+      "institution_id": "INST002",
+      "name": "Zenith Professional College",
+      "location": "Delhi",
+      "image": "https://picsum.photos/200/200?random=2"
+    },
+    {
+      "institution_id": "INST003",
+      "name": "Elite Commerce Hub",
+      "location": "Bangalore",
+      "image": "https://picsum.photos/200/200?random=3"
+    },
+    {
+      "institution_id": "INST003",
+      "name": "Elite Commerce Hub",
+      "location": "Bangalore",
+      "image": "https://picsum.photos/200/200?random=4"
+    },
+    {
+      "institution_id": "INST003",
+      "name": "Elite Commerce Hub",
+      "location": "Bangalore",
+      "image": "https://picsum.photos/200/200?random=5"
+    },
+    {
+      "institution_id": "INST003",
+      "name": "Elite Commerce Hub",
+      "location": "Bangalore",
+      "image": "https://picsum.photos/200/200?random=6"
+    },
+    {
+      "institution_id": "INST003",
+      "name": "Elite Commerce Hub",
+      "location": "Bangalore",
+      "image": "https://picsum.photos/200/200?random=7"
+    }
+  ]
+,
+  "admins_reference": [
+    {
+      "admin_id": "ADM001",
+      "name": "Rajesh Kumar"
+    },
+    {
+      "admin_id": "ADM002",
+      "name": "Priya Sharma"
+    },
+    {
+      "admin_id": "ADM003",
+      "name": "Arun Pandey"
+    },
+    {
+      "admin_id": "ADM004",
+      "name": "Shishu Sharma"
+    },
+    {
+      "admin_id": "ADM005",
+      "name": "Arun Rajesh"
+    },
+    {
+      "admin_id": "ADM006",
+      "name": "Karan Sharma"
+    }
+  ],
+  "teachers_reference": [
+    {
+      "teacher_id": "T001",
+      "name": "Prof. Vikas Mehta",
+      "subjects_taught_ids": [
+        "SUB001",
+        "SUB014",
+        "SUB017"
+      ],
+      "primary_institution_id": "INST001"
+    },
+    {
+      "teacher_id": "T002",
+      "name": "Ms. Anjali Iyer",
+      "subjects_taught_ids": [
+        "SUB002",
+        "SUB005",
+        "SUB007"
+      ],
+      "primary_institution_id": "INST001"
+    },
+    {
+      "teacher_id": "T003",
+      "name": "Dr. Rohit Khanna",
+      "subjects_taught_ids": [
+        "SUB004",
+        "SUB006",
+        "SUB009"
+      ],
+      "primary_institution_id": "INST001"
+    },
+    {
+      "teacher_id": "T004",
+      "name": "Prof. Sunil Jadhav",
+      "subjects_taught_ids": [
+        "SUB010",
+        "SUB023",
+        "SUB009"
+      ],
+      "primary_institution_id": "INST002"
+    }
+  ],
+  "students_reference": [
+    { "student_id": "S001", "name": "Aarav Sharma", "email": "aarav.s@acc.com" },
+    { "student_id": "S002", "name": "Bhavna Patel", "email": "bhavna.p@acc.com" },
+    { "student_id": "S003", "name": "Chirag Gupta", "email": "chirag.g@acc.com" },
+    { "student_id": "S004", "name": "Diya Singh", "email": "diya.s@acc.com" },
+    { "student_id": "S005", "name": "Eshan Khan", "email": "eshan.k@acc.com" },
+    { "student_id": "S006", "name": "Fiza Ali", "email": "fiza.a@acc.com" },
+    { "student_id": "S007", "name": "Gaurav Verma", "email": "gaurav.v@acc.com" },
+    { "student_id": "S008", "name": "Hina Reddy", "email": "hina.r@acc.com" },
+    { "student_id": "S009", "name": "Ishan Jain", "email": "ishan.j@acc.com" },
+    { "student_id": "S010", "name": "Jia Malhotra", "email": "jia.m@acc.com" },
+    { "student_id": "S011", "name": "Kiran Das", "email": "kiran.d@acc.com" },
+    { "student_id": "S012", "name": "Leena Nanda", "email": "leena.n@acc.com" },
+    { "student_id": "S013", "name": "Manoj Pillai", "email": "manoj.p@acc.com" },
+    { "student_id": "S014", "name": "Neha Sharma", "email": "neha.s@acc.com" },
+    { "student_id": "S015", "name": "Omar Farooqi", "email": "omar.f@acc.com" },
+    { "student_id": "S016", "name": "Priya Roy", "email": "priya.r@acc.com" },
+    { "student_id": "S017", "name": "Qasim Baig", "email": "qasim.b@acc.com" },
+    { "student_id": "S018", "name": "Riya Yadav", "email": "riya.y@acc.com" },
+    { "student_id": "S019", "name": "Sanjay Nair", "email": "sanjay.n@acc.com" },
+    { "student_id": "S020", "name": "Tina Varghese", "email": "tina.v@acc.com" },
+    { "student_id": "S021", "name": "Uday Menon", "email": "uday.m@acc.com" },
+    { "student_id": "S022", "name": "Vaishali K.", "email": "vaishali.k@acc.com" },
+    { "student_id": "S023", "name": "Wasim Akram", "email": "wasim.a@acc.com" },
+    { "student_id": "S024", "name": "Xavier D'souza", "email": "xavier.d@acc.com" },
+    { "student_id": "S025", "name": "Yashika Shah", "email": "yashika.s@acc.com" },
+    { "student_id": "S026", "name": "Zara Ali", "email": "zara.a@acc.com" },
+    { "student_id": "S027", "name": "Bharat Kumar", "email": "bharat.k@acc.com" },
+    { "student_id": "S028", "name": "Chetna Rao", "email": "chetna.r@acc.com" },
+    { "student_id": "S029", "name": "Dev Sharma", "email": "dev.s@acc.com" },
+    { "student_id": "S030", "name": "Esha Gupta", "email": "esha.g@acc.com" },
+    { "student_id": "S031", "name": "Gita Verma", "email": "gita.v@acc.com" },
+    { "student_id": "S032", "name": "Harsh Singh", "email": "harsh.s@acc.com" },
+    { "student_id": "S033", "name": "Inaaya Khan", "email": "inaaya.k@acc.com" },
+    { "student_id": "S034", "name": "Jeevan P.", "email": "jeevan.p@acc.com" },
+    { "student_id": "S035", "name": "Kajal D.", "email": "kajal.d@acc.com" },
+    { "student_id": "S036", "name": "Lalit M.", "email": "lalit.m@acc.com" },
+    { "student_id": "S037", "name": "Meera T.", "email": "meera.t@acc.com" },
+    { "student_id": "S038", "name": "Nihal R.", "email": "nihal.r@acc.com" },
+    { "student_id": "S039", "name": "Omkar S.", "email": "omkar.s@acc.com" },
+    { "student_id": "S040", "name": "Pari J.", "email": "pari.j@acc.com" },
+    { "student_id": "S041", "name": "Rohan Varma", "email": "rohan.v@zpc.com" },
+    { "student_id": "S042", "name": "Sakshi Mehta", "email": "sakshi.m@zpc.com" },
+    { "student_id": "S043", "name": "Tarun Joshi", "email": "tarun.j@zpc.com" },
+    { "student_id": "S044", "name": "Urvashi N.", "email": "urvashi.n@zpc.com" },
+    { "student_id": "S045", "name": "Vinay Kulkarni", "email": "vinay.k@zpc.com" },
+    { "student_id": "S046", "name": "Wasiq S.", "email": "wasiq.s@ech.com" },
+    { "student_id": "S047", "name": "Yamini P.", "email": "yamini.p@ech.com" },
+    { "student_id": "S048", "name": "Zaid B.", "email": "zaid.b@ech.com" },
+    { "student_id": "S049", "name": "Ananya D.", "email": "ananya.d@ech.com" },
+    { "student_id": "S050", "name": "Bimal R.", "email": "bimal.r@ech.com" }
+  ],
+  "courses_reference": [
+    {
+      "course_id": "CA",
+      "course_name": "Chartered Accountancy"
+    },
+    {
+      "course_id": "CMA",
+      "course_name": "Cost and Management Accountancy"
+    }
+  ],
+  "batches_reference": [
+    {
+      "batch_id": "CA_FND_APR_2025",
+      "batch_name": "CA Foundation Apr 2025"
+    },
+    {
+      "batch_id": "CA_FND_OCT_2025",
+      "batch_name": "CA Foundation Oct 2025"
+    },
+    {
+      "batch_id": "CA_FND_NOV_2025",
+      "batch_name": "CA Foundation Apr 2025"
+    },
+    {
+      "batch_id": "CA_FND_DEc_2025",
+      "batch_name": "CA Foundation Oct 2025"
+    },
+    {
+      "batch_id": "CA_INT_MAY_2025",
+      "batch_name": "CA Intermediate May 2025"
+    },
+    {
+      "batch_id": "CA_ADV_NOV_2024",
+      "batch_name": "CA Final Nov 2024"
+    },
+    {
+      "batch_id": "CMA_FND_JUN_2025",
+      "batch_name": "CMA Foundation Jun 2025"
+    },
+    {
+      "batch_id": "CMA_INT_DEC_2024",
+      "batch_name": "CMA Intermediate Dec 2024"
+    },
+    {
+      "batch_id": "CMA_ADV_SEP_2024",
+      "batch_name": "CMA Final Sep 2024"
+    },
+    {
+      "batch_id": "CMA_INT_JUN_2025_ZPC",
+      "batch_name": "CMA Intermediate Jun 2025 (ZPC)"
+    },
+    {
+      "batch_id": "CA_INT_NOV_2025_ECH",
+      "batch_name": "CA Intermediate Nov 2025 (ECH)"
+    }
+  ],
+  "subjects_reference": [
+    {
+      "subject_id": "SUB001",
+      "subject_name": "Principles of Accounting"
+    },
+    {
+      "subject_id": "SUB002",
+      "subject_name": "Business Law"
+    },
+    {
+      "subject_id": "SUB003",
+      "subject_name": "Economics"
+    },
+    {
+      "subject_id": "SUB004",
+      "subject_name": "Quantitative Aptitude"
+    },
+    {
+      "subject_id": "SUB005",
+      "subject_name": "Corporate Law"
+    },
+    {
+      "subject_id": "SUB006",
+      "subject_name": "Cost Accounting"
+    },
+    {
+      "subject_id": "SUB007",
+      "subject_name": "Taxation"
+    },
+    {
+      "subject_id": "SUB008",
+      "subject_name": "Auditing and Assurance"
+    },
+    {
+      "subject_id": "SUB009",
+      "subject_name": "Financial Management"
+    },
+    {
+      "subject_id": "SUB010",
+      "subject_name": "Strategic Cost Management"
+    },
+    {
+      "subject_id": "SUB011",
+      "subject_name": "Advanced Auditing"
+    },
+    {
+      "subject_id": "SUB012",
+      "subject_name": "Corporate and Economic Laws"
+    },
+    {
+      "subject_id": "SUB013",
+      "subject_name": "Commercial Knowledge"
+    },
+    {
+      "subject_id": "SUB014",
+      "subject_name": "Corporate Financial Reporting"
+    },
+    {
+      "subject_id": "SUB015",
+      "subject_name": "Strategic Performance Management"
+    },
+    {
+      "subject_id": "SUB016",
+      "subject_name": "Advanced Financial Management"
+    },
+    {
+      "subject_id": "SUB017",
+      "subject_name": "Advanced Accounting"
+    },
+    {
+      "subject_id": "SUB018",
+      "subject_name": "Fundamentals of Economics"
+    },
+    {
+      "subject_id": "SUB019",
+      "subject_name": "Fundamentals of Accounting"
+    },
+    {
+      "subject_id": "SUB020",
+      "subject_name": "Business Mathematics"
+    },
+    {
+      "subject_id": "SUB021",
+      "subject_name": "Business Laws and Ethics"
+    },
+    {
+      "subject_id": "SUB022",
+      "subject_name": "Operations Management"
+    },
+    {
+      "subject_id": "SUB023",
+      "subject_name": "Indirect Taxation"
+    },
+    {
+      "subject_id": "SUB024",
+      "subject_name": "Company Accounts"
+    },
+    {
+      "subject_id": "SUB025",
+      "subject_name": "Auditing"
+    }
+  ],
+  "data": [
+    {
+      "institution_id": "INST001",
+      "admins_ids": [
+        "ADM001",
+        "ADM002"
+      ],
+      "courses": [
+        {
+          "course_id": "CA",
+          "levels": [
+            {
+              "level_id": "CA_FND",
+              "level_name": "Foundation",
+              "batches": [
+                {
+                  "batch_id": "CA_FND_APR_2025",
+                  "common_subjects_ids": [
+                    "SUB001",
+                    "SUB002",
+                    "SUB003"
+                  ],
+                  "specific_subjects_ids": {
+                    "A": [
+                      "SUB004"
+                    ],
+                    "B": [
+                      "SUB013"
+                    ],
+                    "C": [
+                      "SUB004"
+                    ]
+                  },
+                  "classes": [
+                    {
+                      "class_id": "CA_FND_APR_2025_A",
+                      "class_name": "Class A",
+                      "students_ids": [
+                        "S001",
+                        "S002",
+                        "S003",
+                        "S004",
+                        "S005"
+                      ]
+                    },
+                    {
+                      "class_id": "CA_FND_APR_2025_B",
+                      "class_name": "Class B",
+                      "students_ids": [
+                        "S006",
+                        "S007",
+                        "S008",
+                        "S009",
+                        "S010"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "batch_id": "CA_FND_OCT_2025",
+                  "common_subjects_ids": [
+                    "SUB001",
+                    "SUB002",
+                    "SUB003"
+                  ],
+                  "specific_subjects_ids": {
+                    "A": [
+                      "SUB004"
+                    ]
+                  },
+                  "classes": [
+                    {
+                      "class_id": "CA_FND_OCT_2025_A",
+                      "class_name": "Class A",
+                      "students_ids": [
+                        "S011",
+                        "S012",
+                        "S013",
+                        "S014",
+                        "S015"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "level_id": "CA_INT",
+              "level_name": "Intermediate",
+              "batches": [
+                {
+                  "batch_id": "CA_INT_MAY_2025",
+                  "common_subjects_ids": [
+                    "SUB005",
+                    "SUB006",
+                    "SUB007"
+                  ],
+                  "specific_subjects_ids": {
+                    "A": [
+                      "SUB008"
+                    ],
+                    "B": [
+                      "SUB009"
+                    ]
+                  },
+                  "classes": [
+                    {
+                      "class_id": "CA_INT_MAY_2025_A",
+                      "class_name": "Class A",
+                      "students_ids": [
+                        "S016",
+                        "S017",
+                        "S018",
+                        "S019",
+                        "S020"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "level_id": "CA_ADV",
+              "level_name": "Advanced",
+              "batches": [
+                {
+                  "batch_id": "CA_ADV_NOV_2024",
+                  "common_subjects_ids": [
+                    "SUB010",
+                    "SUB011"
+                  ],
+                  "specific_subjects_ids": {
+                    "A": [
+                      "SUB012"
+                    ]
+                  },
+                  "classes": [
+                    {
+                      "class_id": "CA_ADV_NOV_2024_A",
+                      "class_name": "Class A",
+                      "students_ids": [
+                        "S021",
+                        "S022",
+                        "S023",
+                        "S024",
+                        "S025"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "course_id": "CMA",
+          "levels": [
+            {
+              "level_id": "CMA_FND",
+              "level_name": "Foundation",
+              "batches": [
+                {
+                  "batch_id": "CMA_FND_JUN_2025",
+                  "common_subjects_ids": [
+                    "SUB018",
+                    "SUB019"
+                  ],
+                  "specific_subjects_ids": {
+                    "A": [
+                      "SUB020"
+                    ],
+                    "B": [
+                      "SUB021"
+                    ]
+                  },
+                  "classes": [
+                    {
+                      "class_id": "CMA_FND_JUN_2025_A",
+                      "class_name": "Class A",
+                      "students_ids": [
+                        "S026",
+                        "S027",
+                        "S028",
+                        "S029",
+                        "S030"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "level_id": "CMA_INT",
+              "level_name": "Intermediate",
+              "batches": [
+                {
+                  "batch_id": "CMA_INT_DEC_2024",
+                  "common_subjects_ids": [
+                    "SUB006",
+                    "SUB022",
+                    "SUB023"
+                  ],
+                  "specific_subjects_ids": {
+                    "A": [
+                      "SUB024"
+                    ],
+                    "B": [
+                      "SUB025"
+                    ]
+                  },
+                  "classes": [
+                    {
+                      "class_id": "CMA_INT_DEC_2024_A",
+                      "class_name": "Class A",
+                      "students_ids": [
+                        "S031",
+                        "S032",
+                        "S033",
+                        "S034",
+                        "S035"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "level_id": "CMA_ADV",
+              "level_name": "Advanced",
+              "batches": [
+                {
+                  "batch_id": "CMA_ADV_SEP_2024",
+                  "common_subjects_ids": [
+                    "SUB014",
+                    "SUB015"
+                  ],
+                  "specific_subjects_ids": {
+                    "A": [
+                      "SUB016"
+                    ]
+                  },
+                  "classes": [
+                    {
+                      "class_id": "CMA_ADV_SEP_2024_A",
+                      "class_name": "Class A",
+                      "students_ids": [
+                        "S036",
+                        "S037",
+                        "S038",
+                        "S039",
+                        "S040"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "institution_id": "INST002",
+      "admins_ids": [
+        "ADM003",
+        "ADM004"
+      ],
+      "courses": [
+        {
+          "course_id": "CA",
+          "levels": []
+        },
+        {
+          "course_id": "CMA",
+          "levels": [
+            {
+              "level_id": "CMA_INT",
+              "level_name": "Intermediate",
+              "batches": [
+                {
+                  "batch_id": "CMA_INT_JUN_2025_ZPC",
+                  "common_subjects_ids": [
+                    "SUB006",
+                    "SUB022",
+                    "SUB023"
+                  ],
+                  "specific_subjects_ids": {
+                    "A": [
+                      "SUB024"
+                    ]
+                  },
+                  "classes": [
+                    {
+                      "class_id": "CMA_INT_JUN_2025_ZPC_A",
+                      "class_name": "Class A",
+                      "students_ids": [
+                        "S041",
+                        "S042",
+                        "S043",
+                        "S044",
+                        "S045"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "institution_id": "INST003",
+      "admins_ids": [
+        "ADM005",
+        "ADM006"
+      ],
+      "courses": [
+        {
+          "course_id": "CA",
+          "levels": [
+            {
+              "level_id": "CA_INT",
+              "level_name": "Intermediate",
+              "batches": [
+                {
+                  "batch_id": "CA_INT_NOV_2025_ECH",
+                  "common_subjects_ids": [
+                    "SUB005",
+                    "SUB006",
+                    "SUB007"
+                  ],
+                  "specific_subjects_ids": {
+                    "A": [
+                      "SUB008"
+                    ]
+                  },
+                  "classes": [
+                    {
+                      "class_id": "CA_INT_NOV_2025_ECH_A",
+                      "class_name": "Class A",
+                      "students_ids": [
+                        "S046",
+                        "S047",
+                        "S048",
+                        "S049",
+                        "S050"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "course_id": "CMA",
+          "levels": []
+        }
+      ]
+    }
+  ]
+}

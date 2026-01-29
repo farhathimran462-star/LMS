@@ -1,0 +1,506 @@
+{
+  "Materials": [
+    {
+      "course_id": "CA",
+      "course_name": "Chartered Accountancy",
+      "levels": [
+        {
+          "level_id": "CA_FND",
+          "level_name": "Foundation",
+          "batches": [
+            {
+              "batch_id": "CA_FND_AUG_2025",
+              "batch_name": "CA Foundation Aug 2025",
+              "subjects": [
+                {
+                  "subject_id": "SUB001",
+                  "subject_name": "Principles of Accounting",
+                  "teacher_details": [{"teacher_id": "T001", "teacher_name": "Prof. Vikas Mehta"}],
+                  "materials": [
+                    {"material_id": "M-CA-FND-1A-V", "type": "video", "title": "Accounting Basics Lecture"},
+                    {"material_id": "M-CA-FND-1A-P", "type": "pdf", "title": "Journal Entries Guide"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB001-01", "title": "A1: Ledger Posting Practice", "due_date": "2025-09-15", "total_marks": 20},
+                    {"assignment_id": "A-SUB001-02", "title": "A2: Final Accounts of Sole Proprietorship", "due_date": "2025-10-10", "total_marks": 30},
+                    {"assignment_id": "A-SUB001-03", "title": "A3: NPO Accounts Drill", "due_date": "2025-11-01", "total_marks": 25}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB001-01", "title": "T1: Initial Concepts Quiz", "scheduled_date": "2025-08-28", "max_score": 15, "duration_minutes": 30},
+                    {"test_id": "T-SUB001-02", "title": "T2: Mid-Term Exam (Branch Accounts)", "scheduled_date": "2025-11-05", "max_score": 50, "duration_minutes": 90},
+                    {"test_id": "T-SUB001-03", "title": "T3: Mock Final Paper 1", "scheduled_date": "2025-12-01", "max_score": 100, "duration_minutes": 180}
+                  ]
+                },
+                {
+                  "subject_id": "SUB002",
+                  "subject_name": "Business Law",
+                  "teacher_details": [{"teacher_id": "T002", "teacher_name": "Ms. Anjali Iyer"}],
+                  "materials": [
+                    {"material_id": "M-CA-FND-1B-V", "type": "video", "title": "Indian Contract Act Overview"},
+                    {"material_id": "M-CA-FND-1B-P", "type": "pdf", "title": "Laws Case Study Compendium"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB002-01", "title": "A1: Valid Contracts Analysis", "due_date": "2025-09-20", "total_marks": 20},
+                    {"assignment_id": "A-SUB002-02", "title": "A2: Sale of Goods Scenarios", "due_date": "2025-10-15", "total_marks": 30},
+                    {"assignment_id": "A-SUB002-03", "title": "A3: Partnership Deeds", "due_date": "2025-11-10", "total_marks": 25}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB002-01", "title": "T1: Contract Law MCQ", "scheduled_date": "2025-09-01", "max_score": 20, "duration_minutes": 45},
+                    {"test_id": "T-SUB002-02", "title": "T2: Company Law Definitions", "scheduled_date": "2025-11-10", "max_score": 50, "duration_minutes": 90}
+                  ]
+                },
+                {
+                  "subject_id": "SUB004",
+                  "subject_name": "Quantitative Aptitude",
+                  "teacher_details": [{"teacher_id": "T003", "teacher_name": "Dr. Rohit Khanna"}],
+                  "materials": [
+                    {"material_id": "M-CA-FND-1C-P", "type": "pdf", "title": "Maths Practice Set 1"},
+                    {"material_id": "M-CA-FND-1C-V", "type": "video", "title": "Time Value of Money"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB004-01", "title": "A1: Calculus Problem Set", "due_date": "2025-09-05", "total_marks": 25},
+                    {"assignment_id": "A-SUB004-02", "title": "A2: Statistics Workbook", "due_date": "2025-10-01", "total_marks": 35},
+                    {"assignment_id": "A-SUB004-03", "title": "A3: Probability Practice", "due_date": "2025-11-05", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB004-01", "title": "T1: Time Value of Money Test", "scheduled_date": "2025-09-25", "max_score": 40, "duration_minutes": 75},
+                    {"test_id": "T-SUB004-02", "title": "T2: Final Mock Test", "scheduled_date": "2025-11-30", "max_score": 100, "duration_minutes": 180}
+                  ]
+                },
+                {
+                  "subject_id": "SUB013",
+                  "subject_name": "Commercial Knowledge",
+                  "teacher_details": [{"teacher_id": "T002", "teacher_name": "Ms. Anjali Iyer"}],
+                  "materials": [
+                    {"material_id": "M-CA-FND-1D-V", "type": "video", "title": "Business Environment (2025)"},
+                    {"material_id": "M-CA-FND-1D-P", "type": "pdf", "title": "Global Economy Report"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB013-01", "title": "A1: Case Study on FDI", "due_date": "2025-10-20", "total_marks": 20},
+                    {"assignment_id": "A-SUB013-02", "title": "A2: Indian Policies Summary", "due_date": "2025-11-15", "total_marks": 20}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB013-01", "title": "T1: Industry Quiz", "scheduled_date": "2025-11-15", "max_score": 30, "duration_minutes": 60}
+                  ]
+                }
+              ]
+            },
+            {
+              "batch_id": "CA_FND_DEC_2025",
+              "batch_name": "CA Foundation Dec 2025",
+              "subjects": [
+                {
+                  "subject_id": "SUB001",
+                  "subject_name": "Principles of Accounting",
+                  "teacher_details": [{"teacher_id": "T001", "teacher_name": "Prof. Vikas Mehta"}],
+                  "materials": [
+                    {"material_id": "M-CA-FND-2A-V", "type": "video", "title": "New Batch Welcome - Accounts"},
+                    {"material_id": "M-CA-FND-2A-P", "type": "pdf", "title": "Syllabus Breakup"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB001-D-01", "title": "A1: Journal & Ledger Set", "due_date": "2026-01-20", "total_marks": 20},
+                    {"assignment_id": "A-SUB001-D-02", "title": "A2: Consignment Accounts", "due_date": "2026-02-15", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB001-D-01", "title": "T1: Trial Balance Test", "scheduled_date": "2026-02-10", "max_score": 30, "duration_minutes": 60}
+                  ]
+                },
+                {
+                  "subject_id": "SUB003",
+                  "subject_name": "Economics",
+                  "teacher_details": [{"teacher_id": "T004", "teacher_name": "Prof. Sunil Jadhav"}],
+                  "materials": [
+                    {"material_id": "M-CA-FND-2B-P", "type": "pdf", "title": "Microeconomics Handout"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB003-D-01", "title": "A1: Demand Elasticity Study", "due_date": "2026-01-15", "total_marks": 25},
+                    {"assignment_id": "A-SUB003-D-02", "title": "A2: Perfect Competition Report", "due_date": "2026-02-10", "total_marks": 25}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB003-D-01", "title": "T1: Market Structure Quiz", "scheduled_date": "2026-01-25", "max_score": 40, "duration_minutes": 75}
+                  ]
+                },
+                {
+                  "subject_id": "SUB004",
+                  "subject_name": "Quantitative Aptitude",
+                  "teacher_details": [{"teacher_id": "T003", "teacher_name": "Dr. Rohit Khanna"}],
+                  "materials": [
+                    {"material_id": "M-CA-FND-2C-V", "type": "video", "title": "Linear Algebra Review"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB004-D-01", "title": "A1: Statistics Case Study", "due_date": "2026-02-01", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB004-D-01", "title": "T1: Permutations and Combinations", "scheduled_date": "2026-01-10", "max_score": 25, "duration_minutes": 50}
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level_id": "CA_INT",
+          "level_name": "Intermediate",
+          "batches": [
+            {
+              "batch_id": "CA_INT_OCT_2024",
+              "batch_name": "CA Intermediate Oct 2024",
+              "subjects": [
+                {
+                  "subject_id": "SUB006",
+                  "subject_name": "Cost Accounting",
+                  "teacher_details": [{"teacher_id": "T003", "teacher_name": "Dr. Rohit Khanna"}],
+                  "materials": [
+                    {"material_id": "M-CA-INT-1A-P", "type": "pdf", "title": "Standard Costing Notes"},
+                    {"material_id": "M-CA-INT-1A-V", "type": "video", "title": "Marginal Costing Problems"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB006-01", "title": "A1: Variance Analysis", "due_date": "2024-11-20", "total_marks": 40},
+                    {"assignment_id": "A-SUB006-02", "title": "A2: Process Costing Practice", "due_date": "2024-12-15", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB006-01", "title": "T1: Budgetary Control Exam", "scheduled_date": "2024-12-10", "max_score": 60, "duration_minutes": 120}
+                  ]
+                },
+                {
+                  "subject_id": "SUB009",
+                  "subject_name": "Financial Management",
+                  "teacher_details": [{"teacher_id": "T003", "teacher_name": "Dr. Rohit Khanna"}, {"teacher_id": "T004", "teacher_name": "Prof. Sunil Jadhav"}],
+                  "materials": [
+                    {"material_id": "M-CA-INT-1B-V", "type": "video", "title": "Cost of Capital Theory"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB009-01", "title": "A1: Working Capital Problems", "due_date": "2024-11-10", "total_marks": 35},
+                    {"assignment_id": "A-SUB009-02", "title": "A2: Capital Budgeting Case", "due_date": "2024-12-05", "total_marks": 40}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB009-01", "title": "T1: Leverage and Risk Analysis", "scheduled_date": "2024-11-25", "max_score": 50, "duration_minutes": 90}
+                  ]
+                },
+                {
+                  "subject_id": "SUB008",
+                  "subject_name": "Auditing and Assurance",
+                  "teacher_details": [{"teacher_id": "T002", "teacher_name": "Ms. Anjali Iyer"}],
+                  "materials": [
+                    {"material_id": "M-CA-INT-1C-P", "type": "pdf", "title": "Auditing Standards Summary"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB008-01", "title": "A1: Audit Report Drafting", "due_date": "2024-11-15", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB008-01", "title": "T1: SA Compliance Quiz", "scheduled_date": "2024-12-01", "max_score": 35, "duration_minutes": 60}
+                  ]
+                },
+                {
+                  "subject_id": "SUB005",
+                  "subject_name": "Corporate Law",
+                  "teacher_details": [{"teacher_id": "T002", "teacher_name": "Ms. Anjali Iyer"}],
+                  "materials": [
+                    {"material_id": "M-CA-INT-1D-V", "type": "video", "title": "Companies Act, 2013: Directors"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB005-01", "title": "A1: Board Meetings Regulations", "due_date": "2024-12-01", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB005-01", "title": "T1: Securities Law Test", "scheduled_date": "2024-12-15", "max_score": 40, "duration_minutes": 75}
+                  ]
+                }
+              ]
+            },
+            {
+              "batch_id": "CA_INT_APR_2025",
+              "batch_name": "CA Intermediate Apr 2025",
+              "subjects": [
+                {
+                  "subject_id": "SUB005",
+                  "subject_name": "Corporate Law",
+                  "teacher_details": [{"teacher_id": "T002", "teacher_name": "Ms. Anjali Iyer"}],
+                  "materials": [
+                    {"material_id": "M-CA-INT-2A-V", "type": "video", "title": "Law Amendments - Q1 2025"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB005-2-01", "title": "A1: ROC Filing Procedures", "due_date": "2025-05-10", "total_marks": 25}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB005-2-01", "title": "T1: Insolvency Code Quiz", "scheduled_date": "2025-05-25", "max_score": 30, "duration_minutes": 60}
+                  ]
+                },
+                {
+                  "subject_id": "SUB007",
+                  "subject_name": "Taxation",
+                  "teacher_details": [{"teacher_id": "T002", "teacher_name": "Ms. Anjali Iyer"}],
+                  "materials": [
+                    {"material_id": "M-CA-INT-2B-V", "type": "video", "title": "Income Tax Heads"},
+                    {"material_id": "M-CA-INT-2B-P", "type": "pdf", "title": "GST Calculation Examples"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB007-01", "title": "A1: PGBP Computation", "due_date": "2025-06-01", "total_marks": 40},
+                    {"assignment_id": "A-SUB007-02", "title": "A2: GST Reverse Charge Mechanism", "due_date": "2025-07-01", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB007-01", "title": "T1: Direct Tax Assessment", "scheduled_date": "2025-06-15", "max_score": 70, "duration_minutes": 150}
+                  ]
+                },
+                {
+                  "subject_id": "SUB006",
+                  "subject_name": "Cost Accounting",
+                  "teacher_details": [{"teacher_id": "T003", "teacher_name": "Dr. Rohit Khanna"}],
+                  "materials": [
+                    {"material_id": "M-CA-INT-2C-P", "type": "pdf", "title": "Activity-Based Costing"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB006-2-01", "title": "A1: Joint & By-Product Costs", "due_date": "2025-05-20", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB006-2-01", "title": "T1: Reconciliation Statement Test", "scheduled_date": "2025-06-10", "max_score": 45, "duration_minutes": 90}
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level_id": "CA_ADV",
+          "level_name": "Final",
+          "batches": [
+            {
+              "batch_id": "CA_ADV_SEP_2024",
+              "batch_name": "CA Final Sep 2024",
+              "subjects": [
+                {
+                  "subject_id": "SUB014",
+                  "subject_name": "Corporate Financial Reporting",
+                  "teacher_details": [{"teacher_id": "T001", "teacher_name": "Prof. Vikas Mehta"}],
+                  "materials": [
+                    {"material_id": "M-CA-FIN-1A-V", "type": "video", "title": "Ind AS 116 Leases"},
+                    {"material_id": "M-CA-FIN-1A-P", "type": "pdf", "title": "Complex Consolidation Problems"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB014-01", "title": "A1: Foreign Currency Translation", "due_date": "2024-10-25", "total_marks": 40},
+                    {"assignment_id": "A-SUB014-02", "title": "A2: SEBI LODR Compliance", "due_date": "2024-11-15", "total_marks": 45}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB014-01", "title": "T1: Full Mock Exam (P1)", "scheduled_date": "2024-11-05", "max_score": 100, "duration_minutes": 180}
+                  ]
+                },
+                {
+                  "subject_id": "SUB012",
+                  "subject_name": "Corporate and Economic Laws",
+                  "teacher_details": [{"teacher_id": "T002", "teacher_name": "Ms. Anjali Iyer"}],
+                  "materials": [
+                    {"material_id": "M-CA-FIN-1B-P", "type": "pdf", "title": "SEBI Regulations Checklist"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB012-01", "title": "A1: FEMA Provisions Summary", "due_date": "2024-10-10", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB012-01", "title": "T1: Economic Laws Test", "scheduled_date": "2024-11-20", "max_score": 70, "duration_minutes": 120}
+                  ]
+                },
+                {
+                  "subject_id": "SUB011",
+                  "subject_name": "Advanced Auditing",
+                  "teacher_details": [{"teacher_id": "T003", "teacher_name": "Dr. Rohit Khanna"}],
+                  "materials": [
+                    {"material_id": "M-CA-FIN-1C-V", "type": "video", "title": "Peer Review Process"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB011-01", "title": "A1: Professional Ethics Case Studies", "due_date": "2024-10-05", "total_marks": 35}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB011-01", "title": "T1: Quality Review Test", "scheduled_date": "2024-11-01", "max_score": 60, "duration_minutes": 100}
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "course_id": "CMA",
+      "course_name": "Cost and Management Accountancy",
+      "levels": [
+        {
+          "level_id": "CMA_FND",
+          "level_name": "Foundation",
+          "batches": [
+            {
+              "batch_id": "CMA_FND_NOV_2025",
+              "batch_name": "CMA Foundation Nov 2025",
+              "subjects": [
+                {
+                  "subject_id": "SUB018",
+                  "subject_name": "Fundamentals of Economics",
+                  "teacher_details": [{"teacher_id": "T004", "teacher_name": "Prof. Sunil Jadhav"}],
+                  "materials": [
+                    {"material_id": "M-CMA-FND-1A-V", "type": "video", "title": "Macroeconomics Introduction"},
+                    {"material_id": "M-CMA-FND-1A-P", "type": "pdf", "title": "RBI Policy Brief"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB018-01", "title": "A1: Fiscal Policy Report", "due_date": "2025-12-15", "total_marks": 25}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB018-01", "title": "T1: Microeconomics Unit Test", "scheduled_date": "2025-12-05", "max_score": 40, "duration_minutes": 75}
+                  ]
+                },
+                {
+                  "subject_id": "SUB019",
+                  "subject_name": "Fundamentals of Accounting",
+                  "teacher_details": [{"teacher_id": "T001", "teacher_name": "Prof. Vikas Mehta"}],
+                  "materials": [
+                    {"material_id": "M-CMA-FND-1B-P", "type": "pdf", "title": "B.R.S. Concepts"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB019-01", "title": "A1: Depreciation Methods", "due_date": "2026-01-05", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB019-01", "title": "T1: Partnership Accounts Test", "scheduled_date": "2026-01-20", "max_score": 50, "duration_minutes": 90}
+                  ]
+                },
+                {
+                  "subject_id": "SUB020",
+                  "subject_name": "Business Mathematics",
+                  "teacher_details": [{"teacher_id": "T003", "teacher_name": "Dr. Rohit Khanna"}],
+                  "materials": [
+                    {"material_id": "M-CMA-FND-1C-V", "type": "video", "title": "Linear Programming"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB020-01", "title": "A1: Compound Interest Problems", "due_date": "2025-12-20", "total_marks": 25}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB020-01", "title": "T1: Set Theory Quiz", "scheduled_date": "2026-01-10", "max_score": 30, "duration_minutes": 60}
+                  ]
+                },
+                {
+                  "subject_id": "SUB021",
+                  "subject_name": "Business Laws and Ethics",
+                  "teacher_details": [{"teacher_id": "T002", "teacher_name": "Ms. Anjali Iyer"}],
+                  "materials": [
+                    {"material_id": "M-CMA-FND-1D-P", "type": "pdf", "title": "Ethics Code Handbook"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB021-01", "title": "A1: Legal Compliance Report", "due_date": "2026-01-25", "total_marks": 35}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB021-01", "title": "T1: Ethics Case Study Test", "scheduled_date": "2026-02-05", "max_score": 40, "duration_minutes": 75}
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level_id": "CMA_INT",
+          "level_name": "Intermediate",
+          "batches": [
+            {
+              "batch_id": "CMA_INT_MAR_2025",
+              "batch_name": "CMA Intermediate Mar 2025",
+              "subjects": [
+                {
+                  "subject_id": "SUB023",
+                  "subject_name": "Indirect Taxation",
+                  "teacher_details": [{"teacher_id": "T004", "teacher_name": "Prof. Sunil Jadhav"}],
+                  "materials": [
+                    {"material_id": "M-CMA-INT-1A-V", "type": "video", "title": "GST Input Tax Credit"},
+                    {"material_id": "M-CMA-INT-1A-P", "type": "pdf", "title": "Customs Duty Checklist"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB023-01", "title": "A1: GST Refund Process", "due_date": "2025-04-20", "total_marks": 35}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB023-01", "title": "T1: Indirect Tax Mock 1", "scheduled_date": "2025-05-10", "max_score": 70, "duration_minutes": 150}
+                  ]
+                },
+                {
+                  "subject_id": "SUB022",
+                  "subject_name": "Operations Management",
+                  "teacher_details": [{"teacher_id": "T003", "teacher_name": "Dr. Rohit Khanna"}],
+                  "materials": [
+                    {"material_id": "M-CMA-INT-1B-V", "type": "video", "title": "Inventory Management Models"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB022-01", "title": "A1: Supply Chain Optimization", "due_date": "2025-05-01", "total_marks": 30}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB022-01", "title": "T1: PERT/CPM Test", "scheduled_date": "2025-05-25", "max_score": 50, "duration_minutes": 90}
+                  ]
+                },
+                {
+                  "subject_id": "SUB024",
+                  "subject_name": "Company Accounts",
+                  "teacher_details": [{"teacher_id": "T001", "teacher_name": "Prof. Vikas Mehta"}],
+                  "materials": [
+                    {"material_id": "M-CMA-INT-1C-P", "type": "pdf", "title": "Final Accounts Preparation"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB024-01", "title": "A1: Redemption of Preference Shares", "due_date": "2025-04-10", "total_marks": 40}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB024-01", "title": "T1: Amalgamation Test", "scheduled_date": "2025-04-30", "max_score": 60, "duration_minutes": 120}
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level_id": "CMA_ADV",
+          "level_name": "Final",
+          "batches": [
+            {
+              "batch_id": "CMA_ADV_FEB_2025",
+              "batch_name": "CMA Final Feb 2025",
+              "subjects": [
+                {
+                  "subject_id": "SUB015",
+                  "subject_name": "Strategic Performance Management",
+                  "teacher_details": [{"teacher_id": "T004", "teacher_name": "Prof. Sunil Jadhav"}],
+                  "materials": [
+                    {"material_id": "M-CMA-FIN-1A-V", "type": "video", "title": "Balanced Scorecard"},
+                    {"material_id": "M-CMA-FIN-1A-P", "type": "pdf", "title": "Performance Analysis Guide"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB015-01", "title": "A1: Value Chain Analysis", "due_date": "2025-03-20", "total_marks": 45}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB015-01", "title": "T1: Strategic Mock 1", "scheduled_date": "2025-04-10", "max_score": 80, "duration_minutes": 150}
+                  ]
+                },
+                {
+                  "subject_id": "SUB016",
+                  "subject_name": "Advanced Financial Management",
+                  "teacher_details": [{"teacher_id": "T003", "teacher_name": "Dr. Rohit Khanna"}],
+                  "materials": [
+                    {"material_id": "M-CMA-FIN-1B-V", "type": "video", "title": "Forex Derivatives"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB016-01", "title": "A1: Mergers & Acquisitions Valuation", "due_date": "2025-04-05", "total_marks": 50}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB016-01", "title": "T1: Financial Risk Management Test", "scheduled_date": "2025-04-25", "max_score": 75, "duration_minutes": 120}
+                  ]
+                },
+                {
+                  "subject_id": "SUB014",
+                  "subject_name": "Corporate Financial Reporting",
+                  "teacher_details": [{"teacher_id": "T001", "teacher_name": "Prof. Vikas Mehta"}],
+                  "materials": [
+                    {"material_id": "M-CMA-FIN-1C-P", "type": "pdf", "title": "Ind AS 115 Revenue"}
+                  ],
+                  "assignments": [
+                    {"assignment_id": "A-SUB014-2-01", "title": "A1: Consolidated Financial Statements", "due_date": "2025-03-15", "total_marks": 40}
+                  ],
+                  "tests": [
+                    {"test_id": "T-SUB014-2-01", "title": "T1: Accounting Standards Full Test", "scheduled_date": "2025-04-01", "max_score": 60, "duration_minutes": 100}
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

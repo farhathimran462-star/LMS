@@ -1,0 +1,74 @@
+[
+  {
+    "full_name": "John Doe",
+    "email": "john.doe@student.edu",
+    "phone": "1234567890",
+    "username": "john.doe",
+    "password": "Student@123",
+    "role": "Student",
+    "roll_number": "2025001",
+    "institute_id": "INST001",
+    "is_active": true,
+    "notes": "First year student - Physics major"
+  },
+  {
+    "full_name": "Dr. Sarah Johnson",
+    "email": "sarah.johnson@institute.edu",
+    "phone": "5551234567",
+    "username": "sarah.johnson",
+    "password": "Teacher@2025",
+    "role": "Teacher",
+    "employee_id": "TCH001",
+    "is_active": true,
+    "notes": "Physics department head - PhD in Quantum Mechanics"
+  },
+  {
+    "full_name": "Robert Admin",
+    "email": "robert.admin@institute.edu",
+    "phone": "5555555555",
+    "username": "robert.admin",
+    "password": "Admin@2025",
+    "role": "Admin",
+    "employee_id": "ADM001",
+    "institutes_managed": [
+      "INST001",
+      "INST002"
+    ],
+    "is_active": true,
+    "notes": "Regional administrator for Chennai and Mumbai institutes"
+  },
+  {
+    "full_name": "Alice SuperAdmin",
+    "email": "alice.super@system.edu",
+    "phone": "4444444444",
+    "username": "alice.super",
+    "password": "SuperAdmin@2025",
+    "role": "Super Admin",
+    "employee_id": "SA001",
+    "is_active": true,
+    "notes": "System administrator with full access"
+  },
+  {
+    "full_name": "Jane Smith",
+    "email": "jane.smith@student.edu",
+    "phone": "2345678901",
+    "username": "jane.smith",
+    "password": "Student@456",
+    "role": "Student",
+    "roll_number": "2025002",
+    "institute_id": "INST001",
+    "is_active": true,
+    "notes": "Chemistry major - Dean's list student"
+  },
+  {
+    "full_name": "Prof. Michael Brown",
+    "email": "michael.brown@institute.edu",
+    "phone": "5559876543",
+    "username": "michael.brown",
+    "password": "Teacher@2025",
+    "role": "Teacher",
+    "employee_id": "TCH002",
+    "is_active": true,
+    "notes": "Mathematics professor - Calculus specialist"
+  }
+]

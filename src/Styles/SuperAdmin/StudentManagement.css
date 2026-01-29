@@ -1,0 +1,663 @@
+/* ========================================
+   STUDENT MANAGEMENT SCOPED STYLES
+   (Adapted from TeacherManagement.css)
+   ======================================== */
+
+.sm_user-management {
+  animation: fadeIn var(--transition-base);
+  /* padding: 0; */
+}
+
+.sm_page-title{
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+}
+/* ========================================
+   HEADER SECTION
+   ======================================== */
+.sm_um-header {
+  text-align: left;
+  /* flex-wrap: wrap; */
+  align-items: center;
+
+  /* margin-bottom: var(--space-6); */
+  gap: var(--space-4);
+}
+
+.sm_um-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  /* flex-wrap: wrap; */
+}
+
+/* Search */
+.sm_search-wrapper {
+  position: relative;
+  min-width: 280px;
+  margin-bottom: 20px;
+}
+
+.sm_search-icon {
+  position: absolute;
+  left: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  /* padding-right: var(--space-4); */
+  color: var(--color-gray-500);
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.sm_search-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-8);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  /* margin-left: var(--space-4); */
+  font-size: var(--font-size-sm);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.sm_search-input:focus {
+  border-color: var(--brand-pink);
+  box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+  outline: none;
+}
+
+/* ========================================
+   FILTER SECTION (Dropdowns and Pills)
+   ======================================== */
+
+.sm_filter-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-1);
+    display: block;
+}
+
+.sm_filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3); 
+  align-items: flex-end; 
+  margin-bottom: var(--space-4);
+}
+
+.sm_filter-input-group {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 150px;
+}
+
+/* Adjust search input padding for filter selects in filter row */
+.sm_filter-row .sm_search-input {
+    width: 100%; 
+    /* padding: var(--space-3) var(--space-4);  */
+}
+
+/* Active Filters Container and Pills */
+.sm_active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-gray-200);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.sm_filters-title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  color: var(--brand-pink);
+  margin-right: var(--space-2);
+}
+
+.sm_filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  border: 1px solid var(--color-gray-300);
+}
+
+.sm_filter-tag svg {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-gray-500);
+  transition: color var(--transition-fast);
+}
+
+.sm_filter-tag svg:hover {
+  color: var(--color-error-dark);
+}
+
+/* ========================================
+   USER FORM (Including Close Button)
+   ======================================== */
+.sm_user-form-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-6);
+  position: relative; 
+}
+
+.sm_form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-gray-200);
+}
+
+.sm_form-header h3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  color: var(--color-gray-900);
+}
+
+/* Close Button on Form & Modals */
+.sm_form-close-btn {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    background-color: var(--color-gray-100);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-full); 
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-gray-700);
+    transition: all var(--transition-base);
+    z-index: var(--z-dropdown);
+}
+
+.sm_form-close-btn:hover {
+    background-color: var(--color-error);
+    color: var(--color-white);
+    transform: rotate(90deg);
+}
+
+.sm_user-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.sm_form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.sm_form-group {
+  display: flex;
+  flex-grow: 2;
+  flex-direction: column;
+}
+
+.sm_form-group label {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+}
+
+.sm_required {
+  color: var(--color-error);
+  margin-left: 2px;
+}
+
+.sm_form-group input,
+.sm_form-group select {
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.sm_form-group input:focus,
+.sm_form-group select:focus {
+  border-color: var(--brand-pink);
+  box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+  outline: none;
+}
+
+.sm_form-actions {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-gray-200);
+  margin-top: var(--space-2);
+}
+.sm_form-actions .btn-primary {
+    display: flex;
+    align-items: center;
+}
+
+/* Checkbox Group Container */
+.sm_checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-4); 
+    padding: var(--space-3);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    min-height: 44px;
+    align-items: center;
+}
+
+.sm_checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    cursor: pointer;
+    user-select: none;
+}
+
+.sm_checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--brand-pink);
+    border: 2px solid var(--color-gray-400);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* ========================================
+   TABLE (Includes Checkbox and Action Styles)
+   ======================================== */
+.sm_table-wrapper {
+  background-color: var(--color-white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  overflow-x: auto; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.sm_table-wrapper::-webkit-scrollbar {
+  display: none;
+  width: 0; /* Ensures the space it occupies is also gone */
+  height: 0; /* For horizontal scrollbar */
+}
+
+.sm_users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sm_users-table thead {
+  background-color: var(--brand-pink);
+}
+
+.sm_users-table th {
+  padding: var(--space-4);
+  text-align: left;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-white);
+}
+
+.sm_users-table td {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-gray-200);
+  font-size: var(--font-size-sm);
+  vertical-align: middle; 
+  align-items: center;
+}
+
+.sm_users-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.sm_users-table tbody tr:hover {
+  background-color: var(--color-gray-50);
+}
+
+/* Style for the Name Cell to prevent truncation */
+.sm_name-cell {
+    /* Ensure the column is wide enough to display the name */
+    min-width: 180px;
+    align-items: center;
+}
+
+/* Checkbox Column Styles */
+.sm_checkbox-col {
+  width: 40px; 
+  text-align: center;
+}
+
+.sm_table-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--brand-pink);
+}
+
+/* Status Badge */
+.sm_status-badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-semibold);
+  text-transform: capitalize;
+}
+
+.sm_status-active {
+  background-color: #d1fae5;
+  color: var(--color-success-dark);
+  border: 1px solid var(--color-success);
+}
+
+.sm_status-suspended {
+  background-color: #fee2e2;
+  color: var(--color-error-dark);
+  border: 1px solid var(--color-error);
+}
+
+.sm_date-cell {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-xs);
+}
+
+/* Empty State */
+.sm_empty-state {
+  text-align: center;
+  padding: var(--space-12) var(--space-4);
+  color: var(--color-gray-600);
+}
+
+/* Action Column Styles */
+.sm_actions-col {
+  width: 120px;
+  text-align: right;
+}
+
+.sm_action-buttons {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+.sm_action-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Edit Button */
+.sm_action-edit {
+  color: var(--color-success);
+  border-color: var(--color-success-light);
+}
+.sm_action-edit:hover {
+  background-color: var(--color-success);
+  color: var(--color-white);
+}
+
+/* Delete Button */
+.sm_action-delete {
+  color: var(--color-error);
+  border-color: var(--color-error-light);
+}
+.sm_action-delete:hover {
+  background-color: var(--color-error);
+  color: var(--color-white);
+}
+
+/* Suspend Button (Active to Suspended) */
+.sm_action-suspend {
+  color: var(--brand-orange);
+  border-color: var(--brand-orange-light);
+}
+.sm_action-suspend:hover {
+  background-color: var(--brand-orange);
+  color: var(--color-white);
+}
+
+/* Unsuspend Button (Suspended to Active/Reactivate) */
+.sm_action-unsuspend {
+  color: var(--color-gray-600);
+  border-color: var(--color-gray-300);
+}
+.sm_action-unsuspend:hover {
+  background-color: var(--color-gray-700);
+  color: var(--color-white);
+}
+
+/* ========================================
+   AVATAR STYLES (Used by both TM and SM)
+   ======================================== */
+.user-avatar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.sm_user-full-name {
+    /* Ensure the text doesn't shrink and tries to display fully */
+    flex-shrink: 0; 
+    white-space: nowrap; 
+    color: var(--color-gray-900);
+}
+
+.user-avatar-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.user-avatar-placeholder svg {
+    width: 20px;
+    height: 20px;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-gray-100);
+    box-shadow: var(--shadow-xs);
+    flex-shrink: 0;
+}
+
+
+
+/* ========================================
+   POPUP MODAL STYLES
+   ======================================== */
+.sm_modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  animation: fadeIn 0.2s ease-out;
+  overflow-y: auto; 
+}
+
+.sm_success-modal {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    padding: var(--space-8);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    transform: scale(1);
+    transition: transform var(--transition-base);
+    position: relative; 
+}
+
+/* 🚀 MODIFIED: Style for Edit Form Modal - Compact Layout 🚀 */
+.sm_modal-content-form {
+    max-width: 800px; 
+    width: 95%;
+    padding: var(--space-6); /* Reduced overall padding for a tighter fit */
+    text-align: left;
+    max-height: 90vh; /* Ensures the modal doesn't exceed 90% of the viewport height */
+    overflow-y: auto; /* Allows scrolling inside the modal if content is too long */
+}
+
+.sm_modal-content-form .sm_form-close-btn {
+    top: var(--space-4);
+    right: var(--space-4);
+}
+
+/* Specific styling for elements inside the Edit Form Modal to reduce size */
+.sm_modal-content-form .sm_user-form {
+    gap: var(--space-4); /* Reduced gap */
+}
+
+.sm_modal-content-form .sm_form-row {
+    gap: var(--space-3); /* Reduced gap between elements in a row */
+}
+
+.sm_modal-content-form .sm_form-group label {
+    font-size: var(--font-size-xs); /* Smaller label font */
+    margin-bottom: var(--space-1);
+}
+
+.sm_modal-content-form .sm_form-group input,
+.sm_modal-content-form .sm_form-group select {
+    padding: var(--space-2) var(--space-3); /* Reduced input padding */
+    font-size: var(--font-size-sm); 
+}
+
+.sm_modal-content-form .sm_form-header {
+    margin-bottom: var(--space-4); /* Reduced margin */
+    padding-bottom: var(--space-3);
+}
+
+.sm_modal-content-form .sm_checkbox-group {
+    padding: var(--space-2); /* Reduced Checkbox Group Padding */
+}
+
+/* 🚀 END MODIFICATIONS 🚀 */
+
+
+.sm_success-icon {
+    color: var(--color-success);
+    margin-bottom: var(--space-4);
+}
+
+.sm_success-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+}
+
+.sm_success-message {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-6);
+}
+
+.sm_success-modal .btn.btn-primary {
+    width: 100%;
+}
+
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .sm_form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .sm_um-header {
+    flex-direction: column;
+    /* align-items: stretch; */
+  }
+  
+  .sm_um-actions {
+    flex-direction: column;
+  }
+  
+  .sm_search-wrapper {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .sm_filter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .sm_filter-input-group {
+    min-width: 100%;
+  }
+
+  .sm_table-wrapper {
+    overflow-x: auto;
+  }
+  
+  .sm_users-table {
+    /* Increased min-width to accommodate all columns better, including the wider name column */
+    min-width: 950px; 
+  }
+  
+  /* Ensure modal is responsive on smaller screens */
+  .sm_modal-content-form {
+    padding: var(--space-4); /* Even smaller padding on very small devices */
+  }
+}
+
+@media (max-width: 480px) {
+  .sm_form-actions {
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: stretch;
+  }
+  
+  .sm_form-actions button {
+    width: 100%;
+  }
+}

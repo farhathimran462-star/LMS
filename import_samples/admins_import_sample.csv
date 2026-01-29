@@ -1,0 +1,4 @@
+full_name,email,phone,username,password,role,roll_number,employee_id,institute_id,institutes_managed,is_active,notes
+Robert Admin,robert.admin@institute.edu,5555555555,robert.admin,Admin@2025,Admin,,ADM001,,INST001;INST002,true,Regional administrator for Chennai and Mumbai
+Patricia Wilson,patricia.wilson@institute.edu,5554442222,patricia.wilson,Admin@2025,Admin,,ADM002,,INST001,true,Institute admin - Chennai branch
+Thomas Martinez,thomas.martinez@institute.edu,5553331111,thomas.martinez,Admin@2025,Admin,,ADM003,,INST002,true,Institute admin - Mumbai branch

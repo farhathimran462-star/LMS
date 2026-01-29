@@ -1,0 +1,1179 @@
+/* Batches.CMM_css (Refactored/Augmented) */
+
+/* =========================================================================
+   GENERAL LAYOUT AND STEP CARDS (New Professional Look)
+   ========================================================================= */
+
+.CMM_batch_wrapper {
+    padding-inline: var(--space-8);
+    min-height: 100vh;
+    padding-top: var(--space-6);
+}
+.batch_wrapper_flex{
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.CMM_batch_title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-8);
+}
+
+.CMM_step_card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200); /* Lighter border */
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.CMM_05); /* Softer shadow */
+}
+
+.CMM_step_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--color-gray-100); /* Lighter divider */
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+    gap: var(--space-4);
+}
+
+.CMM_step_title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--brand-pink);
+    margin: 0;
+}
+
+.CMM_step_actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+/* =========================================================================
+   SEARCH BAR REFINEMENT (For Step 1 Card - Aligned Right)
+   ========================================================================= */
+
+.CMM_batch_search-bar {
+    position: relative;
+    display: flex; 
+    align-items: center;
+}
+
+.CMM_batch_search-bar input {
+    padding: var(--space-3) var(--space-4) var(--space-3) var(--space-10); /* Padding for icon */
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    width: 250px;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+}
+
+.CMM_batch_search-bar input:focus {
+    border-color: var(--brand-pink);
+    box-shadow: 0 0 0 2px var(--brand-pink-light);
+    outline: none;
+    width: 280px; 
+}
+
+.CMM_batch_search-icon {
+    position: absolute;
+    left: var(--space-3);
+    color: var(--color-gray-500);
+    pointer-events: none; 
+}
+
+/* =========================================================================
+   CARD GRIDS (FOR SELECTION TILES)
+   ========================================================================= */
+
+/* The base entity_card_grid is kept for backward compatibility, but we use the dedicated slider class below */
+.CMM_entity_card_grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+}
+
+/* --- DEDICATED HORIZONTAL SLIDER CLASS (Used for all 4 steps now) --- */
+.CMM_inst_slider_grid {
+    display: flex; /* Use flexbox for horizontal layout */
+    flex-wrap: nowrap; /* CRITICAL: Prevents items from wrapping to the next line (key for slider) */
+    gap: var(--space-4);
+    overflow-x: auto; /* Enable horizontal scrolling (key for slider) */
+    padding-bottom: var(--space-4); /* Add padding for scrollbar visibility */
+    padding-top: var(--space-2); 
+    
+    /* Hide scrollbar for aesthetic, but keep scrolling functionality */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.CMM_inst_slider_grid::-webkit-scrollbar {
+    display: none;
+}
+/* --- END SLIDER STYLES --- */
+
+
+/* --- Institution Card Styles (Step 1) --- */
+.CMM_inst_card {
+    background-color: var(--color-gray-50);
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    /* UNIFIED: Fixed width for ALL slider items */
+    flex: 0 0 200px; 
+    flex-shrink: 0; /* Ensures it won't shrink in the slider */
+    text-align: center;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-800);
+    box-shadow: var(--shadow-xs);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.CMM_inst_card:hover {
+    border-color: var(--brand-orange);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+
+.CMM_inst_card-icon {
+    color: var(--brand-orange);
+    margin-bottom: var(--space-2);
+}
+
+.CMM_inst_card-name {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+}
+
+.CMM_inst_card.CMM_inst_active {
+    border-color: var(--brand-pink);
+    background-color: var(--brand-pink-light);
+    color: var(--color-gray-900);
+    box-shadow: 0 0 0 3px var(--brand-pink-light);
+}
+
+/* --- Stream/Course Category Card Styles (Step 2) --- */
+.CMM_stream_card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-left: 5px solid var(--color-info); 
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    /* UNIFIED: Fixed width for ALL slider items */
+    flex: 0 0 250px; /* Changed from 1 1 250px */
+    flex-shrink: 0; /* Ensures it won't shrink in the slider */
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    box-shadow: var(--shadow-xs);
+}
+
+.CMM_stream_card:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+.CMM_stream_card-name {
+    font-size: var(--font-size-base);
+}
+
+.CMM_stream_card.CMM_stream_active {
+    border: 2px solid var(--brand-pink);
+    border-left: 5px solid var(--brand-pink);
+    background-color: var(--brand-pink-light);
+    color: var(--color-gray-900);
+    box-shadow: var(--shadow-md);
+}
+
+/* --- Course Level Card Styles (Step 3: User's requested 'separate color' card) --- */
+
+.CMM_course_card {
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    /* UNIFIED: Fixed width for ALL slider items */
+    flex: 0 0 280px; /* Changed from 1 1 280px */
+    flex-shrink: 0; /* Ensures it won't shrink in the slider */
+    box-shadow: var(--shadow-sm);
+    min-height: 100px;
+    position: relative;
+    border: 1px solid transparent;
+    overflow: hidden;
+    color: var(--color-gray-900);
+}
+
+.CMM_course_card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.CMM_15; 
+    z-index: 0;
+}
+
+.CMM_course_card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.CMM_course_card.CMM_course_active {
+    border-width: 2px;
+    border-style: solid;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Card Icons are positioned at the top right */
+.CMM_course_card-icon {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    z-index: 1;
+    color: var(--color-gray-900); /* Default to dark text */
+}
+
+.CMM_course_card-name {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-1);
+    position: relative;
+    z-index: 1;
+}
+
+.CMM_course_card-stream {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    position: relative;
+    z-index: 1;
+}
+
+/* Dynamic Color Palette using index.CMM_css variables */
+/* Pink Theme */
+.CMM_course-color-0 { border-color: var(--brand-pink); }
+.CMM_course-color-0::before { background-color: var(--brand-pink); }
+.CMM_course-color-0.CMM_course_active { border-color: var(--brand-pink-dark); background-color: var(--brand-pink-light); }
+
+/* Info/Blue Theme */
+.CMM_course-color-1 { border-color: var(--color-info); }
+.CMM_course-color-1::before { background-color: var(--color-info); }
+.CMM_course-color-1.CMM_course_active { border-color: var(--color-info-dark); background-color: var(--color-info-light); }
+
+/* Success/Green Theme */
+.CMM_course-color-2 { border-color: var(--color-success); }
+.CMM_course-color-2::before { background-color: var(--color-success); }
+.CMM_course-color-2.CMM_course_active { border-color: var(--color-success-dark); background-color: var(--color-success-light); }
+
+/* Warning/Orange Theme */
+.CMM_course-color-3 { border-color: var(--brand-orange); }
+.CMM_course-color-3::before { background-color: var(--brand-orange); }
+.CMM_course-color-3.CMM_course_active { border-color: var(--brand-orange-dark); background-color: var(--brand-orange-light); }
+
+
+/* =========================================================================
+   BUTTONS AND MISC (Refining existing styles with variables)
+   ========================================================================= */
+
+.CMM_batch_btn-primary, .CMM_batch_btn-secondary, .CMM_batch_btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+    border: 1px solid transparent;
+    font-size: var(--font-size-sm);
+}
+
+.CMM_batch_btn-primary {
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+}
+
+.CMM_batch_btn-primary:hover {
+    background-color: var(--brand-pink-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+.CMM_batch_btn-secondary {
+    background-color: var(--color-white);
+    color: var(--brand-pink);
+    border: 1px solid var(--brand-pink);
+}
+
+.CMM_batch_btn-secondary:hover {
+    background-color: var(--brand-pink-light);
+}
+
+/* Table container refinement */
+.CMM_batch_table-container {
+    overflow-x: auto;
+    margin-top: var(--space-6);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.CMM_batch_table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;
+}
+
+.CMM_batch_table th, .CMM_batch_table td {
+    padding: var(--space-4) var(--space-4); /* Increased vertical padding */
+    font-size: var(--font-size-sm);
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray-200);
+    vertical-align: middle;
+}
+
+/* Sticky Header Effect */
+.CMM_batch_table thead th {
+    background-color: var(--brand-pink-dark); 
+    color: white;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.CMM_05em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Zebra Striping for Readability */
+.CMM_batch_table tbody tr:nth-child(even) {
+    background-color: var(--color-gray-50);
+}
+
+/* NEW: Row Selectability - Enhanced */
+.CMM_batch_selectable-row {
+    cursor: pointer;
+    transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.CMM_batch_selectable-row:hover {
+    background-color: var(--color-gray-100); 
+    transform: none; 
+}
+
+.CMM_batch_selectable-row.CMM_batch_selected-row {
+    background-color: var(--brand-pink-light);
+    color: var(--color-gray-900);
+    font-weight: var(--font-weight-semibold);
+    /* Subtle inner shadow/outline to denote selection */
+    box-shadow: inset 4px 0 0 0 var(--brand-pink);
+}
+.CMM_batch_selectable-row.CMM_batch_selected-row:hover {
+    background-color: var(--brand-pink-light); /* Maintain selection color on hover */
+}
+
+/* Table Stats (Total Subjects, Total Classes) - Enhanced UI */
+.CMM_batch_stat-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-900);
+    font-weight: var(--font-weight-bold);
+    box-shadow: var(--shadow-xs);
+}
+
+
+/* Status Pill Refinement */
+.CMM_batch_status-pill {
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.CMM_05em;
+}
+.CMM_batch_status-active { 
+    background-color: var(--color-success-light); 
+    color: var(--color-success-dark); 
+    border: 1px solid var(--color-success-dark); 
+}
+.CMM_batch_status-inactive { 
+    background-color: var(--color-gray-200); 
+    color: var(--color-gray-700); 
+    border: 1px solid var(--color-gray-400); 
+}
+
+/* Teacher Pill Refinement - ENHANCED */
+.CMM_batch_teacher-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px; 
+    align-items: center;
+}
+.CMM_batch_teacher-pill {
+    background-color: var(--color-info-light);
+    color: var(--color-info-dark);
+    padding: 3px 8px;
+    border-radius: var(--radius-md); 
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+    box-shadow: var(--shadow-xs);
+}
+.CMM_batch_teacher-more {
+    background-color: var(--brand-orange-light);
+    color: var(--brand-orange-dark);
+    padding: 3px 8px;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+/* Action Column Refinement */
+.CMM_batch_table-actions-col {
+    width: 120px; /* Give more space for actions */
+    text-align: center;
+    
+}
+.CMM_batch_action-btn {
+    padding: var(--space-1);
+    border-radius: var(--radius-sm);
+    background-color: white;
+    
+    transition: background-color var(--transition-fast);
+}
+.CMM_batch_action-btn:hover {
+    background-color: white;
+}
+.CMM_batch_edit-btn{ color: green;border: 1px solid green;margin-right: var(--space-5); }
+.CMM_batch_delete-btn{ color: red;border: 1px solid red; }
+
+.CMM_batch_no-results-tile {
+    /* Adjusted to fit new grid layout */
+    padding: var(--space-6);
+    color: var(--color-gray-600);
+    font-style: italic;
+    flex: 1 1 100%;
+    text-align: center;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    background-color: var(--color-gray-100);
+}
+
+
+/* =========================================================================
+   CLASS CARDS (STEP 5) - ENHANCED UI
+   ========================================================================= */
+
+.CMM_class_card_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    gap: var(--space-5); 
+    padding-top: var(--space-4);
+}
+
+.CMM_class_card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-top: 5px solid var(--color-gray-400); /* Top border for emphasis */
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.CMM_class_card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.CMM_1; 
+    z-index: 0;
+    background-color: var(--brand-pink); /* Default background color for gradient */
+    transition: opacity var(--transition-fast);
+}
+
+.CMM_class_card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--brand-pink);
+    transform: translateY(-3px);
+}
+
+.CMM_class_card.CMM_class_active {
+    border-color: var(--brand-pink);
+    border-top: 5px solid var(--brand-pink);
+    box-shadow: 0 0 0 4px var(--brand-pink-light); /* Stronger outline */
+    transform: translateY(-1px);
+}
+.CMM_class_card.CMM_class_active::before {
+    opacity: 0.CMM_2;
+}
+
+/* Dynamic Card Colors */
+.CMM_class_card.CMM_class-color-0 { border-top-color: var(--brand-pink); }
+.CMM_class_card.CMM_class-color-0::before { background-color: var(--brand-pink); }
+.CMM_class_card.CMM_class-color-1 { border-top-color: var(--color-info); }
+.CMM_class_card.CMM_class-color-1::before { background-color: var(--color-info); }
+.CMM_class_card.CMM_class-color-2 { border-top-color: var(--color-success); }
+.CMM_class_card.CMM_class-color-2::before { background-color: var(--color-success); }
+.CMM_class_card.CMM_class-color-3 { border-top-color: var(--brand-orange); }
+.CMM_class_card.CMM_class-color-3::before { background-color: var(--brand-orange); }
+
+
+.CMM_class_card-icon {
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-3);
+    position: relative;
+    z-index: 1;
+}
+
+.CMM_class_card-name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    position: relative;
+    z-index: 1;
+}
+
+.CMM_class_card-info {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-600);
+    margin-top: var(--space-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    position: relative;
+    z-index: 1;
+}
+.CMM_class_card-info-icon {
+    color: var(--color-success-dark);
+}
+
+
+/* =========================================================================
+   CLASS DETAILS (STEP 6) - ENHANCED UI
+   ========================================================================= */
+
+.CMM_batch_class-detail-section {
+    padding-bottom: var(--space-8);
+}
+
+.CMM_batch_detail-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8); /* Space between the detail cards and the timetable */
+}
+
+/* Detail Cards Grid */
+.CMM_batch_detail-grid {
+    /* 1: Students (small stat), 2: Subjects/Teachers (list) */
+    grid-template-columns: 1fr 2fr; 
+    display: grid;
+    gap: var(--space-5);
+    padding-top: var(--space-4);
+}
+
+.CMM_batch_detail-item {
+    padding: var(--space-5);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+     background-color:  var(--brand-orange) ;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.CMM_05);
+    display: flex;
+    flex-direction: column;
+}
+
+.CMM_batch_detail-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.CMM_batch_detail-header strong {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-800);
+}
+
+/* Specific Detail Item Styling */
+.CMM_item-students .CMM_batch_detail-icon { color: var(--color-success-dark); }
+.CMM_item-students strong { color: var(--color-success-dark); }
+.CMM_item-students .CMM_batch_detail-value {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-success-dark);
+    margin-top: var(--space-3);
+    text-align: center;
+}
+
+/* --- Subject-Teacher List Styling (New) --- */
+.CMM_item-subjects-teachers {
+    /* Use brand pink/info colors */
+    border-left: 5px solid var(--brand-pink);
+}
+.CMM_item-subjects-teachers .CMM_batch_detail-icon { color: var(--brand-pink-dark); }
+.CMM_item-subjects-teachers strong { color: var(--brand-pink-dark); }
+
+.CMM_batch_subject-teacher-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0;
+    font-size: var(--font-size-sm);
+    max-height: 200px; 
+    overflow-y: auto;
+}
+
+.CMM_subject-teacher-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) 0;
+    border-bottom: 1px dashed var(--color-gray-200);
+    transition: background-color 0.CMM_1s;
+}
+
+.CMM_subject-teacher-row:hover {
+    background-color: var(--color-gray-100);
+}
+
+.CMM_subject-teacher-row:last-child {
+    border-bottom: none;
+}
+
+.CMM_subject-name {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+}
+
+.CMM_teacher-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-info-dark);
+    /* Adding a light pill effect */
+    background-color: var(--color-info-light);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+}
+
+/* =========================================================================
+   TIMETABLE STYLES (New Component) - ENHANCED UI
+   ========================================================================= */
+
+.CMM_batch_timetable-container {
+    padding: var(--space-5);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.CMM_05);
+}
+
+.CMM_timetable_heading {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--brand-orange-dark);
+    margin-top: 0;
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.CMM_timetable_legend {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin-bottom: var(--space-4);
+    font-style: italic;
+    padding: var(--space-2);
+    border-left: 3px solid var(--color-info);
+    background-color: var(--color-info-light);
+}
+
+.CMM_batch_timetable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.CMM_batch_timetable th, .CMM_batch_timetable td {
+    border: 1px solid var(--color-gray-300);
+    padding: var(--space-3);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    vertical-align: middle;
+}
+
+.CMM_batch_timetable thead th {
+    background-color: var(--brand-pink-dark);
+    color: var(--color-white);
+    font-weight: var(--font-weight-bold);
+    border-color: var(--brand-pink-dark);
+}
+
+.CMM_batch_timetable tbody th, .CMM_batch_timetable tbody td {
+    border-color: var(--color-gray-200);
+}
+
+.CMM_time-col {
+    background-color: var(--color-gray-100);
+    font-weight: var(--font-weight-semibold);
+    width: 150px; /* Fixed width for time column */
+    position: sticky;
+    left: 0;
+    z-index: 5;
+}
+
+.CMM_slot-time {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-800);
+}
+.CMM_slot-period {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-600);
+}
+
+/* Timetable Cell Styling (Content) */
+.CMM_timetable-cell {
+    position: relative;
+    cursor: default;
+    transition: all 0.CMM_15s;
+    overflow: hidden;
+}
+
+.CMM_timetable-cell:hover {
+    box-shadow: inset 0 0 0 3px var(--color-gray-700);
+    z-index: 6;
+}
+
+.CMM_cell-subject {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    font-size: var(--font-size-sm);
+    line-height: 1.CMM_2;
+}
+
+.CMM_cell-teacher {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-700);
+    margin-top: 2px;
+}
+
+/* Dynamic Cell Colors (Based on Subject Index) */
+.CMM_timetable-cell.CMM_color-0 { background-color: #ffe0e9; border-left: 4px solid var(--brand-pink); }
+.CMM_timetable-cell.CMM_color-1 { background-color: #e3f2fd; border-left: 4px solid var(--color-info); }
+.CMM_timetable-cell.CMM_color-2 { background-color: #e8f5e9; border-left: 4px solid var(--color-success); }
+.CMM_timetable-cell.CMM_color-3 { background-color: #fff3e0; border-left: 4px solid var(--brand-orange); }
+
+
+/* Separator Rows for Break/Lunch Alignment */
+.CMM_timetable-separator-row.CMM_break .CMM_separator-cell {
+    background-color: #fce4ec; /* Light pink */
+    color: var(--brand-pink-dark);
+    font-weight: var(--font-weight-semibold);
+    text-align: center;
+    padding: var(--space-1) var(--space-3);
+    border: none;
+    border-bottom: 2px dashed var(--brand-pink-light);
+}
+.CMM_timetable-separator-row.CMM_lunch .CMM_separator-cell {
+    background-color: #fffde7; /* Light yellow */
+    color: var(--brand-orange-dark);
+    font-weight: var(--font-weight-semibold);
+    text-align: center;
+    padding: var(--space-1) var(--space-3);
+    border: none;
+    border-bottom: 2px dashed var(--brand-orange-light);
+}
+
+
+/* =========================================================================
+   MODAL STYLING (General)
+   ========================================================================= */
+.CMM_batch_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.CMM_6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.CMM_batch_modal-content {
+    background-color: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    width: 80%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.CMM_95);
+    transition: transform 0.CMM_2s ease-out;
+}
+/* New Large Modal Size for Batch Form */
+.CMM_batch_modal-large {
+    max-width: 1000px;
+    width: 80%;
+}
+
+.CMM_batch_modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.CMM_batch_modal-header h3 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    color: var(--brand-pink);
+}
+
+.CMM_batch_close-modal {
+    cursor: pointer;
+    color: var(--color-gray-500);
+    transition: color 0.CMM_15s;
+}
+.CMM_batch_close-modal:hover {
+    color: var(--color-gray-900);
+}
+
+.CMM_batch_modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-gray-100);
+}
+
+
+/* =========================================================================
+   BATCH FORM STYLING (NEW)
+   ========================================================================= */
+
+.CMM_batch_form-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Core Details column smaller than Subjects column */
+    gap: var(--space-6);
+}
+
+.CMM_batch_form-column {
+    padding: var(--space-4);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+}
+.CMM_column-core {
+    background-color: var(--color-gray-50);
+}
+.CMM_column-subjects {
+    background-color: var(--color-white);
+}
+
+.CMM_batch_form-column h4 {
+    margin-top: 0;
+    margin-bottom: var(--space-4);
+    color: var(--color-gray-800);
+    font-size: var(--font-size-lg);
+    border-bottom: 2px solid var(--color-gray-100);
+    padding-bottom: var(--space-2);
+}
+
+.CMM_batch_form-group {
+    margin-bottom: var(--space-4);
+}
+
+.CMM_batch_form-row {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+.CMM_batch_form-row .CMM_batch_form-group {
+    flex: 1;
+    margin-bottom: 0; /* Handled by row margin */
+}
+
+.CMM_batch_form-group label {
+    display: block;
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 5px;
+    color: var(--color-gray-700);
+    font-size: var(--font-size-sm);
+}
+
+.CMM_batch_form-group input[type="text"],
+.CMM_batch_form-group input[type="date"],
+.CMM_batch_form-group select,
+.CMM_batch_form-group textarea { /* Added textarea */
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    transition: border-color 0.CMM_15s;
+    background-color: var(--color-white);
+}
+.CMM_batch_form-group input:focus,
+.CMM_batch_form-group select:focus,
+.CMM_batch_form-group textarea:focus { /* Added textarea focus */
+    border-color: var(--brand-pink);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--brand-pink-light);
+}
+
+.CMM_batch_read-only-field {
+    background-color: var(--color-gray-100) !important;
+    color: var(--color-gray-600) !important;
+    cursor: not-allowed;
+    border-style: dashed;
+}
+
+/* --- Subject Configuration --- */
+
+.CMM_batch_subject-box {
+    margin-bottom: var(--space-4);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-300);
+}
+.CMM_common-subjects {
+    border-left: 5px solid var(--color-success);
+    background-color: var(--color-success-light-extra); /* Very light green */
+}
+.CMM_specific-subjects {
+    border-left: 5px solid var(--brand-orange);
+    background-color: var(--brand-orange-light-extra); /* Very light orange */
+}
+
+.CMM_batch_subject-box h5 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-base);
+    color: var(--color-gray-800);
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+}
+
+.CMM_batch_subject-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: var(--space-1);
+}
+
+.CMM_batch_subject-pill-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.CMM_batch_subject-pill {
+    padding: 6px 10px;
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-800);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    transition: background-color 0.CMM_15s, box-shadow 0.CMM_15s;
+    margin-left: -2px; /* Pull pill closer to checkbox */
+}
+
+.CMM_batch_subject-pill-label input[type="checkbox"] {
+    display: none;
+}
+
+.CMM_batch_subject-pill-label input[type="checkbox"]:checked + .CMM_batch_subject-pill {
+    background-color: var(--brand-pink);
+    color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+}
+.CMM_common-subjects .CMM_batch_subject-pill-label input[type="checkbox"]:checked + .CMM_batch_subject-pill {
+    background-color: var(--color-success-dark);
+}
+.CMM_specific-subjects .CMM_batch_subject-pill-label input[type="checkbox"]:checked + .CMM_batch_subject-pill {
+    background-color: var(--brand-orange-dark);
+}
+
+.CMM_batch_class-group-section h6 {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--brand-orange-dark);
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-2);
+    border-bottom: 1px dotted var(--brand-orange-light);
+}
+
+/* =========================================================================
+   CONFIRMATION OVERLAY STYLING (FIXED)
+   ========================================================================= */
+
+.CMM_batch_modal-confirmation-overlay {
+    /* FIX: This is now positioned absolutely relative to its parent .CMM_batch_modal (which is position: relative) */
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Use a semi-transparent white background to "blur" the form behind it */
+    background-color: rgba(255, 255, 255, 0.CMM_95); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1010; /* Must be higher than the content z-index */
+    backdrop-filter: blur(4px); /* Visual effect */
+}
+
+.CMM_batch_confirm-popup {
+    /* Overrides the default batch_modal-content styles for a smaller, focused box */
+    max-width: 380px; 
+    width: 90%;
+    padding: var(--space-6);
+    text-align: center;
+    border: 2px solid var(--brand-pink);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.CMM_2);
+    transform: none !important; /* Reset scale transform */
+    /* Ensure the background is fully white inside the popup */
+    background-color: var(--color-white); 
+    /* Important overrides from .CMM_batch_modal-content */
+    max-height: none; 
+    overflow-y: visible;
+}
+
+.CMM_batch_confirm-icon {
+    color: var(--brand-orange-dark);
+    margin-bottom: var(--space-4);
+}
+
+.CMM_batch_confirm-popup h4 {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-3);
+}
+
+.CMM_batch_confirm-popup p {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-6);
+}
+
+.CMM_batch_confirm-popup .CMM_batch_modal-actions {
+    /* Center actions in the confirmation popup */
+    justify-content: center;
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+/* =========================================================================
+   RESPONSIVE DESIGN 
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+    .CMM_batch_form-grid {
+        grid-template-columns: 1fr; /* Stack columns on tablet/mobile */
+    }
+    .CMM_batch_modal-large {
+        max-width: 80%;
+    }
+    .CMM_batch_detail-grid {
+        grid-template-columns: 1fr; /* Stack the detail cards */
+    }
+    /* Cards in sliders get smaller but retain minimum width */
+    .CMM_inst_card, .CMM_stream_card, .CMM_course_card {
+        flex-basis: 200px; 
+    }
+}
+@media (max-width: 768px) {
+    .CMM_batch_wrapper {
+        padding-inline: var(--space-4);
+    }
+    
+    /* Step Header/Actions */
+    .CMM_step_header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .CMM_step_actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .CMM_batch_search-bar {
+        width: 100%;
+    }
+
+    .CMM_batch_search-bar input {
+        width: 100%;
+        width: 100% !important; /* Override focus width change */
+    }
+
+    /* Cards in sliders get slightly smaller */
+    .CMM_inst_card, .CMM_stream_card, .CMM_course_card {
+        flex-basis: 180px;
+    }
+     /* Timetable needs horizontal scrolling on mobile */
+    .CMM_batch_timetable-container {
+        overflow-x: auto;
+    }
+    .CMM_batch_timetable {
+        min-width: 600px; /* Ensure table is wide enough for content */
+    }
+    .CMM_time-col {
+        position: static; /* Disable sticky time column on very small screens */
+    }
+}
+@media (max-width: 640px) {
+    .CMM_batch_modal-content {
+        padding: var(--space-4);
+        max-width: 100%;
+        margin: var(--space-2);
+    }
+    .CMM_batch_form-row {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+    .CMM_batch_subject-box {
+        padding: var(--space-3);
+    }
+}
+@media (max-width: 480px) {
+    /* Ensure the smallest cards maintain a readable size in the slider */
+    .CMM_inst_card, .CMM_stream_card, .CMM_course_card {
+        flex-basis: 150px;
+    }
+}

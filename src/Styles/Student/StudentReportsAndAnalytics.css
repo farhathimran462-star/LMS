@@ -1,0 +1,322 @@
+/* ========================================
+   StudentReportAnalytics Custom Styles
+   Uses variables from :root in index.css
+   ======================================== */
+
+.STRA_subject-cards-grid {
+    display: grid;
+    /* 2 columns for smaller screens, 5 for desktop */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    /* Using a specific variable for gap, e.g., --space-4 (1rem) */
+    gap: var(--space-4); 
+}
+
+.STRA_subject-card {
+    /* Style for the card background and hover effect */
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gray-200);
+    /* Transition from index.css */
+    transition: all var(--transition-base); 
+}
+
+.STRA_subject-card:hover {
+    /* Subtle hover effect */
+    border-color: var(--brand-pink-light);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.STRA_subject-card-active {
+    /* Active subject card styling */
+    border-color: var(--brand-pink);
+    background-color: var(--brand-pink-light);
+    box-shadow: var(--shadow-lg);
+}
+
+.STRA_subject-card-active h5 {
+    /* Active card text color */
+    color: var(--brand-pink-dark);
+}
+
+/* --- Tab Navigation --- */
+.STRA_tabs-nav {
+    display: flex;
+    /* Using a specific variable for gap, e.g., --space-3 (0.75rem) */
+    gap: var(--space-3); 
+    border-bottom: 2px solid var(--color-gray-200);
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.STRA_tab-btn {
+    /* Overriding default button font size to match small/medium tabs */
+    font-size: var(--font-size-sm); 
+    padding: var(--space-2) var(--space-5);
+}
+
+/* --- Table Styling --- */
+.STRA_table-responsive {
+    /* Ensures the table is scrollable on small screens */
+    overflow-x: auto;
+}
+
+.STRA_report-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* Default table text color */
+    color: var(--color-gray-800); 
+}
+
+.STRA_report-table th,
+.STRA_report-table td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.STRA_report-table th {
+    /* Table header styles */
+    background-color: var(--color-gray-100);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.STRA_report-table tbody tr:hover {
+    /* Subtle row hover effect */
+    background-color: var(--color-gray-50);
+}
+
+/* --- Status Badges --- */
+.STRA_status-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+}
+
+/* --- Statistics Cards --- */
+.STRA_stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+}
+
+.STRA_stat-card {
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+}
+
+.STRA_stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.STRA_stat-card.success {
+    border-color: var(--color-success);
+    background-color: var(--color-success-light);
+}
+
+.STRA_stat-card.error {
+    border-color: var(--color-error);
+    background-color: var(--color-error-light);
+}
+
+.STRA_stat-value {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--brand-pink-dark);
+    margin-bottom: var(--space-2);
+}
+
+.STRA_stat-card.success .STRA_stat-value {
+    color: var(--color-success-dark);
+}
+
+.STRA_stat-card.error .STRA_stat-value {
+    color: var(--color-error-dark);
+}
+
+.STRA_stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* --- Filter Section --- */
+.STRA_filters-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.STRA_filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    flex: 1;
+    min-width: 200px;
+}
+
+.STRA_filter-group label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+}
+
+.STRA_filter-select {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    background-color: var(--color-white);
+    color: var(--color-gray-800);
+    transition: all var(--transition-base);
+}
+
+.STRA_filter-select:hover {
+    border-color: var(--brand-pink-light);
+}
+
+.STRA_filter-select:focus {
+    outline: none;
+    border-color: var(--brand-pink);
+    box-shadow: 0 0 0 3px var(--brand-pink-light);
+}
+
+.STRA_filter-select:disabled {
+    background-color: var(--color-gray-100);
+    cursor: not-allowed;
+}
+
+/* --- Grade Badges --- */
+.STRA_grade-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+}
+
+.STRA_grade-badge.grade-aplus,
+.STRA_grade-badge.grade-a {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.STRA_grade-badge.grade-bplus,
+.STRA_grade-badge.grade-b {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.STRA_grade-badge.grade-cplus,
+.STRA_grade-badge.grade-c {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.STRA_grade-badge.grade-f {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Test Statuses */
+.STRA_status-badge.pass {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+
+.STRA_status-badge.fail {
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+}
+
+.STRA_status-badge.absent {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+/* Assignment Statuses */
+.STRA_status-badge.completed {
+    background-color: var(--color-info-light);
+    color: var(--color-info-dark);
+}
+
+.STRA_status-badge.pendingreview {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning-dark);
+}
+
+/* --- Alert Styles --- */
+.alert {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+}
+
+.alert-error {
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+    border: 1px solid var(--color-error);
+}
+
+/* Text Utility Classes */
+.text-success {
+    color: var(--color-success-dark);
+}
+
+.text-error {
+    color: var(--color-error-dark);
+}
+
+.text-gray-500 {
+    color: var(--color-gray-500);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 640px) {
+    .STRA_stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .STRA_filters-section {
+        flex-direction: column;
+    }
+
+    .STRA_filter-group {
+        min-width: 100%;
+    }
+
+    .STRA_subject-cards-grid {
+        /* On mobile, use only 2 columns for better tap target size */
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .STRA_report-table th,
+    .STRA_report-table td {
+        /* Reduce padding on smaller screens */
+        padding: var(--space-2);
+        font-size: var(--font-size-xs);
+    }
+    
+    /* Center text alignments for numeric columns on mobile */
+    .STRA_report-table td:nth-child(3), /* Total Marks */
+    .STRA_report-table td:nth-child(4) { /* Marks Obtained */
+        text-align: center;
+    }
+}

@@ -1,0 +1,593 @@
+/* ===============================================
+   DYNAMIC FORM STYLING 
+   =============================================== */
+
+/* --- Modal Overlay (Background) --- */
+.DFORM_Modal_Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-modal); 
+}
+
+/* --- Modal Content (The White Box) --- */
+.DFORM_Modal_Content {
+    position: relative; 
+    background: var(--color-white);
+    padding: 0; 
+    overflow: hidden; 
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    display: flex; 
+    flex-direction: column;
+    transform: scale(1);
+    transition: transform var(--transition-base) ease-out;
+}
+
+/* --- Scrollable Wrapper --- */
+.DFORM_Scrollable_Wrapper {
+    padding: var(--space-8); 
+    overflow-y: auto;        
+    flex: 1;                 
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.DFORM_Scrollable_Wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- Confirmation Overlay (Fixed Top Layer) --- */
+.DFORM_Inner_Overlay {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50; 
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--radius-lg);
+}
+
+/* --- Header --- */
+.DFORM_Modal_Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-gray-300);
+    padding-bottom: var(--space-3); 
+}
+
+.DFORM_Modal_Title {
+    margin: 0;
+    color: var(--color-gray-900);
+    font-size: var(--font-size-xl); 
+}
+
+.DFORM_Modal_Close {
+    background: none;
+    border: none;
+    font-size: var(--font-size-2xl);
+    color: var(--color-gray-500);
+    cursor: pointer;
+    line-height: 1;
+    transition: color var(--transition-fast);
+}
+.DFORM_Modal_Close:hover {
+    color: var(--color-gray-700);
+}
+
+/* --- Form Layout --- */
+.DFORM_Form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+}
+
+.DFORM_Form_Field {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.DFORM_Column_2 {
+    width: calc(50% - 10px); 
+}
+
+.DFORM_Column_1 {
+    width: 100%;
+}
+
+/* --- Field Styling --- */
+.DFORM_Label {
+    display: flex;
+    white-space: nowrap;
+    margin-bottom: var(--space-2); 
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+}
+
+.DFORM_Input_Text,
+.DFORM_Input_Number,
+.DFORM_Input_Date,
+.DFORM_Input_Time {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    box-sizing: border-box;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base); 
+}
+
+.DFORM_Input_File {
+    padding-top: var(--space-1);
+}
+
+.DFORM_Field_Description {
+    margin-top: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+}
+
+.DFORM_Field_Hint {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    display: block;
+    margin-top: var(--space-1);
+}
+
+.DFORM_Required_Asterisk {
+    color: var(--color-error); 
+    margin-left: 2px;
+}
+
+.DFORM_Field_Error {
+    color: var(--color-error); 
+    font-size: var(--font-size-xs);
+    display: block;
+    margin-top: var(--space-1);
+}
+
+/* --- Display Box --- */
+.DFORM_DisplayBox {
+    padding: var(--space-3);
+    background-color: var(--color-gray-100); 
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    color: var(--color-gray-700);
+}
+
+.DFORM_DisplayBox_Icon {
+    margin-right: var(--space-3);
+    font-size: var(--font-size-lg);
+}
+
+/* --- Custom Select and Pills --- */
+.DFORM_Custom_Select_Container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: var(--space-1) 0;
+}
+
+.DFORM_Pills_Display_Container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+}
+
+.DFORM_Pill {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    color: var(--color-white);
+    white-space: nowrap;
+}
+
+.DFORM_Pill_Remove {
+    background: none;
+    border: none;
+    color: var(--color-white);
+    margin-left: var(--space-2);
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-lg);
+    line-height: 1;
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+}
+.DFORM_Pill_Remove:hover {
+    opacity: 1;
+}
+
+.DFORM_SelectablePill {
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: 1px solid;
+    user-select: none;
+}
+
+.DFORM_Pill--pink,
+.DFORM_SelectablePill--pink {
+    background-color: var(--brand-pink);
+    border-color: var(--brand-pink);
+    color: var(--color-white);
+}
+
+.DFORM_SelectablePill--pink {
+    background-color: var(--brand-pink-light);
+    color: var(--brand-pink-dark);
+}
+
+.DFORM_Pill--default,
+.DFORM_SelectablePill--default {
+    background-color: var(--color-gray-600);
+    border-color: var(--color-gray-600);
+    color: var(--color-white);
+}
+
+.DFORM_SelectablePill--default {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-700);
+    border-color: var(--color-gray-300);
+}
+
+.DFORM_SelectablePill--Selected {
+    background-color: var(--brand-pink); 
+    border-color: var(--brand-pink);
+    color: var(--color-white);
+    font-weight: var(--font-weight-semibold);
+}
+.DFORM_SelectablePill:hover:not(.DFORM_SelectablePill--Selected) {
+    background-color: var(--color-gray-200);
+}
+
+/* --- File Upload --- */
+.DFORM_CurrentFile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-1);
+    background-color: var(--color-gray-100);
+    border-bottom: 1px dashed var(--color-gray-300);
+    margin-bottom: var(--space-2);
+    border-radius: var(--radius-sm);
+}
+
+.DFORM_Download_Btn {
+    text-decoration: none;
+    color: var(--brand-pink);
+    font-size: var(--font-size-sm);
+    margin-left: var(--space-3);
+    transition: color var(--transition-fast);
+}
+.DFORM_Download_Btn:hover {
+    color: var(--brand-pink-dark);
+}
+
+/* --- Buttons --- */
+.DFORM_Form_Actions {
+    margin-top: var(--space-8);
+    text-align: right;
+}
+
+.DFORM_Btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+}
+
+.DFORM_Btn_Primary {
+    background-color: var(--brand-orange);
+    color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+}
+.DFORM_Btn_Primary:hover:not(:disabled) {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.DFORM_Btn_Secondary {
+    background-color: var(--color-white);
+    color: var(--color-gray-700);
+    border: 1px solid var(--color-gray-300);
+    margin-right: var(--space-4); 
+}
+.DFORM_Btn_Secondary:hover:not(:disabled) {
+    background-color: var(--color-gray-100);
+    border-color: var(--color-gray-400);
+}
+
+/* --- Confirmation Box --- */
+.DFORM_Confirmation_Box {
+    text-align: center;
+    border-radius: 20px;
+    background-color: white;
+    max-width: 400px;
+    padding: var(--space-5);
+}
+
+.DFORM_Confirmation_Title {
+    color: var(--color-gray-900);
+    margin-top: 0;
+}
+
+.DFORM_Confirmation_Message {
+    margin: var(--space-5) 0 var(--space-8);
+    font-size: var(--font-size-lg);
+}
+
+.DFORM_Confirmation_Actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+}
+
+/* --- Custom Dropdown --- */
+.DFORM_Dropdown_Wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.DFORM_Dropdown_Trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-900);
+  transition: all var(--transition-base);
+}
+
+.DFORM_Dropdown_Trigger:hover {
+  border-color: var(--color-gray-400);
+  background-color: var(--color-gray-50);
+}
+
+.DFORM_Dropdown_Trigger--Open {
+  border-color: var(--brand-pink); 
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.1);
+  background-color: var(--color-white);
+}
+
+.DFORM_Dropdown_Trigger--Placeholder .DFORM_Dropdown_Label {
+  color: var(--color-gray-400);
+}
+
+.DFORM_Dropdown_Arrow {
+  display: flex;
+  align-items: center;
+  color: var(--color-gray-500);
+  transition: transform 0.2s ease;
+}
+
+.DFORM_Dropdown_Trigger--Open .DFORM_Dropdown_Arrow {
+  transform: rotate(180deg);
+}
+
+.DFORM_Dropdown_Menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+}
+
+.DFORM_Dropdown_Item {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.1s;
+}
+
+.DFORM_Dropdown_Item:hover {
+  background-color: var(--color-gray-100);
+  color: var(--brand-pink);
+}
+
+.DFORM_Dropdown_Item--Selected {
+  background-color: var(--brand-pink-light);
+  color: var(--brand-pink-dark);
+  font-weight: var(--font-weight-medium);
+}
+
+.DFORM_Checkmark {
+  font-size: 12px;
+}
+
+.DFORM_Dropdown_Menu::-webkit-scrollbar {
+  width: 6px;
+}
+.DFORM_Dropdown_Menu::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-300);
+  border-radius: 4px;
+}
+
+/* --- REPEATER GROUP STYLING (NEW & RESPONSIVE) --- */
+.DFORM_Repeater_Wrapper {
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box; 
+}
+
+/* Individual Item Row */
+.DFORM_Repeater_Item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.DFORM_Repeater_Item:hover {
+    border-color: #bbb;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Row Number */
+.DFORM_Repeater_Index {
+    font-weight: 600;
+    color: #888;
+    font-size: 0.85rem;
+    min-width: 25px;
+    flex-shrink: 0; 
+}
+
+/* Text Content in View Mode */
+.DFORM_Repeater_Text {
+    font-size: 0.9rem;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0; /* CRITICAL: Prevents flex overflow */
+}
+
+/* Input Fields Wrapper */
+.DFORM_Repeater_Field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* CRITICAL: Prevents input from overflowing container */
+}
+
+.DFORM_Repeater_Label {
+    display: block;
+    margin-bottom: 4px;
+    color: #666;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.DFORM_Repeater_Input {
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    width: 100%; 
+}
+
+/* Input Row (New Item) */
+.DFORM_Repeater_InputRow {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end; 
+    padding-top: 10px;
+    border-top: 1px dashed #ddd;
+    margin-top: 4px;
+}
+
+/* Add Button (+ Icon) */
+.DFORM_Repeater_AddBtn {
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; 
+    border-radius: 6px;
+}
+
+/* Actions Container */
+.DFORM_Repeater_Actions {
+    margin-left: auto;
+    display: flex;
+    /* gap: 8px; */
+    flex-shrink: 0;
+}
+
+.DFORM_Action_Icon {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s;
+}
+
+.DFORM_Action_Icon:hover {
+    transform: scale(1.1);
+}
+
+.DFORM_Icon_Edit { color: #007bff; }
+.DFORM_Icon_Delete { color: #dc3545; }
+.DFORM_Icon_Save { color: #28a745; }
+.DFORM_Icon_Cancel { color: #6c757d; }
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+    .DFORM_Repeater_Item, 
+    .DFORM_Repeater_InputRow {
+        flex-wrap: wrap; 
+    }
+
+    .DFORM_Repeater_Field {
+        flex: 1 1 100% !important; 
+        margin-bottom: 5px;
+    }
+
+    .DFORM_Repeater_Index {
+        display: none; 
+    }
+
+    .DFORM_Repeater_AddBtn {
+        width: 100%; 
+        margin-top: 8px;
+    }
+}

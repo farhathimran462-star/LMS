@@ -1,0 +1,639 @@
+.inst_dashboard_container {
+                background-color: var(--color-gray-50); 
+                font-family: 'Poppins', Arial, sans-serif;
+                padding: var(--space-8) var(--space-4);
+                max-width: 1300px;
+                margin: 0 auto;
+                min-height: 100vh;
+            }
+
+            /* --- Header & Summary --- */
+            .inst_dashboard_header {
+                text-align: center;
+                padding: var(--space-6) 0;
+                border-bottom: 3px solid var(--brand-orange); 
+                margin-bottom: var(--space-6);
+            }
+            .inst_main_title {
+                color: var(--color-gray-900); 
+                font-size: 25px;
+                display: flex;
+                justify-content: center;
+                text-transform: uppercase;
+                gap: var(--space-2);
+                align-items: center;
+                font-weight: var(--font-weight-bold);
+                margin-bottom: var(--space-2);
+            }
+            .inst_total_count {
+                font-size: var(--font-size-lg);
+                color: var(--color-gray-700);
+            }
+            .inst_count_value {
+                font-weight: var(--font-weight-semibold);
+                color: var(--brand-pink);
+            }
+
+            /* --- Section Headers --- */
+            .inst_section_heading {
+                color: var(--brand-orange-dark); 
+                font-size: var(--font-size-xl);
+                font-weight: var(--font-weight-semibold);
+                border-bottom: 1px solid var(--color-gray-300);
+                padding-bottom: var(--space-2);
+                margin-top: var(--space-8);
+                margin-bottom: var(--space-6);
+            }
+            .inst_section_separator {
+                border: 0;
+                height: 1px;
+                background-color: var(--color-gray-300);
+                margin: var(--space-8) 0;
+            }
+
+            /* --- Action Bar (Search and Add Button) --- */
+            .inst_action_bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: var(--space-8);
+                gap: var(--space-4);
+                flex-wrap: wrap;
+            }
+
+            /* --- Search Bar & Icon --- */
+            .inst_search_wrapper {
+                position: relative;
+                flex-grow: 1;
+                max-width: 400px; 
+            }
+            .inst_search_icon {
+                position: absolute;
+                left: 15px; 
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--color-gray-500);
+                width: 20px;
+                height: 20px;
+                stroke: var(--color-gray-600); 
+            }
+            .inst_search_input {
+                width: 100%; 
+                padding: var(--space-3) var(--space-4) var(--space-3) 50px;
+                border: 1px solid var(--color-gray-400);
+                border-radius: var(--radius-lg);
+                font-size: var(--font-size-base);
+                box-shadow: var(--shadow-sm);
+                transition: border-color var(--transition-base), box-shadow var(--transition-base); 
+                box-sizing: border-box; 
+                color: var(--color-gray-900);
+            }
+            .inst_search_input:focus {
+                outline: none;
+                border-color: var(--brand-orange); 
+                box-shadow: 0 0 0 3px var(--brand-orange-light); 
+            }
+
+            /* --- Primary Button Style (Add Institute, Save) --- */
+            .inst_btn_primary {
+                display: inline-flex;
+                align-items: center;
+                gap: var(--space-2);
+                background-color: var(--brand-pink); 
+                color: var(--color-white);
+                padding: var(--space-3) var(--space-4);
+                border-radius: var(--radius-lg);
+                border: 2px solid var(--brand-pink);
+                font-weight: var(--font-weight-medium);
+                cursor: pointer;
+                transition: background-color var(--transition-base), transform var(--transition-base);
+            }
+
+            .inst_btn_primary:hover {
+                background-color: var(--brand-pink-dark);
+                border-color: var(--brand-pink-dark);
+                transform: translateY(-1px);
+            }
+            .inst_btn_primary .inst_icon_prefix {
+                width: 20px;
+                height: 20px;
+                stroke: var(--color-white);
+            }
+
+            .inst_add_button {
+                min-width: 180px;
+            }
+
+            /* --- Table Structure (Horizontal Scroll) --- */
+            .inst_table_container {
+                margin-top: var(--space-4);
+                box-shadow: var(--shadow-lg);
+                border-radius: var(--radius-xl);
+                overflow: hidden;
+                border: 1px solid var(--color-gray-200);
+            }
+
+            .inst_table_responsive {
+                overflow-x: auto;
+            }
+
+            .inst_institutions_table {
+                min-width: 900px; 
+                width: 100%;
+                border-collapse: collapse;
+                background-color: var(--color-white);
+            }
+
+            .inst_institutions_table th {
+                background-color: var(--brand-orange-light); 
+                color: var(--color-gray-900);
+                padding: var(--space-4) var(--space-3);
+                text-align: left;
+                font-weight: var(--font-weight-semibold);
+                text-transform: uppercase;
+                font-size: var(--font-size-sm);
+            }
+
+            .inst_institutions_table td {
+                padding: var(--space-3);
+                border-bottom: 1px solid var(--color-gray-200);
+                color: var(--color-gray-800);
+                font-size: var(--font-size-base);
+            }
+
+            .inst_institutions_table tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+            /* FIX 2: Updated hover color for distinct effect */
+            .inst_institutions_table tbody tr:hover {
+                background-color: var(--color-gray-200); 
+                transition: background-color var(--transition-base);
+            }
+
+            /* FIX 2: Updated selection color for better contrast */
+            .inst_row_selected {
+                background-color: var(--color-blue-50, #E0F2FE) !important; /* Light blue background */
+                border-top: 2px solid var(--brand-pink); /* Stronger indicator */
+                border-bottom: 2px solid var(--brand-pink);
+            }
+
+            .inst_no_results {
+                text-align: center;
+                font-style: italic;
+                color: var(--color-gray-500);
+                padding: var(--space-6);
+            }
+            
+            /* --- NEW: STYLES for Edit/Delete/Details Actions Column --- */
+            .inst_actions_cell {
+                display: flex;
+                gap: 8px; /* Space between buttons */
+                justify-content: flex-start; 
+                align-items: center;
+                min-width: 250px; 
+            }
+
+            /* Base style for all action buttons in the table */
+            .inst_action_btn {
+                padding: var(--space-2) var(--space-3);
+                border: none;
+                border-radius: var(--radius-md);
+                font-size: var(--font-size-sm);
+                font-weight: var(--font-weight-medium);
+                cursor: pointer;
+                transition: background-color var(--transition-base);
+                white-space: nowrap; /* Prevents wrapping */
+            }
+
+            /* Details button style (uses existing orange theme) */
+            .inst_details_btn {
+                background-color: var(--brand-orange); 
+                color: var(--color-white);
+            }
+
+            .inst_details_btn:hover {
+                background-color: var(--brand-orange-dark);
+            }
+
+            /* Edit button style (Blue theme) */
+            .inst_edit_btn {
+                background-color: var(--color-blue-500, #3B82F6); 
+                color: var(--color-white);
+            }
+
+            .inst_edit_btn:hover {
+                background-color: var(--color-blue-600, #2563EB); 
+            }
+
+            /* Delete button style (Red theme) */
+            .inst_delete_btn {
+                background-color: var(--color-red-500, #EF4444); 
+                color: var(--color-white);
+            }
+
+            .inst_delete_btn:hover {
+                background-color: var(--color-red-600, #DC2626); 
+            }
+            /* --- END NEW STYLES --- */
+
+
+            /* --- Modal Styles (Add Institute Form) --- */
+            .inst_modal_overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.6);
+                display: flex;
+                
+                justify-content: center;
+                align-items: center;
+                z-index: 9000;
+            }
+
+            .inst_modal_content {
+                background-color: var(--color-white);
+                border-radius: var(--radius-xl);
+                width: 90%;
+                max-height: 85vh;
+                overflow: auto;
+                max-width: 500px;
+                box-shadow: var(--shadow-2xl);
+                animation: inst_fadeInUp 0.3s ease-out;
+                scrollbar-width: none; 
+                -ms-overflow-style: none;
+            }
+
+            .inst_modal_header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: var(--space-5);
+                border-bottom: 1px solid var(--color-gray-200);
+            }
+
+            .inst_modal_title {
+                font-size: var(--font-size-xl);
+                font-weight: var(--font-weight-semibold);
+                color: var(--brand-pink-dark);
+            }
+
+            .inst_modal_close {
+                background: none;
+                border: none;
+                font-size: var(--font-size-2xl);
+                color: var(--color-gray-500);
+                cursor: pointer;
+                line-height: 1;
+                padding: 0;
+                transition: color var(--transition-base);
+            }
+
+            .inst_modal_close:hover {
+                color: var(--brand-pink);
+            }
+
+            .inst_form {
+                padding: var(--space-5);
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-4);
+            }
+
+            .inst_form_group {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .inst_form_group label {
+                font-weight: var(--font-weight-medium);
+                color: var(--color-gray-700);
+                margin-bottom: var(--space-1);
+                font-size: var(--font-size-sm);
+            }
+
+            .inst_form_group input,
+            .inst_form_group select {
+                padding: var(--space-3);
+                border: 1px solid var(--color-gray-300);
+                border-radius: var(--radius-md);
+                font-size: var(--font-size-base);
+                color: var(--color-gray-800);
+                transition: border-color var(--transition-base), box-shadow var(--transition-base);
+            }
+
+            .inst_form_group input:focus,
+            .inst_form_group select:focus {
+                outline: none;
+                border-color: var(--brand-orange);
+                box-shadow: 0 0 0 2px var(--brand-orange-light);
+            }
+
+            .inst_modal_actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: var(--space-3);
+                padding-top: var(--space-3);
+            }
+
+            .inst_btn_secondary {
+                background-color: var(--color-gray-200);
+                color: var(--color-gray-800);
+                padding: var(--space-3) var(--space-4);
+                border-radius: var(--radius-lg);
+                border: 1px solid var(--color-gray-300);
+                font-weight: var(--font-weight-medium);
+                cursor: pointer;
+                transition: background-color var(--transition-base);
+            }
+
+            .inst_btn_secondary:hover {
+                background-color: var(--color-gray-300);
+            }
+
+            /* Modal Animation */
+            @keyframes inst_fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* --- Responsive Adjustments (Mobile) --- */
+            @media (max-width: 640px) {
+                .inst_action_bar {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+                .inst_search_wrapper {
+                    max-width: 100%;
+                }
+                .inst_modal_content {
+                    margin: var(--space-4);
+                }
+                /* FIX 1: Adjust summary layout for small screens */
+                .inst_details_summary {
+                    flex-direction: column; /* Stack details vertically */
+                    gap: var(--space-2); /* Smaller gap for stacking */
+                    word-break: break-word; /* Ensure long words break */
+                }
+                /* NEW: Responsive action cell stacking for small screens */
+                .inst_actions_cell {
+                    flex-direction: column; 
+                    align-items: stretch; 
+                    gap: 4px;
+                    min-width: unset;
+                }
+                .inst_action_btn {
+                    width: 100%;
+                }
+                
+                /* FIX FOR BATCHES TABLE: Ensure table remains horizontal on mobile */
+                /* This forces the table elements to use their default display types (table, table-row, table-cell) */
+                .inst_batches_table,
+                .inst_batches_table thead,
+                .inst_batches_table tbody,
+                .inst_batches_table th,
+                .inst_batches_table td,
+                .inst_batches_table tr {
+                    display: revert; 
+                }
+                .inst_batches_table {
+                    min-width: 600px; /* Keep minimum width to force horizontal scroll */
+                }
+            }
+
+/* ... (All existing styles for layout, header, search, and buttons) ... */
+
+/* --- NEW: DETAILS PANEL STYLES (Below the Table) --- */
+.inst_details_panel_container {
+    /* Auto center the panel and control its maximum width */
+    display: flex;
+    justify-content: center;
+    width: 100%; 
+    margin: var(--space-8) 0; /* Vertical space below the table */
+}
+
+.inst_details_panel {
+    /* Styling for the panel itself */
+    width: 100%;
+    max-width: 1100px; /* Adjust maximum width as needed */
+    padding: var(--space-6);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-xl);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-xl);
+    animation: inst_fadeInDown 0.4s ease-out; /* Fade-in animation */
+}
+
+.inst_details_panel_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--brand-pink);
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.inst_details_title {
+    font-size: var(--font-size-xl);
+    color: var(--brand-pink);
+    font-weight: var(--font-weight-bold);
+}
+
+.inst_details_close_btn {
+    background: none;
+    border: 2px solid var(--color-gray-300);
+    border-radius: 50%;
+    color: var(--color-gray-500);
+    padding: var(--space-1) var(--space-2);
+    cursor: pointer;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-medium);
+    transition: color var(--transition-base);
+}
+.inst_details_close_btn:hover {
+    color: var(--color-red-500);
+}
+
+.inst_details_summary {
+    display: flex;
+    gap: 40px;
+    margin-bottom: var(--space-6);
+    font-size: var(--font-size-base);
+    color: var(--color-gray-700);
+    /* FIX 1: Allow flex items to wrap */
+    flex-wrap: wrap; 
+}
+
+.inst_details_subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-800);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-3);
+}
+
+/* --- Batches Table inside the Panel --- */
+.inst_batches_table_responsive {
+    overflow-x: auto;
+}
+
+.inst_batches_table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+table th:first-child {
+  border-top-left-radius: var(--space-5);
+  /* border-bottom-left-radius: var(--space-5); */
+}
+table th:last-child {
+  border-top-right-radius: var(--space-5);
+  /* border-bottom-right-radius: var(--space-5); */
+}
+.inst_batches_table th {
+    background-color: var(--brand-orange-light); 
+    color: white;
+    
+    
+    padding: var(--space-5);
+
+    text-align: left;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+}
+
+.inst_batches_table td {
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--color-gray-200);
+    font-size: var(--font-size-base);
+    color: var(--color-gray-800);
+}
+
+.inst_no_results_small {
+    text-align: center;
+    font-style: italic;
+    color: var(--color-gray-500);
+    padding: var(--space-4);
+}
+
+/* Panel Animation */
+@keyframes inst_fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ======================================================= */
+/* --- NEW STYLES: Custom Multi-Select and Pills --- */
+/* ======================================================= */
+
+/* --- Pill Container (Displays selected items) --- */
+.inst_pills_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px; /* Space between pills and the input field */
+}
+
+.inst_pill {
+    display: flex;
+    align-items: center;
+    background-color: var(--brand-pink-light, #FCE7F6); /* Light pink background for pills */
+    color: var(--brand-pink-dark, #BE185D);
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    border: 1px solid var(--brand-pink, #EC4899);
+}
+
+.inst_pill_remove_btn {
+    background: none;
+    border: none;
+    color: var(--brand-pink-dark, #BE185D);
+    font-size: var(--font-size-base);
+    margin-left: 6px;
+    padding: 0;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.15s;
+}
+
+.inst_pill_remove_btn:hover {
+    color: var(--color-red-600, #DC2626);
+}
+
+/* --- Custom Select Dropdown Wrapper --- */
+.inst_custom_select {
+    position: relative;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.inst_custom_select.is_open {
+    border-color: var(--brand-orange);
+    box-shadow: 0 0 0 2px var(--brand-orange-light);
+}
+
+/* --- Input Field (Search bar within the custom select) --- */
+.inst_custom_select_input {
+    width: 100%;
+    padding: var(--space-3);
+    border: none; /* Remove border from input inside custom select */
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    box-sizing: border-box;
+    /* Remove default focus ring, as the wrapper handles it */
+    outline: none; 
+}
+
+/* --- Dropdown Options Container --- */
+.inst_custom_select_dropdown {
+    position: absolute;
+    top: 100%; /* Position below the input */
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    margin-top: 4px;
+    max-height: 200px; /* Limit height and allow scroll */
+    overflow-y: auto;
+}
+
+.inst_dropdown_option {
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    transition: background-color 0.15s;
+}
+
+.inst_dropdown_option:hover {
+    background-color: var(--color-gray-100);
+}
+
+.inst_dropdown_no_results {
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-gray-500);
+    font-style: italic;
+    text-align: center;
+}
+
+/* Ensure the image fills the icon circle completely and keeps shape */

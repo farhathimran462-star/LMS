@@ -1,0 +1,8 @@
+full_name,email,phone,username,password,role,roll_number,employee_id,institute_id,institutes_managed,is_active,notes
+John Doe,john.doe@student.edu,1234567890,john.doe,Student@123,Student,2025001,,6912,,TRUE,Example student - Delete this row and add your data
+Jane Smith,jane.smith@student.edu,2345678901,jane.smith,Student@456,Student,2025002,,8920,,TRUE,Another example student
+Dr. Sarah Johnson,sarah.johnson@teacher.edu,5551234567,sarah.johnson,Teacher@123,Teacher,,TCH001,,,TRUE,Example teacher - Physics department
+Prof. Michael Brown,michael.brown@teacher.edu,5559876543,michael.brown,Teacher@456,Teacher,,TCH002,,,TRUE,Another example teacher
+Robert Admin,robert.admin@admin.edu,5555555555,robert.admin,Admin@123,Admin,,ADM001,,6912;8920,TRUE,Example admin managing multiple institutes
+Patricia Wilson,patricia.wilson@admin.edu,5554442222,patricia.wilson,Admin@456,Admin,,ADM002,,8920,TRUE,Another example admin
+Alice SuperAdmin,alice.super@system.edu,4444444444,alice.super,SuperAdmin@123,Super Admin,,SA001,,,TRUE,Example super admin

@@ -1,0 +1,332 @@
+    .IN_institute-card.IN_selected {
+        border: 4px solid var(--brand-pink-light); /* Primary color border */
+        background-color: var(--brand-pink); /* Light pink background */
+        color:white; /* Dark pink text */
+        transform: scale(1.02); /* Slight scale up for emphasis */
+        box-shadow: var(--shadow-lg);
+        font-weight: var(--font-weight-semibold);
+    }
+     .IN_card-icon{
+        color: var(--brand-pink);
+        font-size: var(--font-size-xl);
+    }
+
+    .IN_institute-card.IN_selected .IN_card-icon {
+  color: white;
+}
+    .IN_card-slider-container-wrapper {
+        width: 100%;
+        max-width: 1280px; 
+        background-color: white;
+        border: 1px solid var(--color-gray-200);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6) 0;
+        margin-bottom: var(--space-8);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    /* --- NEW: Container for Title, Search Bar and Button (All on one row for desktop) --- */
+    .IN_search-and-action-container {
+        width: 95%; 
+        max-width: 1200px; /* Increased max-width to accommodate all three items */
+        margin: var(--space-4) auto var(--space-6) auto;
+        display: flex;
+        gap: var(--space-4); /* Space between title, search, and button */
+        align-items: center;
+    }
+    .IN_description-text{
+        padding:0 var(--space-6);
+        margin-top: -10px;
+        text-wrap: wrap;
+        font-size: var(--font-size-sm);
+        color:var(--color-gray-500);
+    }
+
+    /* --- Title Styling (Now part of the flex row, anchored left) --- */
+    .IN_slider-title {
+        flex-shrink: 0; /* Prevents title from shrinking */
+        font-size: var(--font-size-2xl);
+        color: var(--brand-pink);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        letter-spacing: 1px;
+        font-weight: var(--font-weight-bold);
+        margin: 0; /* Resetting margin to control spacing via gap */
+    }
+
+
+    /* --- Search Bar Container (Pushed to the right, takes up defined space) --- */
+    .IN_search-bar-container {
+        flex-grow: 0; /* IMPORTANT: Prevents it from filling the center */
+        flex-shrink: 0; /* Prevents shrinking */
+        width: 350px; /* Define width for optimal desktop search size */
+        margin-left: auto; /* THIS PUSHES THE SEARCH BAR AND BUTTON TO THE RIGHT */
+        position: relative;
+        max-width: none;
+        margin-right: 0; 
+    }
+
+    /* --- Search Input Styling --- */
+    .IN_search-input {
+        width: 100%;
+        padding: var(--space-3) var(--space-4);
+        padding-left: var(--space-10); 
+        border: 1px solid var(--color-gray-300);
+        border-radius: var(--radius-full); 
+        background-color: var(--color-white);
+        color: var(--color-gray-900);
+        font-size: var(--font-size-base);
+        transition: all var(--transition-base);
+        box-shadow: var(--shadow-xs);
+        height: 48px; 
+    }
+
+    .IN_search-input:focus {
+        outline: none;
+        border-color: var(--brand-orange); 
+        box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2); 
+    }
+
+    .IN_search-icon {
+        position: absolute;
+        left: var(--space-3);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--color-gray-500);
+        width: 20px;
+        height: 20px;
+        pointer-events: none; 
+    }
+
+    /* --- Add Button Styling --- */
+    .IN_add-button {
+        flex-shrink: 0; /* Ensure button keeps its content-based width */
+        padding: var(--space-3) var(--space-6);
+        background-color: var(--brand-orange); 
+        color: var(--color-white);
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-medium);
+        cursor: pointer;
+        transition: background-color var(--transition-fast), transform var(--transition-fast);
+        box-shadow: var(--shadow-md);
+        white-space: nowrap; 
+        height: 48px; 
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+    }
+
+    .IN_add-button:hover {
+        border: 2px solid var(--brand-orange-dark);
+        color: var(--brand-orange-dark);
+        background-color: white;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* --- Base Slider Container and Layout --- */
+    .IN_card-slider-container {
+        display: flex;
+        align-items: center; 
+        width: 100%;
+        padding: 0 var(--space-4);
+    }
+
+    /* --- Cards Wrapper (The Slider) --- */
+    .IN_cards-wrapper {
+        display: flex;
+        overflow-x: auto; 
+        scroll-snap-type: x mandatory; 
+        -webkit-overflow-scrolling: touch;
+        flex-grow: 1; 
+        padding: var(--space-3) 0;
+        
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .IN_cards-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* --- Individual Card Styling --- */
+    .IN_institute-card {
+        flex: 0 0 250px; 
+        height: 150px;
+        margin: 0 var(--space-3); 
+        padding: var(--space-4);
+        background-color: var(--color-white);
+        border: 2px solid var(--color-gray-300);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        cursor: pointer;
+        transition: all var(--transition-base);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-gray-800);
+        scroll-snap-align: start; 
+    }
+    .IN_card-flexy{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .IN_institute-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+        border-color: var(--brand-pink-light);
+    }
+   
+
+
+    /* --- Slider Controls (Buttons) --- */
+    .IN_slider-controls {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0; 
+    }
+
+    .IN_slider-button {
+        background-color: var(--brand-pink); 
+        color: var(--color-white);
+        border: none;
+        border-radius: var(--radius-full);
+        width: 40px;
+        height: 40px;
+        font-size: var(--font-size-xl);
+        cursor: pointer;
+        box-shadow: var(--shadow-sm);
+        transition: background-color var(--transition-fast), transform var(--transition-fast);
+        margin: 0 var(--space-2);
+    }
+
+    .IN_slider-button:hover:not(:disabled) {
+        background-color: var(--brand-pink-dark);
+        transform: scale(1.05);
+    }
+    .IN_slider-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Handle no institutes case */
+    .IN_no-institutes {
+        padding: var(--space-6);
+        text-align: center;
+        color: var(--color-gray-500);
+        width: 100%;
+    }
+
+    /* --- Responsiveness: Adjust Layout and Card Size --- */
+
+    /* Tablet and smaller Desktops (max-width: 1024px) */
+    @media (max-width: 1024px) {
+        .IN_institute-card {
+            flex: 0 0 220px; 
+            height: 130px;
+            font-size: var(--font-size-base);
+        }
+        
+        /* On smaller desktops, allow search bar to be a bit smaller */
+        .IN_search-bar-container {
+            width: 250px; 
+        }
+    }
+
+    /* Mobile Devices (max-width: 767px) */
+    @media (max-width: 767px) {
+        .IN_card-slider-container-wrapper {
+            margin: var(--space-4) auto;
+        }
+
+        /* Stacking for Mobile (Title, Search, Button) - remains stacked for small screens */
+        .IN_search-and-action-container {
+            flex-direction: column; 
+            gap: var(--space-3);
+            margin: var(--space-3) auto var(--space-4) auto;
+            padding: 0 var(--space-4);
+            width: 100%; 
+        }
+
+        .IN_slider-title {
+            width: 100%;
+            text-align: center; 
+            font-size: var(--font-size-xl);
+        }
+        
+        .IN_search-bar-container {
+            width: 100%; 
+            margin-left: 0; /* Reset margin-left: auto for stacking */
+        }
+
+        .IN_add-button {
+            width: 100%; 
+            height: 44px; 
+            font-size: var(--font-size-sm);
+            padding: var(--space-2) var(--space-4);
+        }
+        
+        .IN_card-slider-container {
+            padding: 0 var(--space-2);
+        }
+        
+        .IN_search-input {
+            padding: var(--space-2) var(--space-4);
+            padding-left: var(--space-8);
+            font-size: var(--font-size-sm);
+        }
+        .IN_search-icon {
+            width: 18px;
+            height: 18px;
+        }
+        .IN_institute-card {
+            flex: 0 0 180px; 
+            height: 100px;
+            margin: 0 var(--space-2);
+            padding: var(--space-3);
+            font-size: var(--font-size-sm);
+            border-radius: var(--radius-md);
+        }
+        .IN_slider-button {
+            width: 35px;
+            height: 35px;
+            font-size: var(--font-size-lg);
+            margin: 0 var(--space-1);
+        }
+    }
+
+    /* Very Small Mobile Devices (max-width: 480px) */
+    @media (max-width: 480px) {
+        .IN_institute-card {
+            flex: 0 0 80%;
+            height: 100px;
+        }
+        .IN_slider-controls {
+            display: none; 
+        }
+        .IN_cards-wrapper {
+            margin: 0 auto;
+            padding: var(--space-3) 0;
+        }
+    }
+
+    .IN_card-img-display {
+    width: 50px;
+    margin: auto;
+    height: 50px;
+    object-fit: cover; /* Crops image nicely to fit circle */
+    border-radius: 50%; /* Ensures image is circular */
+    display: block;
+}
+
+/* Optional: Add a small border to images to make them pop */
+.IN_card-icon img {
+    border: 2px solid #fff; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

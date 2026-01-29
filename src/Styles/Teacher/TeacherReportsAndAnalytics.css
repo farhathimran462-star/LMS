@@ -1,0 +1,189 @@
+    /* =======================================
+    TEACHER REPORTS ANALYTICS COMPONENT STYLES
+    Prefix: TARA_ (Teacher Analytics Report App)
+    ======================================= */
+
+    /* --- Layout Wrappers --- */
+    .TARA_dashboard-container {
+        padding: var(--space-8);
+        background-color: var(--color-gray-100);
+        min-height: 100vh;
+        font-family: var(--font-primary);
+    }
+
+    /* 1. 4-CARD SUMMARY GRID: Enforced 2x2 layout on desktop */
+    .TARA_summary-grid {
+        display: grid;
+        /* Two cards per row max */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: var(--space-5);
+        margin-bottom: var(--space-8);
+    }
+
+    /* 2. MAIN CHARTS GRID: Two columns on desktop for side-by-side display */
+    .TARA_horizontal-report-grid {
+        display: grid;
+        /* Enforces single row (2 columns) for comparison data */
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-8);
+    }
+
+    /* --- Card/Chart Styles --- */
+    .TARA_chart-card {
+        background-color: var(--color-white);
+        padding: var(--space-6);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--color-gray-200);
+        /* This allows scrolling ONLY when chartWidthStyle.width is set to dynamic width (i.e., Student View) */
+        overflow-x: auto; 
+    }
+
+    .TARA_card-title {
+        color: var(--color-gray-900);
+        margin-bottom: var(--space-2);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
+        border-left: 5px solid var(--brand-pink-dark);
+        padding-left: var(--space-3);
+    }
+
+    .TARA_card-subtitle {
+        color: var(--color-gray-700);
+        margin-bottom: var(--space-5);
+        font-size: var(--font-size-sm);
+    }
+
+    /* --- Summary Metrics Cards (Cards 1 & 2) --- */
+    .TARA_summary-metrics-row {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        margin-top: var(--space-6);
+        min-height: 150px; 
+        align-items: center;
+    }
+
+    .TARA_summary-value {
+        font-size: var(--font-size-4xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--brand-pink);
+    }
+
+    .TARA_summary-label {
+        font-size: var(--font-size-sm);
+        color: var(--color-gray-700);
+        margin-top: var(--space-2);
+        font-weight: var(--font-weight-medium);
+    }
+
+    .TARA_marks-value { color: var(--brand-pink); } 
+    .TARA_assignment-value { color: var(--brand-orange-dark); }
+    .TARA_attendance-value { color: var(--color-success); } 
+
+    .TARA_count-metrics-row .TARA_students-value { color: var(--color-primary); }
+    .TARA_count-metrics-row .TARA_batch-value { color: var(--brand-orange-dark); }
+    .TARA_count-metrics-row .TARA_subject-value { color: var(--brand-pink-dark); }
+
+    /* --- Pass/Fail Rate Card (Card 3 - Now Pie Chart) --- */
+    /* Ensure Pie Chart container is tall enough */
+    .TARA_pie-card {
+        min-height: 420px; 
+    }
+
+    /* --- Subject Bar Chart Card (Card 4) --- */
+    .TARA_bar-card-subject {
+        min-height: 420px; 
+    }
+
+
+    /* =======================================
+    RESPONSIVE LAYOUT ADJUSTMENTS
+    ======================================== */
+    @media (max-width: 1024px) {
+        /* Tablet: Main charts stack into 1 column */
+        .TARA_horizontal-report-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        /* Mobile: Summary cards also stack into 1 column */
+        .TARA_summary-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Filter styles (omitted for brevity) */
+    .TARA_dashboard-title {
+        color: var(--color-gray-900);
+        border-bottom: 4px solid var(--brand-pink);
+        padding-bottom: var(--space-4);
+        margin-bottom: var(--space-4);
+        font-size: var(--font-size-3xl);
+        font-weight: var(--font-weight-semibold);
+    }
+
+    .TARA_selected-title {
+        color: var(--color-gray-700);
+        font-size: var(--font-size-xl);
+        margin: var(--space-4) 0 var(--space-2) 0;
+    }
+
+    .TARA_filter-box {
+        background-color: var(--color-white);
+        padding: var(--space-5);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        margin-bottom: var(--space-8);
+        border: 1px solid var(--color-gray-300);
+    }
+
+    .TARA_filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-5);
+        width: 100%;
+    }
+
+    .TARA_filter-group {
+        display: flex;
+        align-items: center;
+        position: relative;
+        gap: var(--space-2); 
+        min-width: 0;
+    }
+
+    .TARA_filter-select {
+        padding: var(--space-3) var(--space-4);
+        padding-right: 45px; 
+        border-radius: var(--radius-md);
+        border: 1px solid var(--color-gray-300);
+        min-width: 200px;
+        max-width: 100%;
+        font-size: var(--font-size-base);
+        background-color: var(--color-white);
+        color: var(--color-gray-900);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        text-overflow: ellipsis; 
+        white-space: nowrap; 
+        overflow: hidden; 
+    }
+
+    .TARA_clear-button {
+        position: absolute;
+        right: 5px; 
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: transparent;
+        border: none;
+        color: var(--color-error);
+        cursor: pointer;
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-bold);
+        padding: 0 var(--space-2);
+        line-height: 1;
+        z-index: 10;
+    }

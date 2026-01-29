@@ -1,0 +1,218 @@
+/* StudentAttendance.css */
+
+/* --- Main Container & Typography --- */
+.STAT_container {
+    max-width: 1200px;
+    /* margin: var(--space-8) auto; */
+    padding: 0 var(--space-8);
+    font-family: var(--font-primary);
+}
+
+.STAT_title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-6);
+    text-align: left;
+}
+
+.STAT_subtitle {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+    margin-bottom: var(--space-4);
+}
+
+.STAT_text-pink { color: var(--brand-pink); }
+.STAT_text-success { color: var(--color-success); }
+.STAT_text-error { color: var(--color-error); }
+.STAT_text-orange { color: var(--brand-orange); }
+
+.STAT_font-semibold { font-weight: var(--font-weight-semibold); }
+.STAT_separator {
+    border: none;
+    border-top: 1px solid var(--color-gray-300);
+    margin: var(--space-8) 0;
+}
+
+/* --- Shadow Utilities --- */
+.STAT_shadow-sm { box-shadow: var(--shadow-sm); }
+.STAT_shadow-md { box-shadow: var(--shadow-md); }
+.STAT_shadow-lg { box-shadow: var(--shadow-lg); }
+
+.STAT_card {
+    background-color: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+}
+
+/* --- Table Styles (General) --- */
+.STAT_table-wrapper {
+    /* Ensures horizontal scrolling if the table is wider than its container */
+    overflow-x: auto; 
+    /* Add a subtle shadow for better separation */
+    box-shadow: var(--shadow-sm); 
+    border-radius: var(--radius-md); 
+}
+
+.STAT_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-base);
+    /* Min-width is removed to allow horizontal scrolling to handle overflow */
+}
+
+.STAT_table th, .STAT_table td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+/* === BRIGHT TABLE HEADER STYLE (New) === */
+.STAT_table th {
+    /* Use the bright brand color */
+    background-color: var(--brand-pink); 
+    color: var(--color-white); /* White text on bright background */
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    /* Remove default border-bottom for a cleaner look with a strong background */
+    border-bottom: none; 
+}
+
+/* --- 1. Overall Summary Table Specifics --- */
+.STAT_summary-table-card {
+    margin-bottom: var(--space-8);
+}
+
+.STAT_summary-table th {
+    text-align: center;
+    text-transform: none; 
+    font-size: var(--font-size-base);
+    /* Use brand-orange for summary table header to differentiate */
+    background-color: var(--brand-orange);
+}
+
+.STAT_summary-table td {
+    text-align: center;
+    border-bottom: none;
+    padding: var(--space-4);
+}
+
+.STAT_summary-table tbody tr {
+    background-color: var(--color-white);
+}
+
+.STAT_summary-value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    display: block;
+    line-height: 1.2;
+}
+
+/* --- 2. Subject-wise Table Specifics --- */
+.STAT_table-card {
+    margin-bottom: var(--space-8);
+}
+
+.STAT_table-row {
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.STAT_table-row:hover {
+    background-color: var(--color-gray-100);
+}
+
+.STAT_table-row-selected {
+    background-color: var(--brand-pink-light);
+    font-weight: var(--font-weight-medium);
+    border-left: 4px solid var(--brand-pink);
+}
+
+/* Badge Styling for Attendance Percentage */
+.STAT_badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-xs);
+}
+
+.STAT_badge-success {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+
+.STAT_badge-warning {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning-dark);
+}
+
+/* --- 3. Daily Attendance Log Table Specifics --- */
+.STAT_daily-log-table tr:nth-child(even) {
+    background-color: var(--color-gray-50);
+}
+
+.STAT_status-badge {
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.STAT_status-present {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+
+.STAT_status-absent {
+    background-color: var(--color-error-light);
+    color: var(--color-error-dark);
+}
+
+.STAT_no-data-msg {
+    text-align: center;
+    color: var(--color-gray-500);
+    padding: var(--space-8);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    font-style: italic;
+    margin-top: var(--space-4);
+}
+
+
+/* --- Responsive Adjustments (Kept as table view, relying on overflow-x: auto) --- */
+@media (max-width: 768px) {
+    /* Critical change: Removing mobile-specific table layout changes.
+       We rely on STAT_table-wrapper { overflow-x: auto; } */
+       
+    .STAT_table-wrapper {
+        /* Ensure table padding is consistent */
+        padding: 0; 
+        border-radius: 0;
+    }
+    
+    /* Subject-wise and Daily Log Table (General adjustments) */
+    .STAT_table th, .STAT_table td {
+        white-space: nowrap; /* Prevents text wrap, forcing horizontal scroll */
+        padding: var(--space-3);
+    }
+    
+    .STAT_table-row-selected {
+        /* Adjust border for a full mobile view */
+        border: 2px solid var(--brand-pink);
+    }
+    
+    /* Summary Table Adjustments for Mobile */
+    .STAT_summary-table th, .STAT_summary-table td {
+        padding: var(--space-3);
+    }
+    
+    .STAT_summary-value {
+        font-size: var(--font-size-xl);
+    }
+}
