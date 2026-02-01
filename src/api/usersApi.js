@@ -69,7 +69,7 @@ export const getAllUsers = async () => {
     // Fetch all users
     const { data: usersData, error: usersError } = await supabase
       .from('Users')
-      .select('*')
+      .select('*, password')
       .order('created_at', { ascending: false });
 
     if (usersError) throw usersError;
@@ -173,19 +173,17 @@ export const getAllUsers = async () => {
     // Merge user data with role-specific data
     const mergedData = usersData.map(user => {
       const baseUser = { ...user };
-
-      // Add role-specific fields
+      // Always include password if present
       if (user.role === 'Student' && studentsMap[user.user_id]) {
-        return { ...baseUser, ...studentsMap[user.user_id] };
+        return { ...baseUser, ...studentsMap[user.user_id], password: user.password };
       } else if (user.role === 'Teacher' && teachersMap[user.user_id]) {
-        return { ...baseUser, ...teachersMap[user.user_id] };
+        return { ...baseUser, ...teachersMap[user.user_id], password: user.password };
       } else if (user.role === 'Admin' && adminsMap[user.user_id]) {
-        return { ...baseUser, ...adminsMap[user.user_id] };
+        return { ...baseUser, ...adminsMap[user.user_id], password: user.password };
       } else if (user.role === 'Super Admin' && superAdminsMap[user.user_id]) {
-        return { ...baseUser, ...superAdminsMap[user.user_id] };
+        return { ...baseUser, ...superAdminsMap[user.user_id], password: user.password };
       }
-
-      return baseUser;
+      return { ...baseUser, password: user.password };
     });
 
     return { data: mergedData, error: null };

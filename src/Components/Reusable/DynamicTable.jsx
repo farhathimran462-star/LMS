@@ -53,6 +53,12 @@ const DynamicTable = ({
     onCancelEdit,
     onInputChange, 
 
+    // --- NEW: Marks Management Edit Props ---
+    onEditRow,           // Handler to start editing a row
+    onDeleteRow,         // Handler to delete a row  
+    editFormData = {},   // Object with editable field values
+    onEditFormChange,    // Handler to update editFormData 
+
     onRowClick, 
     onRowClickable = false, 
     selectedRowId = null, 
@@ -136,7 +142,7 @@ const DynamicTable = ({
     const columns = [...scrollingCols, ...fixedCols];
 
     // --- 2. ACTIONS COLUMN LOGIC ---
-    const hasEditDeleteActions = (onEdit || onDelete || onSuspendReactivate || editingRowId !== null); 
+    const hasEditDeleteActions = (onEdit || onDelete || onEditRow || onDeleteRow || onSuspendReactivate || editingRowId !== null); 
     const hasApprovalActions = onStatusChange || onHold; 
     
     // The "Actions" column is the main sticky one on the far right
@@ -719,21 +725,55 @@ const DynamicTable = ({
                                                 // Exclude 'actions' and 'view' columns from being editable input
                                                 const isEditable = isEditing && colKey.toLowerCase() !== 'actions' && colKey.toLowerCase() !== 'view';
 
+                                                // Check if this column is one of the editable numeric fields (marks or attendance)
+                                                const isMarksEditableField = ['marks_obtained', 'max_marks', 'passing_mark', 'total_days', 'present_days', 'half_days', 'absent_days'].includes(colKey.toLowerCase());
+                                                const isExamNameField = colKey.toLowerCase() === 'exam_name';
+
                                                 return (
                                                     <td 
                                                         key={`${rowIndex}-${colKey}`} 
                                                         className={`DT_td-cell ${getColumnClassName(colKey)} ${pillColumns.map(c => normalizeKey(c)).includes(normalizeKey(colKey)) ? 'DT_td-has-pill' : ''} ${isSticky(colKey) ? 'DT_sticky-col' : ''}`}
                                                         style={getStickyStyle(colKey)}
                                                     >
-                                                        {isEditable ? (
-                                                            /* --- RENDER INPUT IF EDITING --- */
+                                                        {isEditable && isMarksEditableField ? (
+                                                            /* --- RENDER INPUT FOR MARKS FIELDS IF EDITING --- */
+                                                            <input 
+                                                                type="number" 
+                                                                className="DT_edit-input"
+                                                                value={editFormData[colKey] || ''}
+                                                                onChange={(e) => onEditFormChange && onEditFormChange({ ...editFormData, [colKey]: e.target.value })}
+                                                                onClick={(e) => e.stopPropagation()} 
+                                                                style={{
+                                                                    width: '100%', 
+                                                                    padding: '6px', 
+                                                                    border: '2px solid #e91e63', 
+                                                                    borderRadius: '4px',
+                                                                    fontSize: '14px'
+                                                                }}
+                                                            />
+                                                        ) : isEditable && isExamNameField ? (
+                                                            /* --- RENDER INPUT FOR EXAM NAME IF EDITING --- */
+                                                            <input 
+                                                                type="text" 
+                                                                className="DT_edit-input"
+                                                                value={editFormData[colKey] || ''}
+                                                                onChange={(e) => onEditFormChange && onEditFormChange({ ...editFormData, [colKey]: e.target.value })}
+                                                                onClick={(e) => e.stopPropagation()} 
+                                                                style={{
+                                                                    width: '100%', 
+                                                                    padding: '6px', 
+                                                                    border: '2px solid #e91e63', 
+                                                                    borderRadius: '4px',
+                                                                    fontSize: '14px'
+                                                                }}
+                                                            />
+                                                        ) : isEditable ? (
+                                                            /* --- RENDER INPUT IF EDITING OTHER FIELDS --- */
                                                             <input 
                                                                 type="text" 
                                                                 className="DT_edit-input"
                                                                 value={row[colKey] || ''}
-                                                                // Trigger the parent's handler to update state
                                                                 onChange={(e) => onInputChange && onInputChange(rowId, colKey, e.target.value)}
-                                                                // Prevent row click when clicking input
                                                                 onClick={(e) => e.stopPropagation()} 
                                                                 style={{
                                                                     width: '100%', 
@@ -796,7 +836,7 @@ const DynamicTable = ({
                                                                     className="DT_action-btn DT_save-btn" 
                                                                     title="Save Changes" 
                                                                     style={{color:'green', borderColor:'green', backgroundColor:'#fff'}}
-                                                                    onClick={(e) => { e.stopPropagation(); onSaveEdit(row); }}
+                                                                    onClick={(e) => { e.stopPropagation(); onSaveEdit(rowId); }}
                                                                 >
                                                                     <CheckCircle size={16} />
                                                                 </button>
@@ -804,7 +844,7 @@ const DynamicTable = ({
                                                                     className="DT_action-btn DT_cancel-btn" 
                                                                     title="Dismiss Changes" 
                                                                     style={{color:'red', borderColor:'red', backgroundColor:'#fff'}}
-                                                                    onClick={(e) => { e.stopPropagation(); onCancelEdit(row); }}
+                                                                    onClick={(e) => { e.stopPropagation(); onCancelEdit(); }}
                                                                 >
                                                                     <XOctagon size={16} />
                                                                 </button>
@@ -821,16 +861,16 @@ const DynamicTable = ({
                                                                     );
                                                                 })()}
                                                                 
-                                                                {/* LOGIC CHANGE: HIDE EDIT IF FINALIZED */}
-                                                                {!isFinalized && onEdit && (
-                                                                    <button className="DT_action-btn DT_edit-btn" title="Edit" onClick={(e) => { e.stopPropagation(); onEdit(row); }} style={{ padding: '3px 3px', fontSize: '10px'}}>
+                                                                {/* Use onEditRow if available, otherwise fallback to onEdit */}
+                                                                {!isFinalized && (onEditRow || onEdit) && (
+                                                                    <button className="DT_action-btn DT_edit-btn" title="Edit" onClick={(e) => { e.stopPropagation(); onEditRow ? onEditRow(row) : onEdit(row); }} style={{ padding: '3px 3px', fontSize: '10px'}}>
                                                                         <Edit size={12} />
                                                                     </button>
                                                                 )}
                                                                 
-                                                                {/* LOGIC CHANGE: HIDE DELETE IF FINALIZED */}
-                                                                {!isFinalized && onDelete && (
-                                                                    <button className="DT_action-btn DT_delete-btn" title="Delete" onClick={(e) => { e.stopPropagation(); onDelete(row); }} style={{ padding: '3px 3px', fontSize: '10px' }}>
+                                                                {/* Use onDeleteRow if available, otherwise fallback to onDelete */}
+                                                                {!isFinalized && (onDeleteRow || onDelete) && (
+                                                                    <button className="DT_action-btn DT_delete-btn" title="Delete" onClick={(e) => { e.stopPropagation(); onDeleteRow ? onDeleteRow(rowId) : onDelete(row); }} style={{ padding: '3px 3px', fontSize: '10px' }}>
                                                                         <Trash2 size={12} />
                                                                     </button>
                                                                 )}

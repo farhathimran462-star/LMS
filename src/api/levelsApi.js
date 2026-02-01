@@ -11,7 +11,7 @@ export const getAllLevels = async () => {
         *,
         courses (id, course_name, course_id)
       `)
-      .order('level_name', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) throw error;
     return { data, error: null };
@@ -28,7 +28,7 @@ export const getLevelsByCourse = async (courseId) => {
       .from('levels')
       .select('*')
       .eq('course_id', courseId)
-      .order('level_name', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) throw error;
     return { data, error: null };

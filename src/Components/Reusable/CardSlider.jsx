@@ -10,11 +10,12 @@ import {
   FaBox, 
   FaFileAlt,
   FaCogs,
-  FaUserFriends
+  FaUserFriends,
+  FaEdit
 } from "react-icons/fa";
 
 // --- Helper Component: Individual Card ---
-const CardItem = ({ id, name, image, isSelected, onClick, defaultIcon, showImage }) => {
+const CardItem = ({ id, name, image, isSelected, onClick, defaultIcon, showImage, onEdit, showEdit }) => {
   const [imgError, setImgError] = useState(false);
 
   return (
@@ -45,13 +46,28 @@ const CardItem = ({ id, name, image, isSelected, onClick, defaultIcon, showImage
           )}
         </div>
         <span className="IN_institute-name">{name}</span>
+        
+        {/* Show edit icon only on selected card if onEdit is provided */}
+        {isSelected && showEdit && onEdit && (
+          <button 
+            className="IN_card-edit-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(id);
+            }}
+            aria-label="Edit"
+            title="Edit"
+          >
+            <FaEdit />
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
-// 1. ADDED `onAddButtonClick` to props destructuring
-const CardSlider = ({ title, institutes, onSelectInstitute, icon_title, fromTabOf, searchBar, onAddButtonClick }) => {
+// 1. ADDED `onAddButtonClick` and `onEditCard` to props destructuring
+const CardSlider = ({ title, institutes, onSelectInstitute, icon_title, fromTabOf, searchBar, onAddButtonClick, onEditCard }) => {
   const [selectedId, setSelectedId] = useState(null);
   const [searchTerm, setSearchTerm] = useState(''); 
   const sliderRef = useRef(null);
@@ -172,6 +188,8 @@ const CardSlider = ({ title, institutes, onSelectInstitute, icon_title, fromTabO
                 onClick={handleCardClick}
                 defaultIcon={selectedIcon}
                 showImage={shouldShowImage}
+                onEdit={onEditCard}
+                showEdit={!!onEditCard}
               />
             ))
           ) : (

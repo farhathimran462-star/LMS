@@ -1,9 +1,24 @@
+// Chart.js imports
+import { Bar, Doughnut } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement
+} from 'chart.js';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import DynamicTable from "../Reusable/DynamicTable";
 import "../../Styles/SuperAdmin/AttendanceManagement.css"; 
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import html2canvas from 'html2canvas';
 import { Download } from 'lucide-react';
 
 // API Imports
@@ -12,13 +27,14 @@ import { getAllInstitutions } from '../../api/institutionsApi';
 import { getAllClasses } from '../../api/classesApi';
 import { getSubjectsByLevel } from '../../api/subjectsApi';
 import { getClassesByTeacher } from '../../api/classesApi';
-import { getCoursesByInstitution } from '../../api/coursesApi';
-import { getLevelsByCourse } from '../../api/levelsApi';
+import { getAllCourses, getCoursesByInstitution } from '../../api/coursesApi';
+import { getAllLevels, getLevelsByCourse } from '../../api/levelsApi';
 import { getAllBatches } from '../../api/batchesApi';
+import { getAllProgrammes, getProgrammesByCourseLevel } from '../../api/programmesApi';
 import { supabase } from '../../config/supabaseClient';
 
 // Fixed columns for marks table
-const FIXED_COLUMNS = ['rollno', 'name', 'course', 'batch', 'exam_name', 'marks_obtained', 'max_marks', 'passing_mark', 'percentage', 'grade'];
+const FIXED_COLUMNS = ['rollno', 'name', 'course', 'level', 'programme', 'batch', 'class', 'exam_name', 'marks_obtained', 'max_marks', 'passing_mark', 'percentage'];
 
 const MarksManagement = ({ userRole }) => {
     // User info from session
@@ -35,8 +51,11 @@ const MarksManagement = ({ userRole }) => {
     const [institutions, setInstitutions] = useState([]);
     const [courses, setCourses] = useState([]);
     const [levels, setLevels] = useState([]);
-    const [batches, setBatches] = useState([]);
-    const [classes, setClasses] = useState([]);
+    const [programmes, setProgrammes] = useState([]);
+    const [allBatches, setAllBatches] = useState([]); // full list from API
+    const [batches, setBatches] = useState([]); // filtered for dropdown
+    const [allClasses, setAllClasses] = useState([]); // full list from API
+    const [classes, setClasses] = useState([]); // filtered for dropdown
     const [subjects, setSubjects] = useState([]);
     const [students, setStudents] = useState([]);
     const [teacherClasses, setTeacherClasses] = useState([]);
@@ -44,19 +63,22 @@ const MarksManagement = ({ userRole }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [reportCardData, setReportCardData] = useState(null);
     const [loadingReportCard, setLoadingReportCard] = useState(false);
-    const [isReportExportOpen, setIsReportExportOpen] = useState(false);
-    const reportExportMenuRef = useRef(null);
+    const reportCardRef = useRef(null);
+    const [editingMarkId, setEditingMarkId] = useState(null);
+    const [editFormData, setEditFormData] = useState({ exam_name: '', marks_obtained: '', max_marks: '', passing_mark: '' });
+    const [deleteConfirmId, setDeleteConfirmId] = useState(null);
     
     // --- UNIFIED FILTER STATE ---
     const [activeFilters, setActiveFilters] = useState({
         subject: '',
         unit: '',
-        institution: '',
-        class: '',
-        course: '',
-        level: '',
-        batch: '',
-        student: ''
+        institution: '', // will store institution.id
+        class: '',       // will store class.id
+        course: '',      // will store course.id
+        level: '',       // will store level.id
+        programme: '',   // will store programme.id
+        batch: '',       // will store batch.id
+        student: ''      // will store student.id
     });
 
     // Fetch initial data
@@ -69,22 +91,56 @@ const MarksManagement = ({ userRole }) => {
         setLoading(true);
         try {
             if (isSuperAdmin || isAdmin) {
-                const [insData, marksData] = await Promise.all([
+                const [insData, marksData, coursesData, levelsData, batchesData, programmesData] = await Promise.all([
                     getAllInstitutions(),
-                    getAllMarks({})
+                    getAllMarks({}),
+                    getAllCourses(),
+                    getAllLevels(),
+                    getAllBatches(),
+                    getAllProgrammes()
                 ]);
                 
                 if (insData.error) throw new Error(insData.error.message);
                 if (marksData.error) throw new Error(marksData.error.message);
+                if (coursesData.error) {
+                    console.error('Error fetching courses:', coursesData.error);
+                }
+                if (levelsData.error) {
+                    console.error('Error fetching levels:', levelsData.error);
+                }
+                if (batchesData.error) {
+                    console.error('Error fetching batches:', batchesData.error);
+                }
+                if (programmesData.error) {
+                    console.error('Error fetching programmes:', programmesData.error);
+                }
                 
                 console.log('Fetched institutions:', insData.data);
+                console.log('Fetched courses:', coursesData);
+                console.log('Fetched levels:', levelsData);
+                console.log('Fetched batches:', batchesData);
+                console.log('Fetched programmes:', programmesData);
                 setInstitutions(insData.data || []);
                 setMarks(marksData.data || []);
+                setCourses(coursesData.data || []);
+                setLevels(levelsData.data || []);
+                setAllBatches(batchesData.data || []);
+                setBatches(batchesData.data || []);
+                const { data: allClassesData, error: allClassesError } = await getAllClasses();
+                if (!allClassesError) {
+                    setAllClasses(allClassesData || []);
+                    setClasses(allClassesData || []);
+                }
+                setProgrammes(programmesData.data || []);
             } else if (isTeacher) {
-                const [insData, clsData, marksData] = await Promise.all([
+                const [insData, clsData, marksData, coursesData, levelsData, batchesData, programmesData] = await Promise.all([
                     getAllInstitutions(),
                     getClassesByTeacher(currentUserId),
-                    getAllMarks({})
+                    getAllMarks({}),
+                    getAllCourses(),
+                    getAllLevels(),
+                    getAllBatches(),
+                    getAllProgrammes()
                 ]);
                 
                 if (insData.error) throw new Error(insData.error.message);
@@ -95,6 +151,16 @@ const MarksManagement = ({ userRole }) => {
                 setInstitutions(insData.data || []);
                 setTeacherClasses(clsData.data || []);
                 setMarks(marksData.data || []);
+                setCourses(coursesData.data || []);
+                setLevels(levelsData.data || []);
+                setAllBatches(batchesData.data || []);
+                setBatches(batchesData.data || []);
+                const { data: allClassesData, error: allClassesError } = await getAllClasses();
+                if (!allClassesError) {
+                    setAllClasses(allClassesData || []);
+                    setClasses(allClassesData || []);
+                }
+                setProgrammes(programmesData.data || []);
             }
         } catch (err) {
             console.error('Error fetching data:', err.message);
@@ -103,59 +169,98 @@ const MarksManagement = ({ userRole }) => {
         }
     };
 
-    // Fetch courses when institution is selected
+    // --- DYNAMIC FILTER LOGIC (fetch options based on previous filter) ---
+    // Courses: use getCoursesByInstitution when institution is selected, else getAllCourses
     useEffect(() => {
-        if (activeFilters.institution && institutions.length > 0) {
-            const selectedInst = institutions.find(i => i.institute_name === activeFilters.institution);
-            if (selectedInst) {
-                fetchCourses(selectedInst.id);
+        const fetchCourses = async () => {
+            if (activeFilters.institution && institutions.length > 0) {
+                try {
+                    const { data, error } = await getCoursesByInstitution(activeFilters.institution);
+                    if (error) throw error;
+                    setCourses(data || []);
+                } catch (err) {
+                    setCourses([]);
+                }
+            } else {
+                const { data, error } = await getAllCourses();
+                setCourses(data || []);
             }
-        } else {
-            setCourses([]);
-        }
+        };
+        fetchCourses();
     }, [activeFilters.institution, institutions]);
 
-    const fetchCourses = async (institutionId) => {
-        try {
-            const { data, error } = await getCoursesByInstitution(institutionId);
-            if (error) throw error;
-            setCourses(data || []);
-        } catch (err) {
-            console.error('Error fetching courses:', err.message);
-            setCourses([]);
-        }
-    };
-
-    // Fetch levels when course is selected
+    // Levels: use getLevelsByCourse when course is selected, else getAllLevels
     useEffect(() => {
-        if (activeFilters.course && courses.length > 0) {
-            const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-            if (selectedCourse) {
-                fetchLevels(selectedCourse.id);
+        const fetchLevels = async () => {
+            if (activeFilters.course && courses.length > 0) {
+                try {
+                    const { data, error } = await getLevelsByCourse(activeFilters.course);
+                    if (error) throw error;
+                    setLevels(data || []);
+                } catch (err) {
+                    setLevels([]);
+                }
+            } else {
+                const { data, error } = await getAllLevels();
+                setLevels(data || []);
             }
-        } else {
-            setLevels([]);
-        }
+        };
+        fetchLevels();
     }, [activeFilters.course, courses]);
 
-    const fetchLevels = async (courseId) => {
-        try {
-            const { data, error } = await getLevelsByCourse(courseId);
-            if (error) throw error;
-            setLevels(data || []);
-        } catch (err) {
-            console.error('Error fetching levels:', err.message);
-            setLevels([]);
-        }
-    };
+    // Programmes: use getProgrammesByCourseLevel when both course and level are selected, else getAllProgrammes
+    useEffect(() => {
+        const fetchProgrammes = async () => {
+            if (activeFilters.course && activeFilters.level && courses.length > 0 && levels.length > 0) {
+                try {
+                    const { data, error } = await getProgrammesByCourseLevel(activeFilters.course, activeFilters.level);
+                    if (error) throw error;
+                    setProgrammes(data || []);
+                } catch (err) {
+                    setProgrammes([]);
+                }
+            } else {
+                const { data, error } = await getAllProgrammes();
+                setProgrammes(data || []);
+            }
+        };
+        fetchProgrammes();
+    }, [activeFilters.course, activeFilters.level, courses, levels]);
 
-    // Fetch subjects when level is selected
+    // Batches: fetch all, filter by programme if selected (Timetable.jsx logic)
+    useEffect(() => {
+        getAllBatches().then(({ data, error }) => {
+            if (error) {
+                setBatches([]);
+            } else {
+                if (activeFilters.programme && programmes.length > 0) {
+                    setBatches((data || []).filter(b => b.programme_id === activeFilters.programme));
+                } else {
+                    setBatches(data || []);
+                }
+            }
+        });
+    }, [activeFilters.programme, programmes]);
+
+    // Classes: fetch all, filter by batch if selected (Timetable.jsx logic)
+    useEffect(() => {
+        if (activeFilters.batch && batches.length > 0) {
+            getAllClasses().then(({ data, error }) => {
+                if (error) setClasses([]);
+                else {
+                    setClasses((data || []).filter(c => c.batch_id === activeFilters.batch));
+                }
+            });
+        } else {
+            setClasses([]);
+        }
+    }, [activeFilters.batch, batches]);
+
+    // Subjects: fetch when level is selected
     useEffect(() => {
         if (activeFilters.level && levels.length > 0) {
-            const selectedLevel = levels.find(l => l.level_name === activeFilters.level);
-            if (selectedLevel) {
-                fetchSubjects(selectedLevel.id);
-            }
+            // activeFilters.level now stores the level ID, not the name
+            fetchSubjects(activeFilters.level);
         } else {
             setSubjects([]);
         }
@@ -172,80 +277,18 @@ const MarksManagement = ({ userRole }) => {
         }
     };
 
-    // Fetch batches when level is selected
+    // Students: fetch when class is selected
     useEffect(() => {
-        if (activeFilters.level) {
-            fetchBatches();
-        } else {
-            setBatches([]);
-        }
-    }, [activeFilters.level]);
-
-    const fetchBatches = async () => {
-        try {
-            const { data, error } = await getAllBatches();
-            if (error) throw error;
-            
-            // Filter batches by selected institution, course, and level
-            const selectedInst = institutions.find(i => i.institution_name === activeFilters.institution);
-            const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-            const selectedLevel = levels.find(l => l.level_name === activeFilters.level);
-            
-            const filtered = (data || []).filter(b => 
-                (!selectedInst || b.institute_id === selectedInst.id) &&
-                (!selectedCourse || b.course_id === selectedCourse.id) &&
-                (!selectedLevel || b.level_id === selectedLevel.id)
-            );
-            
-            setBatches(filtered);
-        } catch (err) {
-            console.error('Error fetching batches:', err.message);
-            setBatches([]);
-        }
-    };
-
-    // Fetch classes when batch is selected
-    useEffect(() => {
-        if (activeFilters.batch) {
-            fetchClasses();
-        } else {
-            setClasses([]);
-        }
-    }, [activeFilters.batch]);
-
-    const fetchClasses = async () => {
-        try {
-            const { data, error } = await getAllClasses();
-            if (error) throw error;
-            
-            // Filter classes by selected batch
-            const selectedBatch = batches.find(b => b.batch_name === activeFilters.batch);
-            
-            const filtered = (data || []).filter(c => 
-                !selectedBatch || c.batch_id === selectedBatch.id
-            );
-            
-            setClasses(filtered);
-        } catch (err) {
-            console.error('Error fetching classes:', err.message);
-            setClasses([]);
-        }
-    };
-
-    // Fetch students when class is selected
-    useEffect(() => {
-        if (activeFilters.class) {
-            fetchStudents();
+        if (activeFilters.class && classes.length > 0) {
+            // activeFilters.class now stores the class ID, not the name
+            fetchStudents(activeFilters.class);
         } else {
             setStudents([]);
         }
-    }, [activeFilters.class]);
+    }, [activeFilters.class, classes]);
 
-    const fetchStudents = async () => {
+    const fetchStudents = async (classId) => {
         try {
-            const selectedClass = classes.find(c => c.class_name === activeFilters.class);
-            if (!selectedClass) return;
-
             const { data, error } = await supabase
                 .from('students')
                 .select(`
@@ -254,8 +297,7 @@ const MarksManagement = ({ userRole }) => {
                     user_id,
                     Users!inner(full_name, username)
                 `)
-                .eq('class_id', selectedClass.id);
-            
+                .eq('class_id', classId);
             if (error) throw error;
             setStudents(data || []);
         } catch (err) {
@@ -271,47 +313,177 @@ const MarksManagement = ({ userRole }) => {
 
     // --- FILTER CHANGE HANDLER ---
     const handleFilterChange = useCallback((column, value) => {
-        if (column === 'subject' && value === '') {
-            const firstSubject = subjects[0]?.subject_name || '';
-            setActiveFilters(prev => ({ ...prev, [column]: firstSubject }));
-            return;
-        }
-        
-        // Reset dependent filters when parent filter changes
+        // Reset dependent filters and clear options as in Timetable.jsx
         setActiveFilters(prev => {
-            const newFilters = { ...prev, [column]: value };
-            
+            const updated = { ...prev, [column]: value };
             if (column === 'institution') {
-                newFilters.course = '';
-                newFilters.level = '';
-                newFilters.subject = '';
-                newFilters.batch = '';
-                newFilters.class = '';
-                newFilters.student = '';
+                updated.course = '';
+                updated.level = '';
+                updated.programme = '';
+                updated.batch = '';
+                updated.class = '';
+                updated.subject = '';
+                updated.student = '';
+                setCourses([]);
+                setLevels([]);
+                setProgrammes([]);
+                setBatches([]);
+                setClasses([]);
             } else if (column === 'course') {
-                newFilters.level = '';
-                newFilters.subject = '';
-                newFilters.batch = '';
-                newFilters.class = '';
-                newFilters.student = '';
+                updated.level = '';
+                updated.programme = '';
+                updated.batch = '';
+                updated.class = '';
+                updated.subject = '';
+                updated.student = '';
+                setLevels([]);
+                setProgrammes([]);
+                setBatches([]);
+                setClasses([]);
             } else if (column === 'level') {
-                newFilters.subject = '';
-                newFilters.batch = '';
-                newFilters.class = '';
-                newFilters.student = '';
+                updated.programme = '';
+                updated.batch = '';
+                updated.class = '';
+                updated.subject = '';
+                updated.student = '';
+                setProgrammes([]);
+                setBatches([]);
+                setClasses([]);
+            } else if (column === 'programme') {
+                updated.batch = '';
+                updated.class = '';
+                updated.subject = '';
+                updated.student = '';
+                setBatches([]);
+                setClasses([]);
             } else if (column === 'batch') {
-                newFilters.class = '';
-                newFilters.student = '';
+                updated.class = '';
+                updated.subject = '';
+                updated.student = '';
+                setClasses([]);
             } else if (column === 'class') {
-                newFilters.student = '';
+                updated.subject = '';
+                updated.student = '';
+            } else if (column === 'subject') {
+                updated.student = '';
             }
-            
-            return newFilters;
+            return updated;
         });
-    }, [subjects]);
+    }, []);
     
     const handleSearchChange = useCallback((query) => {
         setSearchQuery(query);
+    }, []);
+
+    // Handle edit mark
+    const handleEditMark = useCallback((markRecord) => {
+        setEditingMarkId(markRecord.id);
+        setEditFormData({
+            exam_name: markRecord.exam_name,
+            marks_obtained: markRecord.marks_obtained,
+            max_marks: markRecord.max_marks,
+            passing_mark: markRecord.passing_mark
+        });
+    }, []);
+
+    // Handle save edit
+    const handleSaveEdit = useCallback(async (markId) => {
+        try {
+            setLoading(true);
+            
+            const examName = editFormData.exam_name?.trim();
+            const marksObtained = parseFloat(editFormData.marks_obtained);
+            const maxMarks = parseFloat(editFormData.max_marks);
+            const passingMark = parseFloat(editFormData.passing_mark);
+
+            if (!examName) {
+                alert('Please enter exam name');
+                return;
+            }
+
+            if (isNaN(marksObtained) || isNaN(maxMarks) || isNaN(passingMark)) {
+                alert('Please enter valid numbers for all fields');
+                return;
+            }
+
+            // Calculate new percentage and grade
+            const percentageValue = (marksObtained / maxMarks) * 100;
+            const percentage = marksObtained / maxMarks;
+            
+            let grade = 'F';
+            let gradePoint = 0;
+            
+            if (percentageValue >= 90) { grade = 'A+'; gradePoint = 1.0; }
+            else if (percentageValue >= 80) { grade = 'A'; gradePoint = 0.9; }
+            else if (percentageValue >= 70) { grade = 'B+'; gradePoint = 0.8; }
+            else if (percentageValue >= 60) { grade = 'B'; gradePoint = 0.7; }
+            else if (percentageValue >= 50) { grade = 'C+'; gradePoint = 0.6; }
+            else if (percentageValue >= 40) { grade = 'C'; gradePoint = 0.5; }
+
+            const isPassed = marksObtained >= passingMark;
+
+            const { error } = await supabase
+                .from('marks')
+                .update({
+                    exam_name: examName,
+                    marks_obtained: marksObtained,
+                    max_marks: maxMarks,
+                    passing_marks: passingMark,
+                    percentage: percentage,
+                    grade: grade,
+                    grade_point: gradePoint,
+                    is_passed: isPassed
+                })
+                .eq('id', markId);
+
+            if (error) throw error;
+
+            alert('Mark updated successfully!');
+            setEditingMarkId(null);
+            setEditFormData({ exam_name: '', marks_obtained: '', max_marks: '', passing_mark: '' });
+            
+            // Refresh data
+            await fetchInitialData();
+        } catch (error) {
+            console.error('Error updating mark:', error);
+            alert('Error updating mark: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
+    }, [editFormData]);
+
+    // Handle cancel edit
+    const handleCancelEdit = useCallback(() => {
+        setEditingMarkId(null);
+        setEditFormData({ exam_name: '', marks_obtained: '', max_marks: '', passing_mark: '' });
+    }, []);
+
+    // Handle delete mark
+    const handleDeleteMark = useCallback(async (markId) => {
+        if (!window.confirm('Are you sure you want to delete this mark record?')) {
+            return;
+        }
+
+        try {
+            setLoading(true);
+            
+            const { error } = await supabase
+                .from('marks')
+                .delete()
+                .eq('id', markId);
+
+            if (error) throw error;
+
+            alert('Mark deleted successfully!');
+            
+            // Refresh data
+            await fetchInitialData();
+        } catch (error) {
+            console.error('Error deleting mark:', error);
+            alert('Error deleting mark: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
     }, []);
 
     // Handle data import from Excel
@@ -331,15 +503,24 @@ const MarksManagement = ({ userRole }) => {
         }
 
         // Get IDs from selected filters
-        const selectedInst = institutions.find(i => i.institute_name === activeFilters.institution);
-        const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-        const selectedLevel = levels.find(l => l.level_name === activeFilters.level);
-        const selectedBatch = batches.find(b => b.batch_name === activeFilters.batch);
-        const selectedClass = classes.find(cls => cls.class_name === activeFilters.class);
-        const selectedSubject = subjects.find(s => s.subject_name === activeFilters.subject);
+        const selectedInst = institutions.find(i => i.id === activeFilters.institution);
+        const selectedCourse = courses.find(c => c.id === activeFilters.course);
+        const selectedLevel = levels.find(l => l.id === activeFilters.level);
+        const selectedProgramme = programmes.find(p => p.id === activeFilters.programme);
+        const selectedBatch = batches.find(b => b.id === activeFilters.batch);
+        const selectedClass = classes.find(cls => cls.id === activeFilters.class);
+        const selectedSubject = subjects.find(s => s.id === activeFilters.subject);
 
-        if (!selectedInst || !selectedCourse || !selectedLevel || !selectedBatch || !selectedClass || !selectedSubject) {
-            alert('Could not find matching IDs for selected filters');
+        if (!selectedInst || !selectedCourse || !selectedLevel || !selectedProgramme || !selectedBatch || !selectedClass || !selectedSubject) {
+            let missing = [];
+            if (!selectedInst) missing.push('Institution');
+            if (!selectedCourse) missing.push('Course');
+            if (!selectedLevel) missing.push('Level');
+            if (!selectedProgramme) missing.push('Programme');
+            if (!selectedBatch) missing.push('Batch');
+            if (!selectedClass) missing.push('Class');
+            if (!selectedSubject) missing.push('Subject');
+            alert('Could not find matching IDs for: ' + missing.join(', '));
             return;
         }
 
@@ -409,6 +590,7 @@ const MarksManagement = ({ userRole }) => {
                         institution_id: selectedInst.id,
                         course_id: selectedCourse.id,
                         level_id: selectedLevel.id,
+                        programme_id: selectedProgramme.id,
                         batch_id: selectedBatch.id,
                         exam_type: 'Regular',
                         exam_name: examName || 'Exam',
@@ -499,77 +681,60 @@ const MarksManagement = ({ userRole }) => {
 
     // --- IMPORT VISIBILITY LOGIC ---
     const showImport = useMemo(() => {
-        const mandatoryFilters = ['institution', 'class', 'course', 'level', 'batch'];
+        const mandatoryFilters = ['institution', 'class', 'course', 'level', 'batch', 'subject'];
         const allMandatorySelected = mandatoryFilters.every(key => activeFilters[key] !== '');
         return allMandatorySelected;
     }, [activeFilters]);
 
     // --- FILTER DEFINITIONS ---
     const marksFilterDefinitions = useMemo(() => {
-        console.log('Creating filter definitions...');
-        console.log('Institutions:', institutions);
-        console.log('Institutions length:', institutions.length);
-        
         const defs = {};
-
-        // 1. INSTITUTION - Show all institutions
         defs.institution = [
             { value: '', label: 'All Institute' },
-            ...institutions.map(inst => {
-                console.log('Mapping institution:', inst);
-                return { 
-                    value: inst.institute_name, 
-                    label: inst.institute_name 
-                };
-            })
+            ...institutions.map(inst => ({
+                value: inst.id,
+                label: inst.institute_name
+            }))
         ];
-
-        console.log('Institution filter options:', defs.institution);
-
-        // 2. COURSE - Show courses for selected institution
         defs.course = [
             { value: '', label: 'All Course' },
-            ...courses.map(course => ({ 
-                value: course.course_name, 
-                label: course.course_name 
+            ...courses.map(course => ({
+                value: course.id,
+                label: course.course_name
             }))
         ];
-
-        // 3. LEVEL - Show levels for selected course
         defs.level = [
             { value: '', label: 'All Level' },
-            ...levels.map(level => ({ 
-                value: level.level_name, 
-                label: level.level_name 
+            ...levels.map(level => ({
+                value: level.id,
+                label: level.level_name
             }))
         ];
-
-        // 4. SUBJECT - Show subjects for selected level
-        defs.subject = [
-            { value: '', label: 'All Subjects' },
-            ...subjects.map(s => ({ value: s.subject_name, label: `${s.subject_code} - ${s.subject_name}` }))
+        defs.programme = [
+            { value: '', label: 'All Programme' },
+            ...programmes.map(prog => ({
+                value: prog.id,
+                label: prog.programme_name
+            }))
         ];
-
-        // 5. BATCH - Show batches for selected level
-        // 5. BATCH - Show batches for selected level
         defs.batch = [
             { value: '', label: 'All Batch' },
-            ...batches.map(batch => ({ 
-                value: batch.batch_name, 
-                label: batch.batch_name 
+            ...batches.map(batch => ({
+                value: batch.id,
+                label: batch.batch_name
             }))
         ];
-
-        // 6. CLASS - Show classes for selected batch
         defs.class = [
             { value: '', label: 'All Class' },
-            ...classes.map(cls => ({ 
-                value: cls.class_name, 
-                label: cls.class_name 
+            ...classes.map(cls => ({
+                value: cls.id,
+                label: cls.class_name
             }))
         ];
-
-        // 7. STUDENT - Show students for selected class
+        defs.subject = [
+            { value: '', label: 'All Subjects' },
+            ...subjects.map(s => ({ value: s.id, label: `${s.subject_code} - ${s.subject_name}` }))
+        ];
         defs.student = [
             { value: '', label: 'All Students' },
             ...students.map(student => ({
@@ -577,36 +742,49 @@ const MarksManagement = ({ userRole }) => {
                 label: `${student.roll_number} - ${student.Users?.full_name || student.Users?.username}`
             }))
         ];
-        
         return defs;
-    }, [subjects, institutions, courses, levels, batches, classes, students]);
+    }, [subjects, institutions, courses, levels, programmes, batches, classes, students]);
     
     // --- DATA TRANSFORMATION ---
     const getFilteredAndMarksData = useMemo(() => {
         // Transform marks to student-centric format
+        console.log('DATA TRANSFORMATION RUNNING - courses.length:', courses.length, 'marks.length:', marks.length);
         const marksRecords = [];
         
+        // Use allCourses, allBatches, allClasses for table mapping to avoid empty values
         marks.forEach(mark => {
             const studentName = mark.students?.Users?.full_name || mark.students?.Users?.username || 'N/A';
             const rollNo = mark.students?.roll_number || 'N/A';
-            const className = mark.classes?.class_name || 'N/A';
-            const courseName = courses.find(c => c.id === mark.course_id)?.course_name || 'N/A';
-            const batchName = batches.find(b => b.id === mark.batch_id)?.batch_name || 'N/A';
+            // Use allClasses for class name
+            const className = (classes && classes.length > 0 ? classes : []).find(c => c.id === mark.class_id)?.class_name || mark.classes?.class_name || 'N/A';
+            // Use allCourses for course name
+            const courseName = (courses && courses.length > 0 ? courses : []).find(c => c.id === mark.course_id)?.course_name || 'N/A';
+            // Use allBatches for batch name
+            const batchName = (batches && batches.length > 0 ? batches : []).find(b => b.id === mark.batch_id)?.batch_name || 'N/A';
+            const programmeName = programmes.find(p => p.id === mark.programme_id)?.programme_name || 'N/A';
             const subjectName = mark.subjects?.subject_name || 'N/A';
+            const subjectId = mark.subjects?.id || mark.subject_id || null;
             const institutionName = institutions.find(i => i.id === mark.institution_id)?.institute_name || 'N/A';
             const levelName = levels.find(l => l.id === mark.level_id)?.level_name || 'N/A';
-            
             marksRecords.push({
                 id: mark.id,
                 student_id: mark.student_id,
                 name: studentName,
                 rollno: rollNo,
                 class: className,
+                class_id: mark.class_id, // for filtering
                 course: courseName,
+                course_id: mark.course_id, // for filtering
                 batch: batchName,
+                batch_id: mark.batch_id, // for filtering
+                programme: programmeName,
+                programme_id: mark.programme_id, // for filtering
                 subject: subjectName,
+                subject_id: subjectId,
                 institution: institutionName,
+                institution_id: mark.institution_id, // for filtering
                 level: levelName,
+                level_id: mark.level_id, // for filtering
                 exam_name: mark.exam_name || 'N/A',
                 marks_obtained: mark.marks_obtained || 0,
                 max_marks: mark.max_marks || 0,
@@ -619,10 +797,26 @@ const MarksManagement = ({ userRole }) => {
         let data = marksRecords;
 
         // Apply filters
-        const standardKeys = ['institution', 'class', 'course', 'level', 'batch', 'subject'];
+        const standardKeys = ['institution', 'class', 'course', 'level', 'programme', 'batch', 'subject'];
         standardKeys.forEach(key => {
             if (activeFilters[key]) {
-                data = data.filter(record => record[key] === activeFilters[key]);
+                if (key === 'institution') {
+                    data = data.filter(record => String(record.institution_id) === String(activeFilters.institution));
+                } else if (key === 'course') {
+                    data = data.filter(record => String(record.course_id) === String(activeFilters.course));
+                } else if (key === 'level') {
+                    data = data.filter(record => String(record.level_id) === String(activeFilters.level));
+                } else if (key === 'programme') {
+                    data = data.filter(record => String(record.programme_id) === String(activeFilters.programme));
+                } else if (key === 'batch') {
+                    data = data.filter(record => String(record.batch_id) === String(activeFilters.batch));
+                } else if (key === 'class') {
+                    data = data.filter(record => String(record.class_id) === String(activeFilters.class));
+                } else if (key === 'subject') {
+                    data = data.filter(record => String(record.subject_id) === String(activeFilters.subject));
+                } else {
+                    data = data.filter(record => record[key] === activeFilters[key]);
+                }
             }
         });
 
@@ -640,7 +834,7 @@ const MarksManagement = ({ userRole }) => {
         
         return data;
 
-    }, [marks, activeFilters, searchQuery, subjects, courses, levels, batches, institutions]);
+    }, [marks, activeFilters, searchQuery, subjects, courses, levels, batches, programmes, institutions]);
 
     // Fetch report card data when student is selected
     useEffect(() => {
@@ -858,106 +1052,39 @@ const MarksManagement = ({ userRole }) => {
         }
     };
 
-    // Export individual student report card as PDF
+    // Export report card as PDF using html2canvas for accurate UI capture
     const handleExportStudentReportPDF = async () => {
         if (!activeFilters.student) {
             alert('Please select a specific student to generate report card');
             return;
         }
-        
         try {
-            const { data: studentDetails, error: studentError } = await supabase
-                .from('students')
-                .select(`
-                    id,
-                    roll_number,
-                    Users!inner(full_name, username)
-                `)
-                .eq('id', activeFilters.student)
-                .single();
-
-            if (studentError || !studentDetails) {
-                alert('Error fetching student details');
-                console.error(studentError);
+            const reportCardElement = reportCardRef.current;
+            if (!reportCardElement) {
+                alert('Report card UI not found.');
                 return;
             }
-            
-            const { data: allStudentMarks, error: marksError } = await supabase
-                .from('marks')
-                .select(`
-                    *,
-                    subjects(subject_name),
-                    programmes:programme_id(programme_name)
-                `)
-                .eq('student_id', activeFilters.student);
-
-            if (marksError || !allStudentMarks || allStudentMarks.length === 0) {
-                alert('No marks data found for selected student');
-                return;
+            // Hide the export button before capture
+            const exportBtn = reportCardElement.querySelector('button');
+            if (exportBtn) exportBtn.style.visibility = 'hidden';
+            // Wait for UI to update
+            await new Promise(res => setTimeout(res, 100));
+            const canvas = await html2canvas(reportCardElement, { scale: 2 });
+            if (exportBtn) exportBtn.style.visibility = 'visible';
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+            // Calculate width/height to fit A4
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const imgWidth = pageWidth - 40;
+            const imgHeight = canvas.height * (imgWidth / canvas.width);
+            let y = 20;
+            if (imgHeight > pageHeight - 40) {
+                pdf.addImage(imgData, 'PNG', 20, y, imgWidth, pageHeight - 40);
+            } else {
+                pdf.addImage(imgData, 'PNG', 20, y, imgWidth, imgHeight);
             }
-
-            const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-            const programmeName = allStudentMarks[0]?.programmes?.programme_name || activeFilters.level || 'N/A';
-            
-            // Get attendance data
-            let attendancePercentage = 0;
-            const { data: attendanceData } = await supabase
-                .from('attendance_summary')
-                .select('attendance_percentage')
-                .eq('student_id', activeFilters.student)
-                .limit(1);
-            attendancePercentage = attendanceData?.[0]?.attendance_percentage || 0;
-
-            const doc = new jsPDF();
-            
-            // Title
-            doc.setFontSize(16);
-            doc.setFont(undefined, 'bold');
-            doc.text('Assessment Score Card', 105, 20, { align: 'center' });
-            
-            doc.setFontSize(12);
-            doc.text(`${selectedCourse?.course_name || 'N/A'} - ${programmeName}`, 105, 28, { align: 'center' });
-            
-            // Student Details
-            doc.setFontSize(10);
-            doc.setFont(undefined, 'normal');
-            doc.text(`Name: ${studentDetails.Users?.full_name || studentDetails.Users?.username || 'N/A'}`, 14, 40);
-            doc.text(`Roll Number: ${studentDetails.roll_number || 'N/A'}`, 14, 48);
-            doc.text(`Attendance: ${attendancePercentage.toFixed(2)}%`, 14, 56);
-            
-            // Marks Table
-            const tableData = allStudentMarks.map(mark => [
-                mark.exam_name || 'N/A',
-                mark.subjects?.subject_name || 'N/A',
-                mark.max_marks || 0,
-                mark.marks_obtained || 0,
-                mark.percentage ? `${(mark.percentage * 100).toFixed(2)}%` : '0%'
-            ]);
-            
-            autoTable(doc, {
-                head: [['Exam Name', 'Subject', 'Max Marks', 'Obtained Marks', 'Percentage']],
-                body: tableData,
-                startY: 65,
-                theme: 'grid',
-                headStyles: { fillColor: [233, 30, 99], textColor: 255, fontStyle: 'bold' },
-                styles: { fontSize: 9, cellPadding: 3 },
-            });
-            
-            // Grade Interpretation
-            const finalY = doc.lastAutoTable.finalY + 10;
-            doc.setFontSize(10);
-            doc.setFont(undefined, 'bold');
-            doc.text('General Interpretation based on percentage:', 14, finalY);
-            
-            doc.setFont(undefined, 'normal');
-            doc.setFontSize(9);
-            doc.text('* 90% and above - Excellent', 14, finalY + 8);
-            doc.text('* 75%-89% - Good', 14, finalY + 15);
-            doc.text('* 60%-74% - Average', 14, finalY + 22);
-            doc.text('* Below 60% - Requires improvement', 14, finalY + 29);
-            
-            doc.save(`Report_Card_${studentDetails.roll_number || 'Student'}.pdf`);
-            
+            pdf.save(`Report_Card_${reportCardData.rollNumber || 'Student'}.pdf`);
         } catch (err) {
             console.error('Error exporting PDF report card:', err);
             alert('Error generating PDF report card. Please try again.');
@@ -1003,6 +1130,15 @@ const MarksManagement = ({ userRole }) => {
                     // Logic: If 'showImport' is true, we pass the function (showing the button).
                     // If 'showImport' is false, we pass undefined (hiding the button).
                     onDataImported={showImport ? handleDataImport : undefined}
+                    
+                    // Actions handlers for edit/delete
+                    onEditRow={handleEditMark}
+                    onDeleteRow={handleDeleteMark}
+                    editingRowId={editingMarkId}
+                    editFormData={editFormData}
+                    onEditFormChange={setEditFormData}
+                    onSaveEdit={handleSaveEdit}
+                    onCancelEdit={handleCancelEdit}
                 />
             </div>
 
@@ -1022,96 +1158,56 @@ const MarksManagement = ({ userRole }) => {
             )}
 
             {reportCardData && (
-                <div style={{
-                    backgroundColor: '#fff',
-                    border: '2px solid #e91e63',
-                    borderRadius: '8px',
-                    padding: '24px',
-                    marginTop: '20px',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                }}>
-                    {/* Header with Export Dropdown */}
+                <div
+                    ref={reportCardRef}
+                    style={{
+                        backgroundColor: '#fff',
+                        border: '2px solid #e91e63',
+                        borderRadius: '8px',
+                        padding: '24px',
+                        marginTop: '20px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                    }}
+                >
+                    {/* Header with Export Button */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                         <h2 style={{ color: '#e91e63', fontSize: '20px', fontWeight: 'bold', margin: 0 }}>
                             Assessment Score Card Preview
                         </h2>
-                        
-                        {/* Export Dropdown */}
-                        <div ref={reportExportMenuRef} style={{ position: 'relative' }}>
-                            <button
-                                onClick={() => setIsReportExportOpen(!isReportExportOpen)}
-                                style={{
-                                    backgroundColor: '#e91e63',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '6px',
-                                    padding: '10px 20px',
-                                    fontSize: '14px',
-                                    fontWeight: '600',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    transition: 'background-color 0.2s'
-                                }}
-                                onMouseEnter={(e) => e.target.style.backgroundColor = '#c2185b'}
-                                onMouseLeave={(e) => e.target.style.backgroundColor = '#e91e63'}
-                            >
-                                <Download size={18} /> Export Report Card
-                            </button>
-                            
-                            {isReportExportOpen && (
-                                <div style={{
-                                    position: 'absolute',
-                                    right: 0,
-                                    top: '100%',
-                                    marginTop: '4px',
-                                    backgroundColor: 'white',
-                                    border: '2px solid #e91e63',
-                                    borderRadius: '6px',
-                                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                                    minWidth: '180px',
-                                    zIndex: 1000,
-                                    overflow: 'hidden'
-                                }}>
-                                    <div
-                                        onClick={() => {
-                                            handleExportStudentReport();
-                                            setIsReportExportOpen(false);
-                                        }}
-                                        style={{
-                                            padding: '12px 16px',
-                                            cursor: 'pointer',
-                                            fontSize: '14px',
-                                            transition: 'background-color 0.2s',
-                                            borderBottom: '1px solid #f0f0f0'
-                                        }}
-                                        onMouseEnter={(e) => e.target.style.backgroundColor = '#f8f9fa'}
-                                        onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
-                                    >
-                                        📊 Export as Excel
-                                    </div>
-                                    <div
-                                        onClick={() => {
-                                            handleExportStudentReportPDF();
-                                            setIsReportExportOpen(false);
-                                        }}
-                                        style={{
-                                            padding: '12px 16px',
-                                            cursor: 'pointer',
-                                            fontSize: '14px',
-                                            transition: 'background-color 0.2s'
-                                        }}
-                                        onMouseEnter={(e) => e.target.style.backgroundColor = '#f8f9fa'}
-                                        onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
-                                    >
-                                        📄 Export as PDF
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                        <button
+                            onClick={handleExportStudentReportPDF}
+                            style={{
+                                backgroundColor: '#e91e63',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '6px',
+                                padding: '10px 20px',
+                                fontSize: '14px',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                transition: 'background-color 0.2s'
+                            }}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = '#c2185b'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = '#e91e63'}
+                        >
+                            <Download size={18} /> Export Report Card
+                        </button>
                     </div>
 
+                    {/* Scorecard Header with Logo */}
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 16,
+                        marginBottom: 24
+                    }}>
+                        <img src={'/logo/logo.jpg'} alt="My Career Point Logo" style={{ height: 56, width: 56, objectFit: 'contain', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                        <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#e91e63', margin: 0, letterSpacing: 1 }}>My Career Point</h2>
+                    </div>
                     {/* Title */}
                     <div style={{ textAlign: 'center', marginBottom: '20px' }}>
                         <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#333', margin: '0 0 5px 0' }}>
@@ -1143,7 +1239,7 @@ const MarksManagement = ({ userRole }) => {
                         </div>
                     </div>
 
-                    {/* Marks Table */}
+            
                     <div style={{ overflowX: 'auto' }}>
                         <table style={{
                             width: '100%',
@@ -1152,8 +1248,8 @@ const MarksManagement = ({ userRole }) => {
                         }}>
                             <thead>
                                 <tr style={{ backgroundColor: '#e91e63', color: 'white' }}>
-                                    <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #ddd' }}>Exam Name</th>
                                     <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #ddd' }}>Subject</th>
+                                    <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #ddd' }}>Exam Name</th>
                                     <th style={{ padding: '12px', textAlign: 'center', border: '1px solid #ddd' }}>Max Marks</th>
                                     <th style={{ padding: '12px', textAlign: 'center', border: '1px solid #ddd' }}>Obtained Marks</th>
                                     <th style={{ padding: '12px', textAlign: 'center', border: '1px solid #ddd' }}>Percentage</th>
@@ -1161,15 +1257,30 @@ const MarksManagement = ({ userRole }) => {
                             </thead>
                             <tbody>
                                 {reportCardData.marks.length > 0 ? (
-                                    reportCardData.marks.map((mark, index) => (
-                                        <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#fff' : '#f8f9fa' }}>
-                                            <td style={{ padding: '10px', border: '1px solid #ddd' }}>{mark.exam_name}</td>
-                                            <td style={{ padding: '10px', border: '1px solid #ddd' }}>{mark.subject}</td>
-                                            <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #ddd' }}>{mark.max_marks}</td>
-                                            <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #ddd' }}>{mark.marks_obtained}</td>
-                                            <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #ddd' }}>{mark.percentage}%</td>
-                                        </tr>
-                                    ))
+                                    (() => {
+                                        // Group marks by subject
+                                        const grouped = {};
+                                        reportCardData.marks.forEach(mark => {
+                                            if (!grouped[mark.subject]) grouped[mark.subject] = [];
+                                            grouped[mark.subject].push(mark);
+                                        });
+                                        const rows = [];
+                                        Object.keys(grouped).forEach((subject, sIdx) => {
+                                            const exams = grouped[subject];
+                                            exams.forEach((mark, mIdx) => {
+                                                rows.push(
+                                                    <tr key={subject + '-' + mIdx} style={{ backgroundColor: (rows.length % 2 === 0) ? '#fff' : '#f8f9fa' }}>
+                                                        <td style={{ padding: '10px', border: '1px solid #ddd', verticalAlign: 'middle' }}>{mIdx === 0 ? subject : ''}</td>
+                                                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>{mark.exam_name}</td>
+                                                        <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #ddd' }}>{mark.max_marks}</td>
+                                                        <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #ddd' }}>{mark.marks_obtained}</td>
+                                                        <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #ddd' }}>{mark.percentage}%</td>
+                                                    </tr>
+                                                );
+                                            });
+                                        });
+                                        return rows;
+                                    })()
                                 ) : (
                                     <tr>
                                         <td colSpan="5" style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
@@ -1186,7 +1297,8 @@ const MarksManagement = ({ userRole }) => {
                         backgroundColor: '#f0f8ff',
                         padding: '16px',
                         borderRadius: '6px',
-                        border: '1px solid #cce5ff'
+                        border: '1px solid #cce5ff',
+                        marginBottom: 32
                     }}>
                         <h4 style={{ fontSize: '14px', fontWeight: 'bold', color: '#333', marginTop: 0, marginBottom: '10px' }}>
                             General Interpretation based on percentage
@@ -1198,6 +1310,68 @@ const MarksManagement = ({ userRole }) => {
                             <div>📝 Below 60% - Requires improvement</div>
                         </div>
                     </div>
+                    {/* --- Graphical Representation --- */}
+                    {reportCardData.marks.length > 0 && (
+                        <div style={{ marginTop: 0 }}>
+                            <div style={{ display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                {/* Bar Chart for Exam Results */}
+                                <div style={{ minWidth: 320, flex: 1, background: '#fff', border: '1px solid #eee', borderRadius: 8, padding: 16 }}>
+                                    <h4 style={{ margin: '0 0 12px 0', color: '#e91e63', fontWeight: 600 }}>Exam Results Overview</h4>
+                                    <Bar
+                                        data={{
+                                            labels: reportCardData.marks.map(m => `${m.subject} - ${m.exam_name}`),
+                                            datasets: [
+                                                {
+                                                    label: 'Obtained Marks',
+                                                    data: reportCardData.marks.map(m => Number(m.marks_obtained)),
+                                                    backgroundColor: '#e91e63',
+                                                },
+                                                {
+                                                    label: 'Max Marks',
+                                                    data: reportCardData.marks.map(m => Number(m.max_marks)),
+                                                    backgroundColor: '#f8bbd0',
+                                                }
+                                            ]
+                                        }}
+                                        options={{
+                                            responsive: true,
+                                            plugins: {
+                                                legend: { position: 'top' },
+                                                title: { display: false }
+                                            },
+                                            scales: {
+                                                y: { beginAtZero: true }
+                                            }
+                                        }}
+                                    />
+                                </div>
+                                {/* Attendance Circular Progress */}
+                                <div style={{ minWidth: 220, flex: '0 0 220px', background: '#fff', border: '1px solid #eee', borderRadius: 8, padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                                    <h4 style={{ margin: '0 0 12px 0', color: '#e91e63', fontWeight: 600 }}>Attendance</h4>
+                                    <Doughnut
+                                        data={{
+                                            labels: ['Attendance', 'Absent'],
+                                            datasets: [
+                                                {
+                                                    data: [Number(reportCardData.attendance), 100 - Number(reportCardData.attendance)],
+                                                    backgroundColor: ['#e91e63', '#f8bbd0'],
+                                                    borderWidth: 1
+                                                }
+                                            ]
+                                        }}
+                                        options={{
+                                            cutout: '70%',
+                                            plugins: {
+                                                legend: { display: false },
+                                                tooltip: { enabled: true }
+                                            }
+                                        }}
+                                    />
+                                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: 28, fontWeight: 700, color: '#e91e63' }}>{reportCardData.attendance}%</div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

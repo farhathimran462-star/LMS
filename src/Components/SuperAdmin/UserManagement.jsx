@@ -436,6 +436,7 @@ const UserManagement = () => {
         last_login: user.last_login,
         suspensionReason: user.suspension_reason,
         notes: user.notes,
+        password: user.password, // Include password for edit form
         // Role-specific fields
         roll_number: user.roll_number,
         institute_name: user.institute_name,
@@ -1128,11 +1129,15 @@ const UserManagement = () => {
       }
       
       // Combine user data with role-specific data
-      const combinedUserData = {
+      let combinedUserData = {
         ...user,
         ...roleSpecificData
       };
-      
+      // If password is not present, try to fetch it (if available in user object)
+      if (!combinedUserData.password && user.password) {
+        combinedUserData.password = user.password;
+      }
+      console.log('DEBUG: Opening edit form for user:', combinedUserData);
       setSelectedRole(null); 
       setFormSource("action"); 
       setEditUser(combinedUserData);
@@ -1225,7 +1230,8 @@ const UserManagement = () => {
             fieldsConfig={getUserRoleConfig(editUser ? editUser.role : selectedRole, instituteOptions, !!editUser)}
             initialData={editUser ? {
               ...editUser,
-              full_name: editUser.fullName // Map fullName back to full_name for form
+              full_name: editUser.fullName, // Map fullName back to full_name for form
+              password: editUser.password // Show password in edit form
             } : {}}
             onClose={() => {
               setSelectedRole(null);

@@ -274,12 +274,20 @@ export const enrollStudent = async (classId, studentId) => {
  * @param {Array<string>} studentIds - Array of student IDs from students table
  * @returns {Promise<{data: Array, error: Object}>}
  */
-export const enrollMultipleStudents = async (classId, studentIds) => {
+export const enrollMultipleStudents = async (classId, studentIds, idsObj = {}) => {
+    // idsObj: { institute_id, course_id, level_id, programme_id, batch_id }
     try {
-        // Update students table to set class_id for each student
+        // Update students table to set all required IDs for each student
         const { data, error } = await supabase
             .from('students')
-            .update({ class_id: classId })
+            .update({
+                class_id: classId,
+                institute_id: idsObj.institute_id,
+                course_id: idsObj.course_id,
+                level_id: idsObj.level_id,
+                programme_id: idsObj.programme_id,
+                batch_id: idsObj.batch_id
+            })
             .in('id', studentIds)
             .select();
 
@@ -708,7 +716,14 @@ export const createClassWithRelationships = async (classData) => {
             console.log('Enrolling students:', classData.student_ids);
             const { data: enrolledStudents, error: studentsError } = await enrollMultipleStudents(
                 newClass.id,
-                classData.student_ids
+                classData.student_ids,
+                {
+                    institute_id: classData.institute_id,
+                    course_id: classData.course_id,
+                    level_id: classData.level_id,
+                    programme_id: classData.programme_id,
+                    batch_id: classData.batch_id
+                }
             );
             if (studentsError) {
                 console.error('Error enrolling students:', studentsError);

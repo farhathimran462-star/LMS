@@ -4,6 +4,7 @@ import DynamicForm from "../Reusable/DynamicForm";
 import DynamicTable from "../Reusable/DynamicTable";
 import CardSlider from "../Reusable/CardSlider";
 import { FiHome, FiX } from "react-icons/fi";
+import { FaEdit, FaSave, FaTimes } from "react-icons/fa";
 import { getAllInstitutions } from '../../api/institutionsApi';
 import { getCoursesByInstitution } from '../../api/coursesApi';
 import { getLevelsByCourse } from '../../api/levelsApi';
@@ -102,8 +103,7 @@ const STUDENTS_COLUMN_ORDER = [
     'batch', 
     'class_name', 
     'email', 
-    'phone', 
-    'gender'
+    'phone'
 ];
 
 const STUDENTS_COLUMN_DISPLAY = {
@@ -116,8 +116,7 @@ const STUDENTS_COLUMN_DISPLAY = {
     batch: 'Batch',
     class_name: 'Class',
     email: 'Email',
-    phone: 'Phone',
-    gender: 'Gender'
+    phone: 'Phone'
 };
 
 const Batches = ({ userRole }) => {
@@ -296,16 +295,26 @@ const Batches = ({ userRole }) => {
     }, [selectedBatch]);
 
     // Student and Teacher Options for class form from DB
+    // Only show students not assigned to any class
     const studentOptions = useMemo(() => {
-        console.log('Student options from DB:', allStudents.length, 'students');
         if (allStudents.length === 0) {
             return [{ label: 'No students available - Create students in User Management first', value: '', disabled: true }];
         }
-        return allStudents.map(s => ({
-            label: `${s.name || s.email || 'Student'} - ${s.roll_number || 'No Roll'}`,
-            value: s.id // students.id, not user_id
-        }));
-    }, [allStudents]);
+        // Find all assigned student IDs from all batches/classes
+        const assignedStudentIds = new Set();
+        batches.forEach(batch => {
+            (batch.classes || []).forEach(cls => {
+                (cls.students_ids || []).forEach(id => assignedStudentIds.add(id));
+            });
+        });
+        // Only include students not assigned to any class
+        return allStudents
+            .filter(s => !assignedStudentIds.has(s.id))
+            .map(s => ({
+                label: `${s.name || s.email || 'Student'} - ${s.roll_number || 'No Roll'}`,
+                value: s.id
+            }));
+    }, [allStudents, batches]);
 
     const teacherOptions = useMemo(() => {
         console.log('Teacher options from DB:', allTeachers.length, 'teachers');
@@ -333,6 +342,11 @@ const Batches = ({ userRole }) => {
     // --- BATCH FORM CONFIG ---
     const getBatchFormConfig = () => {
         return [
+            {
+                name: 'id',
+                label: '',
+                type: 'hidden',
+            },
             {
                 name: 'institution',
                 label: 'Institution',
@@ -519,12 +533,17 @@ const Batches = ({ userRole }) => {
     };
 
     const handleEditClick = (batchRow) => {
+        // Debug log to check batchRow and id
+        console.log('handleEditClick batchRow:', batchRow);
+        const batchId = batchRow.id || batchRow.batch_id;
+        console.log('handleEditClick resolved batchId:', batchId);
         setFormModalState({
             isOpen: true,
             mode: 'edition',
             fieldsConfig: getBatchFormConfig(),
             data: {
                 ...batchRow,
+                id: batchId,
                 institution: institutionMap.get(selectedInstitution),
                 course: courseMap.get(selectedCourse),
                 level: levelMap.get(selectedLevel),
@@ -571,11 +590,21 @@ const Batches = ({ userRole }) => {
             };
 
             if (mode === 'edition') {
-                // Update existing batch (add update API call when available)
-                setBatches(prevBatches => 
-                    prevBatches.map(b => 
-                        (b.id === formData.id || b.batch_id === formData.id) 
-                            ? { ...b, ...batchData }
+                // Ensure we have a valid batch id
+                const batchId = formData.id || formData.batch_id;
+                if (!batchId) {
+                    alert('Error: Batch ID is missing. Cannot update batch.');
+                    setLoading(false);
+                    return;
+                }
+                const { updateBatch } = await import('../../api/batchesApi');
+                const { data, error } = await updateBatch(batchId, batchData);
+                console.log('updateBatch response:', { data, error });
+                if (error) throw error;
+                setBatches(prevBatches =>
+                    prevBatches.map(b =>
+                        (b.id === batchId || b.batch_id === batchId)
+                            ? { ...b, ...data }
                             : b
                     )
                 );
@@ -583,7 +612,6 @@ const Batches = ({ userRole }) => {
             } else {
                 const { data, error } = await createBatch(batchData);
                 if (error) throw error;
-                
                 // Add new batch to list
                 const newBatch = {
                     ...batchData,
@@ -595,7 +623,6 @@ const Batches = ({ userRole }) => {
                 setBatches(prev => [...prev, newBatch]);
                 alert('Batch created successfully!');
             }
-            
             setFormModalState({ isOpen: false, mode: 'creation', data: null, fieldsConfig: [] });
         } catch (error) {
             alert('Error with batch: ' + error.message);
@@ -774,6 +801,63 @@ const Batches = ({ userRole }) => {
         </div>
     );
 
+    // --- CLASS EDIT MODAL STATE ---
+
+
+    // --- Class Edit Modal State ---
+    const [editClassModal, setEditClassModal] = useState({ open: false, classData: null });
+
+    const handleEditClassCard = (classId) => {
+        const cls = selectedBatch?.classes.find(c => c.class_id === classId);
+        if (cls) {
+            setEditClassModal({ open: true, classData: { ...cls } });
+        }
+    };
+
+    const handleEditClassChange = (e) => {
+        const { name, value } = e.target;
+        setEditClassModal((prev) => ({
+            ...prev,
+            classData: { ...prev.classData, [name]: value },
+        }));
+    };
+
+    const handleEditClassSave = async () => {
+        // Call updateClass API here
+        const { updateClass } = await import('../../api/classesApi');
+        const { class_id, class_name, description } = editClassModal.classData;
+        try {
+            const { data, error } = await updateClass(class_id, { class_name, description });
+            if (error) throw error;
+            // Update local state with new values
+            setBatches((prevBatches) =>
+                prevBatches.map((b) =>
+                    b.id === selectedBatch.id
+                        ? {
+                              ...b,
+                              classes: b.classes.map((c) =>
+                                  c.class_id === class_id ? { ...c, ...data } : c
+                              ),
+                          }
+                        : b
+                )
+            );
+            setSelectedBatch((prev) =>
+                prev
+                    ? {
+                          ...prev,
+                          classes: prev.classes.map((c) =>
+                              c.class_id === class_id ? { ...c, ...data } : c
+                          ),
+                      }
+                    : prev
+            );
+            setEditClassModal({ open: false, classData: null });
+        } catch (err) {
+            alert('Failed to update class: ' + (err.message || err));
+        }
+    };
+
     const renderClassDetails = () => selectedBatch && (
         <div ref={classDetailsRef}>
             <CardSlider
@@ -785,8 +869,48 @@ const Batches = ({ userRole }) => {
                 activeId={selectedClass?.class_id}
                 showSearch={false}
                 onAddButtonClick={handleAddClassClick}
+                onEditCard={handleEditClassCard}
             />
-            
+            {/* Edit Class Modal */}
+            {editClassModal.open && (
+                <div className="batch_modal">
+                    <div className="batch_modal-content">
+                        <h3>Edit Class</h3>
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleEditClassSave();
+                            }}
+                        >
+                            <div>
+                                <label>Class Name</label>
+                                <input
+                                    type="text"
+                                    name="class_name"
+                                    value={editClassModal.classData.class_name || ''}
+                                    onChange={handleEditClassChange}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label>Description</label>
+                                <textarea
+                                    name="description"
+                                    value={editClassModal.classData.description || ''}
+                                    onChange={handleEditClassChange}
+                                    rows={2}
+                                />
+                            </div>
+                            {/* Other fields as read-only or hidden */}
+                            <div style={{ marginTop: '16px' }}>
+                                <button type="submit" className="btn btn-primary">Save</button>
+                                <button type="button" className="btn btn-secondary" onClick={() => setEditClassModal({ open: false, classData: null })} style={{ marginLeft: '8px' }}>Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+            {/* Student Table for selected class */}
             {selectedClass && (
                 <div style={{ marginTop: '20px' }}>
                     <DynamicTable

@@ -1,11 +1,12 @@
-import '../../Styles/SuperAdmin/ReportsAnalytics.css';
 
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import '../../Styles/SuperAdmin/ReportsAnalytics.css';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   PieChart, Pie, Cell, ResponsiveContainer
 } from 'recharts';
-
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 // API Imports
 import { getAdminReportData, processReportData } from '../../api/reportsApi';
 import { getAllInstitutions } from '../../api/institutionsApi';
@@ -32,6 +33,60 @@ const PIE_COLORS = [CHART_COLORS.Pass, CHART_COLORS.Fail];
 // ===================================================================
 
 const ReportsAnalytics = ({ userRole }) => {
+  // Ref for the analytics UI
+  const analyticsRef = useRef(null);
+  // Export the full analytics UI as PDF
+  const exportAnalyticsAsPDF = async () => {
+    const input = analyticsRef.current;
+    if (!input) return;
+    // Hide the export button before capture
+    const exportBtn = input.querySelector('.sara-export-btn');
+    if (exportBtn) exportBtn.style.visibility = 'hidden';
+    // Recursively remove height/overflow restrictions from input and all parents
+    const nodes = [];
+    let node = input;
+    while (node) {
+      nodes.push(node);
+      node = node.parentElement;
+    }
+    // Save original styles
+    const originalStyles = nodes.map(n => ({
+      height: n.style.height,
+      overflow: n.style.overflow,
+      transform: n.style.transform,
+      transformOrigin: n.style.transformOrigin
+    }));
+    // Remove restrictions
+    nodes.forEach(n => {
+      n.style.height = 'auto';
+      n.style.overflow = 'visible';
+    });
+    window.scrollTo(0, 0);
+    await new Promise(res => setTimeout(res, 100));
+    const canvas = await html2canvas(input, { scale: 2 });
+    // Restore styles
+    nodes.forEach((n, i) => {
+      n.style.height = originalStyles[i].height;
+      n.style.overflow = originalStyles[i].overflow;
+      n.style.transform = originalStyles[i].transform;
+      n.style.transformOrigin = originalStyles[i].transformOrigin;
+    });
+    if (exportBtn) exportBtn.style.visibility = 'visible';
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    // Calculate scale to fit image into PDF page
+    let imgWidth = canvas.width;
+    let imgHeight = canvas.height;
+    const maxWidth = pageWidth - 40;
+    const maxHeight = pageHeight - 40;
+    let scale = Math.min(maxWidth / imgWidth, maxHeight / imgHeight, 1);
+    imgWidth = imgWidth * scale;
+    imgHeight = imgHeight * scale;
+    pdf.addImage(imgData, 'PNG', 20, 20, imgWidth, imgHeight);
+    pdf.save('analytics_report.pdf');
+  };
   // Get user data
   const currentUserData = JSON.parse(sessionStorage.getItem('userData') || '{}');
   
@@ -172,37 +227,41 @@ const ReportsAnalytics = ({ userRole }) => {
       filteredMarks = filteredMarks.filter(m => m.institution_id === selectedInstituteId);
       filteredAttendance = filteredAttendance.filter(a => a.institute_id === selectedInstituteId);
       groupBy = 'course';
-      
+
       // Filter by course
       if (selectedCourseId !== 'ALL') {
         filteredMarks = filteredMarks.filter(m => m.course_id === selectedCourseId);
         filteredAttendance = filteredAttendance.filter(a => a.course_id === selectedCourseId);
         groupBy = 'level';
-        
+
         // Filter by level
         if (selectedLevelId !== 'ALL') {
           filteredMarks = filteredMarks.filter(m => m.level_id === selectedLevelId);
           filteredAttendance = filteredAttendance.filter(a => a.level_id === selectedLevelId);
           groupBy = 'batch';
-          
+
           // Filter by batch
           if (selectedBatchId !== 'ALL') {
             filteredMarks = filteredMarks.filter(m => m.batch_id === selectedBatchId);
             filteredAttendance = filteredAttendance.filter(a => a.batch_id === selectedBatchId);
             groupBy = 'class';
-            
+
             // Filter by class
             if (selectedClassId !== 'ALL') {
               filteredMarks = filteredMarks.filter(m => m.class_id === selectedClassId);
               filteredAttendance = filteredAttendance.filter(a => a.class_id === selectedClassId);
               groupBy = 'subject';
-              
-              // Filter by subject
-              if (selectedSubjectId !== 'ALL') {
+
+              // If student is selected but subject is not, group by subject for that student
+              if (selectedStudentId !== 'ALL' && selectedSubjectId === 'ALL') {
+                filteredMarks = filteredMarks.filter(m => m.student_id === selectedStudentId);
+                filteredAttendance = filteredAttendance.filter(a => a.student_id === selectedStudentId);
+                groupBy = 'subject';
+              } else if (selectedSubjectId !== 'ALL') {
                 filteredMarks = filteredMarks.filter(m => m.subject_id === selectedSubjectId);
                 filteredAttendance = filteredAttendance.filter(a => a.subject_id === selectedSubjectId);
                 groupBy = 'student';
-                
+
                 // Filter by student
                 if (selectedStudentId !== 'ALL') {
                   filteredMarks = filteredMarks.filter(m => m.student_id === selectedStudentId);
@@ -380,6 +439,7 @@ const ReportsAnalytics = ({ userRole }) => {
   }, [processedData]);
 
   // Chart data
+
   const chartMarksData = useMemo(() => {
     return processedData.map(d => ({
       name: d.name,
@@ -477,8 +537,33 @@ const ReportsAnalytics = ({ userRole }) => {
   }
 
   return (
-    <div className="SARA_dashboard-container">
-      <h1 className="SARA_dashboard-title">Analytics and Reports</h1>
+    <div className="SARA_dashboard-container" ref={analyticsRef}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h1 className="SARA_dashboard-title">Analytics and Reports</h1>
+        <button
+          className="sara-export-btn"
+          onClick={exportAnalyticsAsPDF}
+          style={{
+            backgroundColor: '#e91e63',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            padding: '10px 20px',
+            fontSize: '14px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            transition: 'background-color 0.2s',
+            marginLeft: 'auto'
+          }}
+          onMouseEnter={e => e.target.style.backgroundColor = '#c2185b'}
+          onMouseLeave={e => e.target.style.backgroundColor = '#e91e63'}
+        >
+          Export as PDF
+        </button>
+      </div>
 
       {/* FILTER BOX */}
       <div className="SARA_filter-box">
@@ -637,7 +722,7 @@ const ReportsAnalytics = ({ userRole }) => {
           )}
 
           {/* 7. Student Filter */}
-          {!isAllInstitutes && !isAllSubjects && (
+          {!isAllInstitutes && !isAllClasses && (
             <div className="SARA_filter-group">
               <label htmlFor="student-select" className="SARA_filter-label">Student:</label>
               <select
@@ -710,9 +795,11 @@ const ReportsAnalytics = ({ userRole }) => {
       </div>
 
       {/* HORIZONTAL CHARTS */}
-      <div className="SARA_horizontal-report-grid">
-        <div className="SARA_chart-card">
-          <h3 className="SARA_card-title">3. Marks & Pass Rate Report</h3>
+      <div className={`SARA_horizontal-report-grid${selectedClassId !== 'ALL' ? ' SARA_centered-chart' : ''}`}> 
+        <div className="SARA_chart-card" id="marks-report-chart">
+          <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+            <h3 className="SARA_card-title">3. Marks & Pass Rate Report</h3>
+          </div>
           <p className="SARA_card-subtitle">Grouped by {groupByLevel}</p>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={chartMarksData} margin={{ top: 10, right: 30, left: 20, bottom: 60 }}>
@@ -727,24 +814,27 @@ const ReportsAnalytics = ({ userRole }) => {
           </ResponsiveContainer>
         </div>
 
-        <div className="SARA_chart-card">
-          <h3 className="SARA_card-title">4. Attendance Report</h3>
-          <p className="SARA_card-subtitle">Grouped by {groupByLevel}</p>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={chartAttendanceData} margin={{ top: 10, right: 30, left: 20, bottom: 60 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} style={{ fontSize: '11px' }} />
-              <YAxis label={{ value: 'Rate (%)', angle: -90, position: 'insideLeft' }} domain={[0, 100]} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="Attendance (%)" fill={CHART_COLORS.Attendance} radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        {/* Hide Attendance Report if a class is selected */}
+        {selectedClassId === 'ALL' && (
+          <div className="SARA_chart-card">
+            <h3 className="SARA_card-title">4. Attendance Report</h3>
+            <p className="SARA_card-subtitle">Grouped by {groupByLevel}</p>
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={chartAttendanceData} margin={{ top: 10, right: 30, left: 20, bottom: 60 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} style={{ fontSize: '11px' }} />
+                <YAxis label={{ value: 'Rate (%)', angle: -90, position: 'insideLeft' }} domain={[0, 100]} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="Attendance (%)" fill={CHART_COLORS.Attendance} radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </div>
-
     </div>
   );
 };
 
 export default ReportsAnalytics;
+

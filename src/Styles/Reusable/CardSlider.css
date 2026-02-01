@@ -330,3 +330,39 @@
     border: 2px solid #fff; 
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+/* --- Edit Button on Selected Card --- */
+.IN_card-edit-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: white;
+    color: var(--brand-pink);
+    border: 2px solid var(--brand-pink);
+    border-radius: var(--radius-md);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+}
+
+.IN_card-edit-button:hover {
+    background-color: var(--brand-pink);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: var(--shadow-md);
+}
+
+.IN_card-edit-button svg {
+    font-size: 14px;
+}
+
+/* Make card position relative for absolute positioning of edit button */
+.IN_institute-card {
+    position: relative;
+}

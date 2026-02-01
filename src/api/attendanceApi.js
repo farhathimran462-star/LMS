@@ -190,7 +190,8 @@ export const getAllAttendance = async (filters = {}) => {
         batches(id, batch_name),
         institutions(id, institute_name),
         courses(id, course_name),
-        levels(id, level_name)
+        levels(id, level_name),
+        programmes(id, programme_name)
       `)
       .order('students(roll_number)', { ascending: true });
 

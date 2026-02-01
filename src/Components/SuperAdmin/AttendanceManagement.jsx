@@ -9,11 +9,13 @@ import { getAllInstitutions } from '../../api/institutionsApi';
 import { getAllClasses, getClassesByTeacher } from '../../api/classesApi';
 import { getCoursesByInstitution } from '../../api/coursesApi';
 import { getLevelsByCourse } from '../../api/levelsApi';
+import { getProgrammesByCourseLevel } from '../../api/programmesApi';
 import { getAllBatches } from '../../api/batchesApi';
-import { getAllTeachers, getAllAdmins } from '../../api/usersApi'; 
+import { getAllTeachers, getAllAdmins } from '../../api/usersApi';
+import { supabase } from '../../config/supabaseClient'; 
 
 // --- COLUMN DEFINITIONS ---
-const ATTENDANCE_COLUMNS = ['rollno', 'name', 'total_days', 'present_days', 'half_days', 'absent_days', 'attendance_percentage'];
+const ATTENDANCE_COLUMNS = ['rollno', 'name', 'course', 'level', 'programme', 'batch', 'class', 'total_days', 'present_days', 'half_days', 'absent_days', 'attendance_percentage'];
 const DISPLAY_AT_FIXED_RIGHT = ['actions'];
 
 const AttendanceManagement = ({ userRole }) => {
@@ -33,6 +35,8 @@ const AttendanceManagement = ({ userRole }) => {
     const [attendanceData, setAttendanceData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(false);
+    const [editingAttendanceId, setEditingAttendanceId] = useState(null);
+    const [editFormData, setEditFormData] = useState({ total_days: '', present_days: '', half_days: '', absent_days: '' });
     
     // Role-specific states
     const [teacherClasses, setTeacherClasses] = useState([]);
@@ -42,7 +46,9 @@ const AttendanceManagement = ({ userRole }) => {
     const [institutions, setInstitutions] = useState([]);
     const [courses, setCourses] = useState([]);
     const [levels, setLevels] = useState([]);
-    const [batches, setBatches] = useState([]);
+    const [programmes, setProgrammes] = useState([]);
+    const [allBatches, setAllBatches] = useState([]); // all batches from API
+    const [batches, setBatches] = useState([]); // filtered batches for dropdown
     const [classes, setClasses] = useState([]);
 
     // Fetch initial data
@@ -52,11 +58,12 @@ const AttendanceManagement = ({ userRole }) => {
 
     // FILTER STATE
     const [activeFilters, setActiveFilters] = useState({
-        institution: '',
-        course: '',
-        level: '',
-        batch: '',
-        class: ''
+        institution: '', // will store institution.id
+        course: '',      // will store course.id
+        level: '',       // will store level.id
+        programme: '',   // will store programme.id
+        batch: '',       // will store batch.id
+        class: ''        // will store class.id
     });
 
     const fetchInitialData = async () => {
@@ -133,96 +140,67 @@ const AttendanceManagement = ({ userRole }) => {
     // Fetch courses when institution is selected
     useEffect(() => {
         if (activeFilters.institution && institutions.length > 0) {
-            const selectedInst = institutions.find(i => i.institute_name === activeFilters.institution);
-            if (selectedInst) {
-                fetchCourses(selectedInst.id);
-            }
+            getCoursesByInstitution(activeFilters.institution).then(({ data, error }) => {
+                if (error) setCourses([]);
+                else setCourses(data || []);
+            });
         } else {
             setCourses([]);
         }
     }, [activeFilters.institution, institutions]);
 
-    const fetchCourses = async (institutionId) => {
-        try {
-            const { data, error } = await getCoursesByInstitution(institutionId);
-            if (error) throw error;
-            setCourses(data || []);
-        } catch (err) {
-            console.error('Error fetching courses:', err.message);
-            setCourses([]);
-        }
-    };
-
     // Fetch levels when course is selected
     useEffect(() => {
         if (activeFilters.course && courses.length > 0) {
-            const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-            if (selectedCourse) {
-                fetchLevels(selectedCourse.id);
-            }
+            getLevelsByCourse(activeFilters.course).then(({ data, error }) => {
+                if (error) setLevels([]);
+                else setLevels(data || []);
+            });
         } else {
             setLevels([]);
         }
     }, [activeFilters.course, courses]);
 
-    const fetchLevels = async (courseId) => {
-        try {
-            const { data, error } = await getLevelsByCourse(courseId);
-            if (error) throw error;
-            setLevels(data || []);
-        } catch (err) {
-            console.error('Error fetching levels:', err.message);
-            setLevels([]);
-        }
-    };
-
-    // Fetch batches when level is selected
+    // Fetch programmes when level is selected
     useEffect(() => {
-        if (activeFilters.level) {
-            fetchBatches();
+        if (activeFilters.level && activeFilters.course && levels.length > 0 && courses.length > 0) {
+            getProgrammesByCourseLevel(activeFilters.course, activeFilters.level).then(({ data, error }) => {
+                if (error) setProgrammes([]);
+                else setProgrammes(data || []);
+            });
         } else {
-            setBatches([]);
+            setProgrammes([]);
         }
-    }, [activeFilters.level]);
+    }, [activeFilters.level, activeFilters.course, levels, courses]);
 
-    const fetchBatches = async () => {
-        try {
-            const { data, error } = await getAllBatches();
-            if (error) throw error;
-            setBatches(data || []);
-        } catch (err) {
-            console.error('Error fetching batches:', err.message);
-            setBatches([]);
-        }
-    };
+    // Fetch batches when programme is selected
+    useEffect(() => {
+        getAllBatches().then(({ data, error }) => {
+            if (error) {
+                setBatches([]);
+            } else {
+                if (activeFilters.programme && programmes.length > 0) {
+                    setBatches((data || []).filter(b => b.programme_id === activeFilters.programme));
+                } else {
+                    setBatches(data || []);
+                }
+            }
+        });
+    }, [activeFilters.programme, programmes]);
 
     // Fetch classes when batch is selected
     useEffect(() => {
-        if (activeFilters.batch) {
-            fetchClasses();
+        if (activeFilters.batch && batches.length > 0) {
+            getAllClasses().then(({ data, error }) => {
+                if (error) setClasses([]);
+                else {
+                    setClasses((data || []).filter(c => c.batch_id === activeFilters.batch));
+                }
+            });
         } else {
             setClasses([]);
         }
-    }, [activeFilters.batch]);
-
-    const fetchClasses = async () => {
-        try {
-            const { data, error } = await getAllClasses();
-            if (error) throw error;
-            
-            // Filter classes by selected batch
-            const selectedBatch = batches.find(b => b.batch_name === activeFilters.batch);
-            
-            const filtered = (data || []).filter(c => 
-                !selectedBatch || c.batch_id === selectedBatch.id
-            );
-            
-            setClasses(filtered);
-        } catch (err) {
-            console.error('Error fetching classes:', err.message);
-            setClasses([]);
-        }
-    };
+    }, [activeFilters.batch, batches]);
 
     // Column display names
     const columnDisplayNameMap = useMemo(() => ({
@@ -243,7 +221,7 @@ const AttendanceManagement = ({ userRole }) => {
         defs.institution = [
             { value: '', label: 'All Institution' },
             ...institutions.map(inst => ({ 
-                value: inst.institute_name, 
+                value: inst.id, 
                 label: inst.institute_name 
             }))
         ];
@@ -252,7 +230,7 @@ const AttendanceManagement = ({ userRole }) => {
         defs.course = [
             { value: '', label: 'All Course' },
             ...courses.map(course => ({ 
-                value: course.course_name, 
+                value: course.id, 
                 label: course.course_name 
             }))
         ];
@@ -261,16 +239,25 @@ const AttendanceManagement = ({ userRole }) => {
         defs.level = [
             { value: '', label: 'All Level' },
             ...levels.map(level => ({ 
-                value: level.level_name, 
+                value: level.id, 
                 label: level.level_name 
             }))
         ];
 
-        // 4. BATCH
+        // 4. PROGRAMME
+        defs.programme = [
+            { value: '', label: 'All Programme' },
+            ...programmes.map(prog => ({ 
+                value: prog.id, 
+                label: prog.programme_name 
+            }))
+        ];
+
+        // 5. BATCH
         defs.batch = [
             { value: '', label: 'All Batch' },
             ...batches.map(batch => ({ 
-                value: batch.batch_name, 
+                value: batch.id, 
                 label: batch.batch_name 
             }))
         ];
@@ -279,17 +266,17 @@ const AttendanceManagement = ({ userRole }) => {
         defs.class = [
             { value: '', label: 'All Class' },
             ...classes.map(cls => ({ 
-                value: cls.class_name, 
+                value: cls.id, 
                 label: cls.class_name 
             }))
         ];
         
         return defs;
-    }, [institutions, courses, levels, batches, classes]);
+    }, [institutions, courses, levels, programmes, batches, classes]);
 
     // --- CHECK IF ALL REQUIRED FILTERS ARE SELECTED ---
     const areAllFiltersSelected = useMemo(() => {
-        const requiredKeys = ['institution', 'course', 'level', 'batch', 'class'];
+        const requiredKeys = ['institution', 'course', 'level', 'programme', 'batch', 'class'];
         
         return requiredKeys.every(key => {
             const val = activeFilters[key];
@@ -298,28 +285,31 @@ const AttendanceManagement = ({ userRole }) => {
     }, [activeFilters]);
 
     // --- HANDLERS ---
-    const handleFilterChange = useCallback((column, value) => {
-        // Reset dependent filters when parent filter changes
+    const handleFilterChange = useCallback((key, value) => {
         setActiveFilters(prev => {
-            const newFilters = { ...prev, [column]: value };
-            
-            if (column === 'institution') {
-                newFilters.course = '';
-                newFilters.level = '';
-                newFilters.batch = '';
-                newFilters.class = '';
-            } else if (column === 'course') {
-                newFilters.level = '';
-                newFilters.batch = '';
-                newFilters.class = '';
-            } else if (column === 'level') {
-                newFilters.batch = '';
-                newFilters.class = '';
-            } else if (column === 'batch') {
-                newFilters.class = '';
+            const updated = { ...prev, [key]: value };
+            if (key === 'institution') {
+                updated.course = '';
+                updated.level = '';
+                updated.programme = '';
+                updated.batch = '';
+                updated.class = '';
+            } else if (key === 'course') {
+                updated.level = '';
+                updated.programme = '';
+                updated.batch = '';
+                updated.class = '';
+            } else if (key === 'level') {
+                updated.programme = '';
+                updated.batch = '';
+                updated.class = '';
+            } else if (key === 'programme') {
+                updated.batch = '';
+                updated.class = '';
+            } else if (key === 'batch') {
+                updated.class = '';
             }
-            
-            return newFilters;
+            return updated;
         });
     }, []);
     
@@ -343,14 +333,15 @@ const AttendanceManagement = ({ userRole }) => {
             return;
         }
 
-        // Get IDs from selected filters
-        const selectedClass = classes.find(c => c.class_name === activeFilters.class);
-        const selectedBatch = batches.find(b => b.batch_name === activeFilters.batch);
-        const selectedInstitution = institutions.find(i => i.institute_name === activeFilters.institution);
-        const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-        const selectedLevel = levels.find(l => l.level_name === activeFilters.level);
+        // Get objects by ID from selected filters
+        const selectedClass = classes.find(c => c.id === activeFilters.class);
+        const selectedBatch = batches.find(b => b.id === activeFilters.batch);
+        const selectedInstitution = institutions.find(i => i.id === activeFilters.institution);
+        const selectedCourse = courses.find(c => c.id === activeFilters.course);
+        const selectedLevel = levels.find(l => l.id === activeFilters.level);
+        const selectedProgramme = programmes.find(p => p.id === activeFilters.programme);
 
-        if (!selectedClass || !selectedBatch || !selectedInstitution || !selectedCourse || !selectedLevel) {
+        if (!selectedClass || !selectedBatch || !selectedInstitution || !selectedCourse || !selectedLevel || !selectedProgramme) {
             alert('Could not find matching IDs for selected filters');
             return;
         }
@@ -365,6 +356,7 @@ const AttendanceManagement = ({ userRole }) => {
             institute_id: selectedInstitution.id,
             course_id: selectedCourse.id,
             level_id: selectedLevel.id,
+            programme_id: selectedProgramme.id,
             marked_by: currentUserId
         };
 
@@ -476,6 +468,7 @@ const AttendanceManagement = ({ userRole }) => {
                         institute_id: selectedInstitution.id,
                         course_id: selectedCourse.id,
                         level_id: selectedLevel.id,
+                        programme_id: selectedProgramme.id,
                         total_days: newTotalDays,
                         present_days: newPresentDays,
                         absent_days: (existing?.absent_days || 0) + absentDays,
@@ -582,63 +575,174 @@ const AttendanceManagement = ({ userRole }) => {
     // Process Data for Table Display
     const getFilteredAttendanceData = useMemo(() => {
         if (!attendanceData || attendanceData.length === 0) return [];
-        
-        // First, filter by active filters
+
+        // First, filter by active filters (using IDs)
         let filtered = attendanceData;
-        
+
         if (activeFilters.institution) {
-            filtered = filtered.filter(record => 
-                record.institutions?.institute_name === activeFilters.institution
+            filtered = filtered.filter(record =>
+                record.institutions?.id === activeFilters.institution
             );
         }
-        
+
         if (activeFilters.course) {
-            filtered = filtered.filter(record => 
-                record.courses?.course_name === activeFilters.course
+            filtered = filtered.filter(record =>
+                record.courses?.id === activeFilters.course
             );
         }
-        
+
         if (activeFilters.level) {
-            filtered = filtered.filter(record => 
-                record.levels?.level_name === activeFilters.level
+            filtered = filtered.filter(record =>
+                record.levels?.id === activeFilters.level
             );
         }
-        
+
+        if (activeFilters.programme) {
+            filtered = filtered.filter(record =>
+                record.programmes?.id === activeFilters.programme
+            );
+        }
+
         if (activeFilters.batch) {
-            filtered = filtered.filter(record => 
-                record.batches?.batch_name === activeFilters.batch
+            filtered = filtered.filter(record =>
+                record.batches?.id === activeFilters.batch
             );
         }
-        
+
         if (activeFilters.class) {
-            filtered = filtered.filter(record => 
-                record.classes?.class_name === activeFilters.class
+            filtered = filtered.filter(record =>
+                record.classes?.id === activeFilters.class
             );
         }
-        
+
         // Map to display format
         let data = filtered.map(record => ({
             id: record.id,
             rollno: record.students?.roll_number || 'N/A',
             name: record.students?.Users?.full_name || record.students?.Users?.username || 'Unknown',
+            course: record.courses?.course_name || 'N/A',
+            level: record.levels?.level_name || 'N/A',
+            programme: record.programmes?.programme_name || 'N/A',
+            batch: record.batches?.batch_name || 'N/A',
+            class: record.classes?.class_name || 'N/A',
             total_days: record.total_days || 0,
             present_days: record.present_days || 0,
             half_days: record.half_days || 0,
             absent_days: record.absent_days || 0,
             attendance_percentage: record.attendance_percentage ? `${parseFloat(record.attendance_percentage).toFixed(2)}%` : '0%'
         }));
-        
+
         // Apply search filter
         if (searchQuery) {
             const query = searchQuery.toLowerCase();
-            data = data.filter(student => 
-                student.name.toLowerCase().includes(query) || 
+            data = data.filter(student =>
+                student.name.toLowerCase().includes(query) ||
                 String(student.rollno).toLowerCase().includes(query)
             );
         }
-        
+
+        // Print filtered data for debugging
+        console.log('[AttendanceManagement] Filtered data for filters:', activeFilters, data);
+
         return data;
-    }, [attendanceData, searchQuery, activeFilters]); 
+    }, [attendanceData, searchQuery, activeFilters]);
+
+    // Handle edit attendance
+    const handleEditAttendance = useCallback((attendanceRecord) => {
+        setEditingAttendanceId(attendanceRecord.id);
+        setEditFormData({
+            total_days: attendanceRecord.total_days,
+            present_days: attendanceRecord.present_days,
+            half_days: attendanceRecord.half_days,
+            absent_days: attendanceRecord.absent_days
+        });
+    }, []);
+
+    // Handle save edit
+    const handleSaveEdit = useCallback(async (attendanceId) => {
+        try {
+            setLoading(true);
+            
+            const totalDays = parseInt(editFormData.total_days);
+            const presentDays = parseInt(editFormData.present_days);
+            const halfDays = parseInt(editFormData.half_days);
+            const absentDays = parseInt(editFormData.absent_days);
+
+            if (isNaN(totalDays) || isNaN(presentDays) || isNaN(halfDays) || isNaN(absentDays)) {
+                alert('Please enter valid numbers for all fields');
+                return;
+            }
+
+            if (totalDays < 0 || presentDays < 0 || halfDays < 0 || absentDays < 0) {
+                alert('Values cannot be negative');
+                return;
+            }
+
+            // Calculate attendance percentage: ((present + half*0.5) / total) * 100
+            const attendancePercentage = totalDays > 0 
+                ? ((presentDays + halfDays * 0.5) / totalDays) * 100 
+                : 0;
+
+            const { error } = await supabase
+                .from('attendance_summary')
+                .update({
+                    total_days: totalDays,
+                    present_days: presentDays,
+                    half_days: halfDays,
+                    absent_days: absentDays,
+                    attendance_percentage: parseFloat(attendancePercentage.toFixed(2))
+                })
+                .eq('id', attendanceId);
+
+            if (error) throw error;
+
+            alert('Attendance updated successfully!');
+            setEditingAttendanceId(null);
+            setEditFormData({ total_days: '', present_days: '', half_days: '', absent_days: '' });
+            
+            // Refresh data
+            await fetchInitialData();
+        } catch (error) {
+            console.error('Error updating attendance:', error);
+            alert('Error updating attendance: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
+    }, [editFormData]);
+
+    // Handle cancel edit
+    const handleCancelEdit = useCallback(() => {
+        setEditingAttendanceId(null);
+        setEditFormData({ total_days: '', present_days: '', half_days: '', absent_days: '' });
+    }, []);
+
+    // Handle delete attendance
+    const handleDeleteAttendance = useCallback(async (attendanceId) => {
+        if (!window.confirm('Are you sure you want to delete this attendance record?')) {
+            return;
+        }
+
+        try {
+            setLoading(true);
+            
+            const { error } = await supabase
+                .from('attendance_summary')
+                .delete()
+                .eq('id', attendanceId);
+
+            if (error) throw error;
+
+            alert('Attendance record deleted successfully!');
+            
+            // Refresh data
+            await fetchInitialData();
+        } catch (error) {
+            console.error('Error deleting attendance:', error);
+            alert('Error deleting attendance: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
     console.log('🎨 Rendering DynamicTable with filters:', attendanceFilterDefinitions);
     console.log('🎨 Active filters:', activeFilters);
@@ -669,6 +773,15 @@ const AttendanceManagement = ({ userRole }) => {
                     
                     // Conditionally pass onDataImported only if ALL specific filters are selected
                     onDataImported={areAllFiltersSelected ? handleDataImport : undefined}
+                    
+                    // Actions handlers for edit/delete
+                    onEditRow={handleEditAttendance}
+                    onDeleteRow={handleDeleteAttendance}
+                    editingRowId={editingAttendanceId}
+                    editFormData={editFormData}
+                    onEditFormChange={setEditFormData}
+                    onSaveEdit={handleSaveEdit}
+                    onCancelEdit={handleCancelEdit}
                 />
             </div>
         </div>

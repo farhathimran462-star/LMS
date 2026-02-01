@@ -414,7 +414,6 @@ const CourseManagement = ({ userRole }) => {
             ];
         } 
         else if (type === 'subject') {
-
             return [
                 { 
                     name: 'subject_name', 
@@ -513,6 +512,70 @@ const CourseManagement = ({ userRole }) => {
         });
     };
 
+    const handleEditCourseClick = async (courseId) => {
+        if (!checkSuperAdminAccess()) return;
+        try {
+            setLoading(true);
+            const { getCourseById } = await import('../../api/coursesApi');
+            const { data, error } = await getCourseById(courseId);
+            if (error || !data) {
+                alert("Course not found.");
+                setLoading(false);
+                return;
+            }
+            setFormState({
+                isOpen: true,
+                type: 'course',
+                mode: 'edition',
+                initialData: {
+                    id: data.id,
+                    course_name: data.course_name || '',
+                    course_id: data.course_id || '',
+                    description: data.description || ''
+                }
+            });
+        } catch (err) {
+            alert("Error loading course details.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleEditLevelClick = async (levelId) => {
+        if (!checkSuperAdminAccess()) return;
+        if (!activeCourseId) {
+            alert("Please select a Course first.");
+            return;
+        }
+        try {
+            setLoading(true);
+            const { getLevelById } = await import('../../api/levelsApi');
+            const { data, error } = await getLevelById(levelId);
+            const selectedCourseName = coursesData.get(activeCourseId) || "Unknown Course";
+            if (error || !data) {
+                alert("Level not found.");
+                setLoading(false);
+                return;
+            }
+            setFormState({
+                isOpen: true,
+                type: 'level',
+                mode: 'edition',
+                initialData: {
+                    id: data.id,
+                    courseName: selectedCourseName,
+                    level_name: data.level_name || '',
+                    level_id: data.level_id || '',
+                    description: data.description || ''
+                }
+            });
+        } catch (err) {
+            alert("Error loading level details.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleAddSubjectClick = () => {
         if (!checkSuperAdminAccess()) return;
         
@@ -549,11 +612,9 @@ const CourseManagement = ({ userRole }) => {
     // --- SUBMIT DYNAMIC FORM HANDLER ---
     const handleDynamicFormSubmit = async (formData) => {
         if (!checkSuperAdminAccess()) return;
-        
         const type = formState.type;
         const mode = formState.mode;
         setLoading(true);
-
         try {
             if (type === 'course') {
                 const courseData = {
@@ -561,9 +622,9 @@ const CourseManagement = ({ userRole }) => {
                     course_name: formData.course_name,
                     description: formData.description || null
                 };
-
                 if (mode === 'edition') {
-                    const { error } = await updateCourse(formData.id, courseData);
+                    // Always use the id from formState.initialData (which is fetched from DB)
+                    const { error } = await updateCourse(formState.initialData.id, courseData);
                     if (error) throw error;
                     alert('Course updated successfully!');
                 } else {
@@ -580,9 +641,9 @@ const CourseManagement = ({ userRole }) => {
                     course_id: activeCourseId,
                     description: formData.description || null
                 };
-
                 if (mode === 'edition') {
-                    const { error } = await updateLevel(formData.id, levelData);
+                    // Always use the id from formState.initialData (which is fetched from DB)
+                    const { error } = await updateLevel(formState.initialData.id, levelData);
                     if (error) throw error;
                     alert('Level updated successfully!');
                 } else {
@@ -598,7 +659,6 @@ const CourseManagement = ({ userRole }) => {
                     subject_name: formData.subject_name,
                     level_id: activeLevelId
                 };
-
                 if (mode === 'edition') {
                     const { error } = await updateSubject(formData.subject_code, subjectData);
                     if (error) throw error;
@@ -673,7 +733,8 @@ const CourseManagement = ({ userRole }) => {
                 icon_title="Courses"
                 fromTabOf="Courses"
                 onSelectInstitute={handleCourseSelect}
-                onAddButtonClick={handleAddCourseClick} 
+                onAddButtonClick={handleAddCourseClick}
+                onEditCard={handleEditCourseClick}
             />
         </div>
     );
@@ -687,6 +748,7 @@ const CourseManagement = ({ userRole }) => {
                 fromTabOf="Levels"
                 onSelectInstitute={handleLevelSelect}
                 onAddButtonClick={handleAddLevelClick}
+                onEditCard={handleEditLevelClick}
             />
         </div>
     );

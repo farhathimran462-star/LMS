@@ -94,7 +94,7 @@ export const getAllInstitutions = async () => {
     const { data: institutions, error } = await supabase
       .from('institutions')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: true });
 
     if (error) throw error;
 

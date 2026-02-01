@@ -5,9 +5,9 @@ import { FiDownload, FiEye, FiX } from "react-icons/fi";
 
 // API Imports
 import { getAllInstitutions } from '../../api/institutionsApi';
-import { getCoursesByInstitution } from '../../api/coursesApi';
-import { getLevelsByCourse } from '../../api/levelsApi';
-import { getProgrammesByCourseLevel } from '../../api/programmesApi';
+import { getCoursesByInstitution, getAllCourses } from '../../api/coursesApi';
+import { getLevelsByCourse, getAllLevels } from '../../api/levelsApi';
+import { getProgrammesByCourseLevel, getAllProgrammes } from '../../api/programmesApi';
 import { getAllBatches } from '../../api/batchesApi';
 import { getAllClasses } from '../../api/classesApi';
 import { uploadTimetable, getAllTimetables, downloadTimetable, deleteTimetable } from '../../api/timetablesApi';
@@ -82,6 +82,11 @@ const Timetable = ({ userRole }) => {
     // State
     const [timetables, setTimetables] = useState([]);
     const [institutions, setInstitutions] = useState([]);
+    const [allCourses, setAllCourses] = useState([]);
+    const [allLevels, setAllLevels] = useState([]);
+    const [allProgrammes, setAllProgrammes] = useState([]);
+    const [allBatches, setAllBatches] = useState([]);
+    const [allClasses, setAllClasses] = useState([]);
     const [courses, setCourses] = useState([]);
     const [levels, setLevels] = useState([]);
     const [programmes, setProgrammes] = useState([]);
@@ -90,15 +95,15 @@ const Timetable = ({ userRole }) => {
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [previewTimetable, setPreviewTimetable] = useState(null);
-    
+
     // --- UNIFIED FILTER STATE ---
     const [activeFilters, setActiveFilters] = useState({
-        institution: '',
-        course: '',
-        level: '',
-        programme: '',
-        batch: '',
-        class: ''
+        institution: '', // will store institution.id
+        course: '',      // will store course.id
+        level: '',       // will store level.id
+        programme: '',   // will store programme.id
+        batch: '',       // will store batch.id
+        class: ''        // will store class.id
     });
 
     // --- FETCH INITIAL DATA ---
@@ -110,16 +115,29 @@ const Timetable = ({ userRole }) => {
     const fetchInitialData = async () => {
         setLoading(true);
         try {
-            const [insData, timetableData] = await Promise.all([
+            const [insData, timetableData, coursesData, levelsData, programmesData, batchesData, classesData] = await Promise.all([
                 getAllInstitutions(),
-                getAllTimetables({})
+                getAllTimetables({}),
+                getAllCourses(),
+                getAllLevels(),
+                getAllProgrammes(),
+                getAllBatches(),
+                getAllClasses()
             ]);
-            
             if (insData.error) throw new Error(insData.error.message);
             if (timetableData.error) throw new Error(timetableData.error.message);
-            
+            if (coursesData.error) throw new Error(coursesData.error.message);
+            if (levelsData.error) throw new Error(levelsData.error.message);
+            if (programmesData.error) throw new Error(programmesData.error.message);
+            if (batchesData.error) throw new Error(batchesData.error.message);
+            if (classesData.error) throw new Error(classesData.error.message);
             setInstitutions(insData.data || []);
             setTimetables(timetableData.data || []);
+            setAllCourses(coursesData.data || []);
+            setAllLevels(levelsData.data || []);
+            setAllProgrammes(programmesData.data || []);
+            setAllBatches(batchesData.data || []);
+            setAllClasses(classesData.data || []);
         } catch (err) {
             console.error('Error fetching data:', err.message);
         } finally {
@@ -127,162 +145,111 @@ const Timetable = ({ userRole }) => {
         }
     };
 
-    // Fetch courses when institution is selected
+    // Filter options based on parent selection, but always show all if no parent is selected
+    // Courses: fetch when institution is selected, else clear
     useEffect(() => {
         if (activeFilters.institution && institutions.length > 0) {
-            const selectedInst = institutions.find(i => i.institute_name === activeFilters.institution);
-            if (selectedInst) {
-                fetchCourses(selectedInst.id);
-            }
+            getCoursesByInstitution(activeFilters.institution).then(({ data, error }) => {
+                if (error) setCourses([]);
+                else setCourses(data || []);
+            });
         } else {
             setCourses([]);
         }
     }, [activeFilters.institution, institutions]);
 
-    const fetchCourses = async (institutionId) => {
-        try {
-            const { data, error } = await getCoursesByInstitution(institutionId);
-            if (error) throw error;
-            setCourses(data || []);
-        } catch (err) {
-            console.error('Error fetching courses:', err.message);
-            setCourses([]);
-        }
-    };
-
-    // Fetch levels when course is selected
+    // Levels: fetch when course is selected, else clear
     useEffect(() => {
         if (activeFilters.course && courses.length > 0) {
-            const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-            if (selectedCourse) {
-                fetchLevels(selectedCourse.id);
-            }
+            getLevelsByCourse(activeFilters.course).then(({ data, error }) => {
+                if (error) setLevels([]);
+                else setLevels(data || []);
+            });
         } else {
             setLevels([]);
         }
     }, [activeFilters.course, courses]);
 
-    const fetchLevels = async (courseId) => {
-        try {
-            const { data, error } = await getLevelsByCourse(courseId);
-            if (error) throw error;
-            setLevels(data || []);
-        } catch (err) {
-            console.error('Error fetching levels:', err.message);
-            setLevels([]);
-        }
-    };
-
-    // Fetch programmes when level is selected
+    // Programmes: fetch when level is selected, else clear
     useEffect(() => {
-        if (activeFilters.level && levels.length > 0 && courses.length > 0) {
-            const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-            const selectedLevel = levels.find(l => l.level_name === activeFilters.level);
-            if (selectedCourse && selectedLevel) {
-                fetchProgrammes(selectedCourse.id, selectedLevel.id);
+        if (activeFilters.level && activeFilters.course && levels.length > 0 && courses.length > 0) {
+            getProgrammesByCourseLevel(activeFilters.course, activeFilters.level).then(({ data, error }) => {
+                if (error) setProgrammes([]);
+                else setProgrammes(data || []);
+            });
+        } else {
+            setProgrammes([]);
+        }
+    }, [activeFilters.level, activeFilters.course, levels, courses]);
+
+    // Batches: fetch when programme is selected, else clear
+    useEffect(() => {
+        getAllBatches().then(({ data, error }) => {
+            if (error) {
+                setBatches([]);
+            } else {
+                if (activeFilters.programme && programmes.length > 0) {
+                    setBatches((data || []).filter(b => b.programme_id === activeFilters.programme));
+                } else {
+                    setBatches(data || []);
+                }
             }
-        } else {
-            setProgrammes([]);
-        }
-    }, [activeFilters.level, levels, courses, activeFilters.course]);
+        });
+    }, [activeFilters.programme, programmes]);
 
-    const fetchProgrammes = async (courseId, levelId) => {
-        try {
-            const { data, error } = await getProgrammesByCourseLevel(courseId, levelId);
-            if (error) throw error;
-            setProgrammes(data || []);
-        } catch (err) {
-            console.error('Error fetching programmes:', err.message);
-            setProgrammes([]);
-        }
-    };
-
-    // Fetch batches when programme is selected
-    useEffect(() => {
-        if (activeFilters.programme) {
-            fetchBatches();
-        } else {
-            setBatches([]);
-        }
-    }, [activeFilters.programme]);
-
-    const fetchBatches = async () => {
-        try {
-            const { data, error } = await getAllBatches();
-            if (error) throw error;
-            
-            // Filter batches by selected filters
-            const selectedInst = institutions.find(i => i.institute_name === activeFilters.institution);
-            const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-            const selectedLevel = levels.find(l => l.level_name === activeFilters.level);
-            const selectedProgramme = programmes.find(p => p.programme_name === activeFilters.programme);
-            
-            const filtered = (data || []).filter(b => 
-                (!selectedInst || b.institute_id === selectedInst.id) &&
-                (!selectedCourse || b.course_id === selectedCourse.id) &&
-                (!selectedLevel || b.level_id === selectedLevel.id) &&
-                (!selectedProgramme || b.programme_id === selectedProgramme.id)
-            );
-            
-            setBatches(filtered);
-        } catch (err) {
-            console.error('Error fetching batches:', err.message);
-            setBatches([]);
-        }
-    };
-
-    // Fetch classes when batch is selected
+    // Classes: fetch when batch is selected, else clear
     useEffect(() => {
         if (activeFilters.batch && batches.length > 0) {
-            const selectedBatch = batches.find(b => b.batch_name === activeFilters.batch);
-            if (selectedBatch) {
-                fetchClasses(selectedBatch.id);
-            }
+            getAllClasses().then(({ data, error }) => {
+                if (error) setClasses([]);
+                else {
+                    setClasses((data || []).filter(c => c.batch_id === activeFilters.batch));
+                }
+            });
         } else {
             setClasses([]);
         }
     }, [activeFilters.batch, batches]);
 
-    const fetchClasses = async (batchId) => {
-        try {
-            const { data, error } = await getAllClasses();
-            if (error) throw error;
-            const filtered = (data || []).filter(c => c.batch_id === batchId);
-            setClasses(filtered);
-        } catch (err) {
-            console.error('Error fetching classes:', err.message);
-            setClasses([]);
-        }
-    };
-
-    // Handle filter change
     const handleFilterChange = useCallback((key, value) => {
         setActiveFilters(prev => {
             const updated = { ...prev, [key]: value };
-            
-            // Reset dependent filters when parent changes
             if (key === 'institution') {
                 updated.course = '';
                 updated.level = '';
                 updated.programme = '';
                 updated.batch = '';
                 updated.class = '';
+                setCourses([]);
+                setLevels([]);
+                setProgrammes([]);
+                setBatches([]);
+                setClasses([]);
             } else if (key === 'course') {
                 updated.level = '';
                 updated.programme = '';
                 updated.batch = '';
                 updated.class = '';
+                setLevels([]);
+                setProgrammes([]);
+                setBatches([]);
+                setClasses([]);
             } else if (key === 'level') {
                 updated.programme = '';
                 updated.batch = '';
                 updated.class = '';
+                setProgrammes([]);
+                setBatches([]);
+                setClasses([]);
             } else if (key === 'programme') {
                 updated.batch = '';
                 updated.class = '';
+                setBatches([]);
+                setClasses([]);
             } else if (key === 'batch') {
                 updated.class = '';
+                setClasses([]);
             }
-            
             return updated;
         });
     }, []);
@@ -301,129 +268,76 @@ const Timetable = ({ userRole }) => {
     // --- FILTER DEFINITIONS ---
     const timetableFilterDefinitions = useMemo(() => {
         const defs = {};
-
-        // 1. INSTITUTION
         defs.institution = [
             { value: '', label: 'All Institute' },
-            ...institutions.map(inst => ({ 
-                value: inst.institute_name, 
-                label: inst.institute_name 
+            ...institutions.map(inst => ({
+                value: inst.id,
+                label: inst.institute_name
             }))
         ];
-
-        // 2. COURSE
         defs.course = [
             { value: '', label: 'All Course' },
-            ...courses.map(course => ({ 
-                value: course.course_name, 
-                label: course.course_name 
+            ...courses.map(course => ({
+                value: course.id,
+                label: course.course_name
             }))
         ];
-
-        // 3. LEVEL
         defs.level = [
             { value: '', label: 'All Level' },
-            ...levels.map(level => ({ 
-                value: level.level_name, 
-                label: level.level_name 
+            ...levels.map(level => ({
+                value: level.id,
+                label: level.level_name
             }))
         ];
-
-        // 4. PROGRAMME
         defs.programme = [
             { value: '', label: 'All Programme' },
-            ...programmes.map(prog => ({ 
-                value: prog.programme_name, 
-                label: prog.programme_name 
+            ...programmes.map(prog => ({
+                value: prog.id,
+                label: prog.programme_name
             }))
         ];
-
-        // 5. BATCH
         defs.batch = [
             { value: '', label: 'All Batch' },
-            ...batches.map(batch => ({ 
-                value: batch.batch_name, 
-                label: batch.batch_name 
+            ...batches.map(batch => ({
+                value: batch.id,
+                label: batch.batch_name
             }))
         ];
-
-        // 6. CLASS
         defs.class = [
             { value: '', label: 'All Class' },
-            ...classes.map(cls => ({ 
-                value: cls.class_name, 
-                label: cls.class_name 
+            ...classes.map(cls => ({
+                value: cls.id,
+                label: cls.class_name
             }))
         ];
-        
         return defs;
     }, [institutions, courses, levels, programmes, batches, classes]);
 
     // --- DATA TRANSFORMATION ---
     const getFilteredTimetableData = useMemo(() => {
-        console.log('All timetables:', timetables);
-        console.log('Active filters:', activeFilters);
-        console.log('Institutions:', institutions);
-        console.log('Courses:', courses);
-        console.log('Levels:', levels);
-        console.log('Programmes:', programmes);
-        console.log('Batches:', batches);
-        console.log('Classes:', classes);
-        
         let data = [...timetables];
-        console.log('Initial data copy:', data);
-        // Apply filters
-        if (activeFilters.institution) {
-            const selectedInst = institutions.find(i => i.institute_name === activeFilters.institution);
-            console.log('Selected institution:', selectedInst);
-            
-            if (selectedInst) {
-                data = data.filter(t => t.institute_id === selectedInst.id);
-            }
-            console.log('Institution filter : ',data);
+        // Debug: log IDs and types
+        console.log(data);
+        console.log('Timetable filter - activeFilters:', activeFilters);
+        console.log('Timetable data sample:', data[0]);
+        if (activeFilters.institution && activeFilters.institution !== '') {
+            data = data.filter(t => String(t.institute_id) === String(activeFilters.institution));
         }
-        if (activeFilters.course) {
-            const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-            console.log('Selected course:', selectedCourse);
-            if (selectedCourse) {
-                data = data.filter(t => t.course_id === selectedCourse.id);
-            }
-            console.log('course filter : ',data);
+        if (activeFilters.course && activeFilters.course !== '') {
+            data = data.filter(t => String(t.course_id) === String(activeFilters.course));
         }
-        if (activeFilters.level) {
-            const selectedLevel = levels.find(l => l.level_name === activeFilters.level);
-            console.log('Selected level:', selectedLevel);
-            if (selectedLevel) {
-                data = data.filter(t => t.level_id === selectedLevel.id);
-            }
-            console.log('level filter : ',data);
+        if (activeFilters.level && activeFilters.level !== '') {
+            data = data.filter(t => String(t.level_id) === String(activeFilters.level));
         }
-        if (activeFilters.programme) {
-            const selectedProgramme = programmes.find(p => p.programme_name === activeFilters.programme);
-            console.log('Selected programme:', selectedProgramme);
-            if (selectedProgramme) {
-                data = data.filter(t => t.programme_id === selectedProgramme.id);
-            }
-            console.log('programme filter : ',data);
+        if (activeFilters.programme && activeFilters.programme !== '') {
+            data = data.filter(t => String(t.programme_id) === String(activeFilters.programme));
         }
-        if (activeFilters.batch) {
-            const selectedBatch = batches.find(b => b.batch_name === activeFilters.batch);
-            console.log('Selected batch:', selectedBatch);
-            if (selectedBatch) {
-                data = data.filter(t => t.batch_id === selectedBatch.id);
-            }
-            console.log('batch filter : ',data);
+        if (activeFilters.batch && activeFilters.batch !== '') {
+            data = data.filter(t => String(t.batch_id) === String(activeFilters.batch));
         }
-        if (activeFilters.class) {
-            const selectedClass = classes.find(c => c.class_name === activeFilters.class);
-            console.log('Selected class:', selectedClass);
-            if (selectedClass) {
-                data = data.filter(t => t.class_id === selectedClass.id);
-            }
-            console.log('class filter : ',data);
+        if (activeFilters.class && activeFilters.class !== '') {
+            data = data.filter(t => String(t.class_id) === String(activeFilters.class));
         }
-
-        console.log('Filtered data:', data);
 
         if (searchQuery) {
             const query = searchQuery.toLowerCase();
@@ -433,45 +347,59 @@ const Timetable = ({ userRole }) => {
             );
         }
 
-        // Add action buttons
-        return data.map(t => ({
-            ...t,
-            timetable_name: t.timetable_name || 'Untitled',
-            start_date: t.start_date || 'N/A',
-            end_date: t.end_date || 'N/A',
-            file_type: t.file_type?.toUpperCase() || 'N/A',
-            uploaded_at: t.uploaded_at ? new Date(t.uploaded_at).toLocaleDateString() : 'N/A',
-            preview: (
-                <button 
-                    className="batch_btn-secondary" 
-                    style={{ padding: '5px 10px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px' }}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setPreviewTimetable(t);
-                    }}
-                >
-                    <FiEye /> Preview
-                </button>
-            ),
-            download: (
-                <button 
-                    className="batch_btn-primary" 
-                    style={{ padding: '5px 10px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px' }}
-                    onClick={async (e) => {
-                        e.stopPropagation();
-                        try {
-                            await downloadTimetable(t.file_path, t.file_name);
-                        } catch (error) {
-                            alert('Error downloading file: ' + error.message);
-                        }
-                    }}
-                >
-                    <FiDownload /> Download
-                </button>
-            )
-        }));
+        // Debug: log filtered data
+        console.log('Filtered timetable data:', data);
 
-    }, [timetables, activeFilters, searchQuery, institutions, courses, levels, programmes, batches, classes]);
+        return data.map(t => {
+            const institutionName = institutions.find(i => String(i.id) === String(t.institute_id))?.institute_name || '';
+            // Use allCourses for table mapping to avoid empty course values
+            const courseName = (allCourses || []).find(c => String(c.id) === String(t.course_id))?.course_name || '';
+            // Use allLevels and allProgrammes for table mapping
+            const levelName = (allLevels || []).find(l => String(l.id) === String(t.level_id))?.level_name || '';
+            const programmeName = (allProgrammes || []).find(p => String(p.id) === String(t.programme_id))?.programme_name || '';
+            // Use allBatches and allClasses for table mapping to avoid empty values
+            const batchName = (allBatches || []).find(b => String(b.id) === String(t.batch_id))?.batch_name || '';
+            const className = (allClasses || []).find(c => String(c.id) === String(t.class_id))?.class_name || '';
+            return {
+                ...t,
+                timetable_name: t.timetable_name || 'Untitled',
+                institution: institutionName,
+                course: courseName,
+                level: levelName,
+                programme: programmeName,
+                batch: batchName,
+                class: className,
+                preview: (
+                    <button 
+                        className="batch_btn-secondary" 
+                        style={{ padding: '5px 10px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px' }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setPreviewTimetable(t);
+                        }}
+                    >
+                        <FiEye /> Preview
+                    </button>
+                ),
+                download: (
+                    <button 
+                        className="batch_btn-primary" 
+                        style={{ padding: '5px 10px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px' }}
+                        onClick={async (e) => {
+                            e.stopPropagation();
+                            try {
+                                await downloadTimetable(t.file_path, t.file_name);
+                            } catch (error) {
+                                alert('Error downloading file: ' + error.message);
+                            }
+                        }}
+                    >
+                        <FiDownload /> Download
+                    </button>
+                )
+            };
+        });
+    }, [timetables, activeFilters, searchQuery, institutions, courses, allLevels, allProgrammes, batches, classes]);
 
     // Handle delete
     const handleDelete = async (timetableRow) => {
@@ -495,12 +423,13 @@ const Timetable = ({ userRole }) => {
 
         setLoading(true);
         try {
-            const selectedInst = institutions.find(i => i.institute_name === activeFilters.institution);
-            const selectedCourse = courses.find(c => c.course_name === activeFilters.course);
-            const selectedLevel = levels.find(l => l.level_name === activeFilters.level);
-            const selectedProgramme = programmes.find(p => p.programme_name === activeFilters.programme);
-            const selectedBatch = batches.find(b => b.batch_name === activeFilters.batch);
-            const selectedClass = classes.find(c => c.class_name === activeFilters.class);
+            // Find selected objects by ID
+            const selectedInst = institutions.find(i => i.id === activeFilters.institution);
+            const selectedCourse = courses.find(c => c.id === activeFilters.course);
+            const selectedLevel = levels.find(l => l.id === activeFilters.level);
+            const selectedProgramme = programmes.find(p => p.id === activeFilters.programme);
+            const selectedBatch = batches.find(b => b.id === activeFilters.batch);
+            const selectedClass = classes.find(c => c.id === activeFilters.class);
 
             console.log('Selected Institution:', selectedInst);
             console.log('Selected Course:', selectedCourse);
@@ -515,32 +444,15 @@ const Timetable = ({ userRole }) => {
                 return;
             }
 
-            // Use correct ID field (check both id and institute_id)
-            const institutionId = selectedInst.id || selectedInst.institute_id;
-            const courseId = selectedCourse.id || selectedCourse.course_id;
-            const levelId = selectedLevel.id || selectedLevel.level_id;
-            const programmeId = selectedProgramme.id || selectedProgramme.programme_id;
-            const batchId = selectedBatch.id || selectedBatch.batch_id;
-            const classId = selectedClass.id || selectedClass.class_id;
-
-            console.log('IDs to use:', {
-                institutionId,
-                courseId,
-                levelId,
-                programmeId,
-                batchId,
-                classId
-            });
-
             const metadata = {
                 timetable_name: `${selectedClass.class_name} - Timetable`,
                 description: 'Uploaded via Timetable Management',
-                institution_id: institutionId,
-                course_id: courseId,
-                level_id: levelId,
-                programme_id: programmeId,
-                batch_id: batchId,
-                class_id: classId,
+                institution_id: selectedInst.id,
+                course_id: selectedCourse.id,
+                level_id: selectedLevel.id,
+                programme_id: selectedProgramme.id,
+                batch_id: selectedBatch.id,
+                class_id: selectedClass.id,
                 start_date: new Date().toISOString().split('T')[0],
                 end_date: null,
                 uploaded_by: currentUserId
@@ -563,12 +475,15 @@ const Timetable = ({ userRole }) => {
     };
 
     // Column configuration
-    const columnOrder = ['timetable_name', 'file_type', 'start_date', 'end_date', 'uploaded_at', 'preview', 'download'];
+    const columnOrder = ['timetable_name', 'institution', 'course', 'level', 'programme', 'batch', 'class', 'preview', 'download'];
     const columnDisplayNames = {
         timetable_name: 'Timetable Name',
-        file_type: 'File Type',
-        start_date: 'Start Date',
-        end_date: 'End Date',
+        institution: 'Institute',
+        course: 'Course',
+        level: 'Level',
+        programme: 'Programme',
+        batch: 'Batch',
+        class: 'Class',
         uploaded_at: 'Uploaded On',
         preview: 'Preview',
         download: 'Download'

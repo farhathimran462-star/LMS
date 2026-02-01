@@ -189,7 +189,7 @@ console.log("User Data in Dashboard:", userData);
         } else if (userRole === "Super Admin" || userRole === "Admin") {
           return <MaterialManagement userRole={userRole} />;
         }
-        return null;a
+        return null;
       case "Material":
          return <AssignmentManagement/>;
       case "StudyMaterials":
